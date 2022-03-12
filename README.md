@@ -1,4 +1,4 @@
-# EECE430-SportClubManagementSystem
+# EECE430 - Sport Club Management System
 EECE 430: Software Engineering.
 
 The Sports Club Management System (SCMS) is a web-app that resembles a general club's website. This project is a template to how such an app would be implemented.
