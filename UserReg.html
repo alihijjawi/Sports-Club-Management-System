@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Panthers User Registration </title>
+    <link rel="stylesheet" href="UserReg.css">
+</head>
+
+<body>
+    <div class="header">
+        <h1> Register New User Account </h1>
+    </div>
+
+    <div class="wrapper">
+        <form name="reg-form">
+            <div class="reg-form">
+                <label for="fname">First Name</label>
+                <input id="fname" type="text" />
+                <label for="lname">Last Name</label>
+                <input id="lname" type="text" />
+                <label>Date of Birth</label>
+                <input id="dob" type="date" />
+                <label for="user_name">Username</label>
+                <input id="user_name" type="text" />
+                <label> Email Address </label>
+                <input id="email" type="email" />
+                <label>Password</label>
+                <input id="pwd" type="password" />
+                <div>
+                    <button id="add-button" type="button" class="button">Create Account</button>
+                    <button id="reset-button" type="button" class="button">Reset</button> <br>
+                    <a href="UserLogin.html">Already have an account? Login here.</a> 
+                </div>
+                <br><span id="error-message"></span>
+            </div>
+        </form>
+    </div>
+
+</body>
+<script src="UserRegScript.js"></script>
+
+</html>
