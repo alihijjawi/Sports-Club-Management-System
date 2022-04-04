@@ -22,7 +22,7 @@ def auth_user():
     found = User.query.filter_by(user_name = user_name).first()
     if found is None:
         return jsonify({"error": 1, "message" : "Invalid credentials"})
-    if not (User.query.filter_by(user_name = user_name).first() and User.query.filter_by(password = password)).first():
+    if not (found.password == password):
         return jsonify({"error": 2, "message": "Invalid credentials"})
     print("success")
     return jsonify({"error": 0, "message": "Welcome back " + found.first_name+"!"})
