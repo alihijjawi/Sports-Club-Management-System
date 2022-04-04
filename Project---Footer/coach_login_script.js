@@ -28,6 +28,8 @@ function authenticate() {
     }
     let userName = document.getElementById("user_name")
     let password = document.getElementById("pwd")
+    console.log(userName);
+    console.log(password);
     const data = {
         "user_name": userName.value,
         "password": password.value
@@ -45,6 +47,7 @@ function authenticate() {
         .catch((error) => {
             console.error('Error:', error);
         });
+        console.log("success");
 
 }
 
