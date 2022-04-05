@@ -11,6 +11,37 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:mira@127.0.0.1:330
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
+@app.route('/contact', methods=['POST'])
+def contact_info():
+    data = request.json
+    name = data['name']
+    email = data['email']
+    message = data['message']
+    contact = Contact(name, email, message)
+    found = Contact.query.filter_by(name = name, email = email, message = message).first()
+    message = {"message": "Your message was received."}
+    if (found is None):
+        db.session.add(contact)
+        db.session.commit()
+
+    return jsonify(message)
+
+@app.route('/report', methods=['POST'])
+def report_issue():
+    data = request.json
+    name = data['name']
+    email = data['email']
+    message = data['message']
+    report = Report(name, email, message)
+    found = Report.query.filter_by(name = name, email = email, message = message).first()
+    message = {"message": "Your issue was reported. \nOur team will get back to you soon."}
+    if (found is None):
+        db.session.add(report)
+        db.session.commit()
+
+    return jsonify(message)
+
+
 @app.route('/login', methods=['POST'])
 def auth_user():
     data = request.json
@@ -63,3 +94,25 @@ class User(db.Model):
         self.date_of_birth = date_of_birth
         self.email = email
         self.hashed_password = bcrypt.generate_password_hash(password)
+
+class Contact(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128))
+    email = db.Column(db.String(128))
+    message = db.Column(db.String(128))
+
+    def __init__(self, name, email, message):
+        self.name = name
+        self.message = message
+        self.email = email
+
+class Report(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128))
+    email = db.Column(db.String(128))
+    message = db.Column(db.String(128))
+
+    def __init__(self, name, email, message):
+        self.name = name
+        self.message = message
+        self.email = email
