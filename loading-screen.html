@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--this is a template for the loading screen. add this loader-wrapper class anytime we need to move between pages-->
+</head>
+
+<body>
+    <div class="content">
+        
+    </div>
+    <!-- here the loader class will be executed when we move pages, designed in CSS -->
+    <div class="loader-wrapper">
+        <span class="loader"><span class="loader-inner"></span></span>
+    </div>
+
+    <script>
+        $(window).on("load", function () {
+            $(".loader-wrapper").fadeOut("slow");
+        });
+    </script>
+</body>
+
+</html>
