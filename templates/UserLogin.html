@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html style="font-size: 16px;">
+<html data-url="{{login}}" id = "FullPage" style="font-size: 16px;">
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +7,11 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="page_type" content="np-template-header-footer-from-plugin">
-  <title>Coach_Login</title>
-  <link rel="stylesheet" href="nicepage.css" media="screen">
-  <link rel="stylesheet" href="UserReg.css" media="screen">
-  <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
-  <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+  <title>User Login</title>
+  <link rel="stylesheet" href="{{url_for('static',filename='nicepage.css')}}" media="screen">
+  <link rel="stylesheet" href="{{url_for('static',filename='UserReg.css')}}" media="screen">
+  <script class="u-script" type="text/javascript" src="{{url_for('static',filename='jquery.js')}}" defer=""></script>
+  <script class="u-script" type="text/javascript" src="{{url_for('static',filename='nicepage.js')}}" defer=""></script>
   <meta name="generator" content="Nicepage 4.8.2, nicepage.com">
   <link id="u-theme-google-font" rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
@@ -21,10 +21,10 @@
 		"@context": "http://schema.org",
 		"@type": "Organization",
 		"name": "",
-		"logo": "images/logo.jpeg"
+		"logo": "{{url_for('static',filename='images/logo.jpeg')}}"
 }</script>
   <meta name="theme-color" content="#478ac9">
-  <meta property="og:title" content="Coach_Login">
+  <meta property="og:title" content="User Registration">
   <meta property="og:type" content="website">
 </head>
 
@@ -108,14 +108,14 @@
         </div>
       </nav>
       <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="677" data-image-height="623">
-        <img src="images/logo.jpeg" class="u-logo-image u-logo-image-1">
+        <img src="{{url_for('static',filename='images/logo.jpeg')}}" class="u-logo-image u-logo-image-1">
       </a>
       <div class="u-image u-image-circle u-preserve-proportions u-image-2" alt="" data-image-width="225"
         data-image-height="225"></div>
       <a class="u-border-2 u-border-black u-btn u-button-style u-hover-black u-none u-text-hover-white u-btn-1">Dark
         Mode</a>
       <h3 class="u-align-center u-headline u-text u-text-default u-text-1">
-        Register User Account
+        User Login
       </h3>
     </div>
   </header>
@@ -124,31 +124,9 @@
       <div class="u-form u-form-1">
         <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom"
           name="form-1" style="padding: 10px;">
-
-
-          <div class="u-form-group u-form-name">
-            <label for="fname" class="u-label">First Name</label>
-            <input type="text" placeholder="Enter your first name" id="fname"
-              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
-          </div>
-          <div class="u-form-group u-form-name u-form-group-2">
-            <label for="lname" class="u-label">Last Name</label>
-            <input type="text" placeholder="Enter your last name" id="lname"
-              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
-          </div>
           <div class="u-form-group u-form-name u-form-group-2">
             <label for="user_name" class="u-label">Username</label>
             <input type="text" placeholder="Enter your username" id="user_name"
-              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
-          </div>
-          <div class="u-form-date u-form-group u-form-group-3">
-            <label for="dob" class="u-label">Date of Birth</label>
-            <input type="date" placeholder="MM/DD/YYYY" id="dob"
-              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
-          </div>
-          <div class="u-form-email u-form-group">
-            <label for="email" class="u-label">Email</label>
-            <input type="email" placeholder="Enter a valid email address" id="email"
               class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
           </div>
           <div class="u-form-group u-form-group-5">
@@ -165,9 +143,8 @@
       <button id="reset-button"
         class="u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-2">Reset</button>
       <div></div>
-      <a href="UserLogin.html"
-        class="u-active-none u-border-2 u-border-palette-1-base u-bottom-left-radius-0 u-bottom-right-radius-0 u-btn u-btn-rectangle u-button-style u-hover-none u-none u-radius-0 u-top-left-radius-0 u-top-right-radius-0 u-btn-3">Already
-        have an account? Login here</a>
+      <a href="register"
+        class="u-active-none u-border-2 u-border-palette-1-base u-bottom-left-radius-0 u-bottom-right-radius-0 u-btn u-btn-rectangle u-button-style u-hover-none u-none u-radius-0 u-top-left-radius-0 u-top-right-radius-0 u-btn-3">Don't have an account? Register Here.</a>
       <span id="error-message" class="error"></span> <br>
     </div>
     </div>
@@ -240,6 +217,6 @@
     </nav>
   </footer>
 </body>
-<script src="UserRegScript.js"></script>
+<script src="{{url_for('static', filename = 'UserRegScript.js')}}"></script>
 
 </html>

@@ -4,14 +4,22 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import request
 from flask import jsonify
 from flask_cors import CORS
-
+from flask import session, url_for, redirect, render_template
 app = Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:mira@127.0.0.1:3306/users'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+app.config['DEBUG'] = True
 
-@app.route('/contact', methods=['POST'])
+@app.route('/')
+def index():
+    if 'username' in session:
+        return f'Logged in as {session["username"]}'
+    return 'You are not logged in'
+
+@app.route('/contact',  methods=['GET', 'POST'])
 def contact_info():
     data = request.json
     name = data['name']
@@ -26,8 +34,10 @@ def contact_info():
 
     return jsonify(message)
 
-@app.route('/report', methods=['POST'])
+@app.route('/report',  methods=['GET', 'POST'])
 def report_issue():
+    if (request.method == 'GET'):
+        return render_template("Report-Issues.html")
     data = request.json
     name = data['name']
     email = data['email']
@@ -38,12 +48,13 @@ def report_issue():
     if (found is None):
         db.session.add(report)
         db.session.commit()
+    return redirect('/')
 
-    return jsonify(message)
 
-
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def auth_user():
+    if request.method == 'GET':
+        return render_template("UserLogin.html")
     data = request.json
     user_name = data['user_name']
     password = data['password']
@@ -52,12 +63,14 @@ def auth_user():
     if found is None:
         return jsonify({"error": 1, "message" : "Invalid credentials"})
     if not bcrypt.check_password_hash(found.hashed_password,password):
-        return jsonify({"error": 2, "message": "Invalid credentials"})
+        return jsonify({"message": "Invalid credentials"})
     return jsonify({"error": 0, "message": "Welcome back " + found.first_name+"!"})
 
 
-@app.route('/register', methods=['POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def create_user():
+    if request.method == 'GET':
+        return render_template('UserReg.html')
     data = request.json
     email = data['email']
     user_name = data['user_name']
@@ -74,8 +87,7 @@ def create_user():
     user = User(first_name, last_name, user_name, email, date_of_birth, password)
     db.session.add(user)
     db.session.commit()
-    message = {"error": 0, "message": "The account has been successfully created."}
-    return jsonify(message)
+    return "login"
 
 
 class User(db.Model):

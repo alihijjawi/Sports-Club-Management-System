@@ -41,7 +41,7 @@ function authenticate() {
         body: JSON.stringify(data),
     })
         .then(response => response.json())
-        .then(data => handleResponse(data))
+        .then(dat => handleResponse(dat))
         .catch((error) => {
             console.error('Error:', error);
         });

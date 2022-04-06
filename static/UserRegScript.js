@@ -12,9 +12,38 @@ function resetInput() {
     errorMessage.innerHTML = "";
     return;
 }
-function handleResponse(data) {
-    errorMessage.innerHTML = data["message"];
-    return;
+function handleResponse(response) {
+    text = response.text();
+    try {
+        const data = JSON.parse(text); // Try to parse the response as JSON
+        // The response was a JSON object
+        // Do your JSON handling here
+        errorMessage.innerHTML = data["message"];
+    } catch (err) {
+        // The response wasn't a JSON object
+        // Do your text handling here
+    }
+}
+async function myFetch(myRequest, data) {
+    const response = await fetch(myRequest, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    const text = await response.text();
+    try {
+        const data1 = JSON.parse(text); // Try to parse it as JSON
+        // The response was a JSON object
+        // Do your JSON handling here
+        errorMessage.innerHTML = data1["message"];
+    } catch (err) {
+        // The response wasn't a JSON object
+        // Do your text handling here
+        location.replace(text);
+    }
 }
 function ValidateEmail(input) {
 
@@ -22,6 +51,9 @@ function ValidateEmail(input) {
 
     if (input.value.match(validRegex)) return true;
     return false;
+}
+function updatePage(content) {
+    document.getElementById("FullPage").innerHTML = content.text();
 }
 function addUser() {
     let inputFields = document.querySelectorAll("input");
@@ -47,8 +79,7 @@ function addUser() {
         "dob": dob.value,
         "password": password.value
     };
-    errorMessage.innerHTML = "Youss";
-    fetch(`${SERVER_URL}/register`, {
+    /*fetch(`${SERVER_URL}/register`, {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -57,10 +88,11 @@ function addUser() {
         body: JSON.stringify(data),
     })
         .then(response => response.json())
-        .then(data => handleResponse(data))
+        .then(dat => handleResponse(dat))
         .catch((error) => {
             console.error('Error:', error);
-        });
+        });*/
+    myFetch(`${SERVER_URL}/register`, data);
 
 }
 
