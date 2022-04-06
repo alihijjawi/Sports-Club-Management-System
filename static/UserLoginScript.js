@@ -1,9 +1,31 @@
 var SERVER_URL = "http://127.0.0.1:5000";
 var errorMessage = document.getElementById("error-message");
-var addButton = document.getElementById("login-button");
+var addButton = document.getElementById("add-button");
 var resetButton = document.getElementById("reset-button");
 addButton.addEventListener("click", authenticate);
 resetButton.addEventListener("click", resetInput);
+
+async function myFetch(myRequest, data) {
+    const response = await fetch(myRequest, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    const text = await response.text();
+    try {
+        const data1 = JSON.parse(text); // Try to parse it as JSON
+        // The response was a JSON object
+        // Do your JSON handling here
+        errorMessage.innerHTML = data1["message"];
+    } catch (err) {
+        // The response wasn't a JSON object
+        // Do your text handling here
+        location.replace(text);
+    }
+}
 function resetInput() {
     const inputFields = document.querySelectorAll("input");
     for (let i = 0; i < inputFields.length; i++) {
@@ -32,20 +54,7 @@ function authenticate() {
         "user_name": userName.value,
         "password": password.value
     };
-    fetch(`${SERVER_URL}/login`, {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-        .then(response => response.json())
-        .then(dat => handleResponse(dat))
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-
+    myFetch(`${SERVER_URL}/login`, data);
 }
 
 

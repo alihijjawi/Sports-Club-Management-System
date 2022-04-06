@@ -12,6 +12,7 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['DEBUG'] = True
+app.secret_key = '\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
 
 @app.route('/')
 def index():
@@ -58,13 +59,13 @@ def auth_user():
     data = request.json
     user_name = data['user_name']
     password = data['password']
-    dummy = "d"
     found = User.query.filter_by(user_name = user_name).first()
     if found is None:
         return jsonify({"error": 1, "message" : "Invalid credentials"})
     if not bcrypt.check_password_hash(found.hashed_password,password):
         return jsonify({"message": "Invalid credentials"})
-    return jsonify({"error": 0, "message": "Welcome back " + found.first_name+"!"})
+    session['username'] = user_name
+    return "/"
 
 
 @app.route('/register', methods=['GET', 'POST'])
