@@ -5,11 +5,14 @@ from flask import request
 from flask import jsonify
 from flask_cors import CORS
 from flask import session, url_for, redirect, render_template
+from flask_marshmallow import Marshmallow
+
 app = Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:mira@127.0.0.1:3306/users'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
+ma = Marshmallow(app)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['DEBUG'] = True
 app.secret_key = '\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
@@ -90,6 +93,32 @@ def create_user():
     db.session.commit()
     return "login"
 
+@app.route('/reserve',methods=['GET','POST'])
+def show_reserve():
+    if request.method == 'GET':
+        return render_template("Reserve-Court-Field.html")
+    if request is None or request.json is None:
+        return
+    data = request.json
+    print(data)
+    name = data["name"]
+    email = data["email"]
+    number = data["number"]
+    date = data["date"]
+    court = data["court"]
+    time = data["time"]
+    reservation = Reservation(name, email, number, date, court, time)
+    db.session.add(reservation)
+    db.session.commit()
+    return jsonify(reservations_schema.dump([reservation]))
+
+@app.route('/updateReserve',methods=['POST']) #update court and field reservation table given date and court/field
+def update_table():
+    data = request.json
+    date = data["date"]
+    court = data["court"]
+    reservations = Reservation.query.filter_by(date =date, court = court).all()
+    return jsonify(reservations_schema.dump(reservations))
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -129,3 +158,27 @@ class Report(db.Model):
         self.name = name
         self.message = message
         self.email = email
+
+class Reservation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128))
+    email = db.Column(db.String(128))
+    number = db.Column(db.String(128))
+    date = db.Column(db.String(128))
+    court= db.Column(db.String(128))
+    time = db.Column(db.String(128))
+    def __init__(self, name, email, number,date,court,time):
+        self.name = name
+        self.number = number
+        self.email = email
+        self.date = date
+        self.court = court
+        self.time = time
+
+class ReservationSchema(ma.Schema):
+    class Meta:
+        fields =("name", "date","court","time")
+        model = Reservation
+
+
+reservations_schema = ReservationSchema(many=True)
