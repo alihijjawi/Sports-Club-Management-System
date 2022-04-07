@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import request
 from flask import jsonify
 from flask_cors import CORS
+from flask import render_template
+from flask import url_for
 
 
 
@@ -26,6 +28,14 @@ def auth_user():
         return jsonify({"error": 2, "message": "Invalid credentials"})
     print("success")
     return jsonify({"error": 0, "message": "Welcome back " + found.first_name+"!"})
+
+@app.route('/coachlogin', methods = ['GET'])
+def getLogin():
+    return render_template("Coach_Login.html")
+
+@app.route('/payment', methods = ['GET'])
+def getPayment():
+    return render_template("Payment.html")
 
 @app.route('/save', methods=['POST'])
 def save_info():
