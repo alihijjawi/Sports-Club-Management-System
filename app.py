@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import request
 from flask import jsonify
 from flask_cors import CORS
+from flask import render_template
+from flask import url_for
 
 
 
@@ -12,6 +14,10 @@ CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Fuckapple123123@127.0.0.1:3306/430'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
+
+@app.route('/payment', methods = ['GET'])
+def render_payment():
+    return render_template("payment.html")
 
 @app.route('/login', methods=['POST'])
 def auth_user():
@@ -36,7 +42,7 @@ def save_info():
     city = data['city']
     state = data['state']
     zip_code = data['zip_code']
-    name_on_card = data['name_on_card']
+    name_on_card = data['credit_card_name']
     credit_card_number = data['credit_card_number']
     exp_month = data['exp_month']
     exp_year = data['exp_year']

@@ -50,7 +50,7 @@ function add() {
         "exp_month": exp_month.value,
         "cvv" : cvv.value 
     };
-    fetch(`${SERVER_URL}/login`, {
+    fetch(`${SERVER_URL}/save`, {
         method: 'POST',
         mode: 'cors',
         headers: {
