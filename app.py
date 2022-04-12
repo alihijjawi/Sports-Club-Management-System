@@ -45,4 +45,4 @@ def post_match():
     match = Match(name, timing, team_1_id, team_2_id)
     db.session.add(match)
     db.session.commit()
-    return jsonify({'message': 'success'})
+    return 'getmatches'

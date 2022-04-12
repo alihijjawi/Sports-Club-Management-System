@@ -38,20 +38,27 @@ function addMatch() {
         "team_1_id": team1_name.value,
         "team_2_id": team2_name.value
     };
-    fetch(`${SERVER_URL}/postmatches`, {
+    myFetch(`${SERVER_URL}/postmatches`, data);
+}
+
+async function myFetch(myRequest, data) {
+    const response = await fetch(myRequest, {
         method: 'POST',
         mode: 'cors',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-    })
-        .then(response => response.json())
-        .then(dat => handleResponse(dat))
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-
+    });
+    const text = await response.text();
+    try {
+        const data1 = JSON.parse(text); // Try to parse it as JSON
+        // The response was a JSON object
+        // Do your JSON handling here
+        errorMessage.innerHTML = data1["message"];
+    } catch (err) {
+        // The response wasn't a JSON object
+        // Do your text handling here
+        location.replace(text);
+    }
 }
-
-
