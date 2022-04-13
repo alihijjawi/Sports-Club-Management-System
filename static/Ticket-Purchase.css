@@ -1,0 +1,54 @@
+.u-section-1 .u-sheet-1 {
+  min-height: 500px;
+}
+.label{
+  position: absolute;
+  left:20px;
+  bottom:60px;
+}
+.u-section-1 .u-form-1 {
+  height: 407px;
+  width: 570px;
+  margin: 46px auto 60px;
+}
+
+.u-section-1 .u-form-group-4 {
+  margin-left: 0;
+}
+
+.u-section-1 .u-btn-1 {
+  letter-spacing: 1px;
+  border-style: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  background-image: none;
+}
+
+@media (max-width: 1199px) {
+  .u-section-1 .u-form-group-4 {
+    width: 570px;
+    margin-top: 30px;
+    margin-right: auto;
+    margin-bottom: 60px;
+  }
+}
+
+@media (max-width: 767px) {
+  .u-section-1 .u-form-1 {
+    width: 540px;
+  }
+
+  .u-section-1 .u-form-group-4 {
+    width: 540px;
+  }
+}
+
+@media (max-width: 575px) {
+  .u-section-1 .u-form-1 {
+    width: 340px;
+  }
+
+  .u-section-1 .u-form-group-4 {
+    width: 340px;
+  }
+}
