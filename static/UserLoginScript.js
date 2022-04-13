@@ -19,11 +19,12 @@ async function myFetch(myRequest, data) {
         const data1 = JSON.parse(text); // Try to parse it as JSON
         // The response was a JSON object
         // Do your JSON handling here
-        errorMessage.innerHTML = data1["message"];
+        handleResponse(data1["message"]);
     } catch (err) {
         // The response wasn't a JSON object
         // Do your text handling here
-        location.replace(text);
+        alert("Login successful.\nWelcome to the official site of Panthers Sports Club!");
+        location.href = text;
     }
 }
 function resetInput() {
@@ -35,8 +36,7 @@ function resetInput() {
     return;
 }
 function handleResponse(data) {
-    errorMessage.innerHTML = data["message"];
-    return;
+    alert(data);
 }
 
 function authenticate() {
@@ -44,7 +44,7 @@ function authenticate() {
     for (let i = 0; i < inputFields.length; i++) {
         let input = inputFields[i];
         if (input.value.length == 0) {
-            errorMessage.innerHTML = "Some details are missing! Please fill in all the fields.";
+            alert("Some details are missing! Please fill in all the fields.");
             return;
         }
     }

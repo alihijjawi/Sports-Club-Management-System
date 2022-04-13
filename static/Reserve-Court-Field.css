@@ -1,7 +1,9 @@
 .u-section-1 .u-sheet-1 {
   min-height: 643px;
 }
-
+.label{
+  left:50px;
+}
 .u-section-1 .u-form-1 {
   height: 157px;
   margin: 35px 451px 0 547px;

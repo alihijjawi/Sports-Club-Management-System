@@ -4,6 +4,11 @@
   left :110px;
   top : 30px;
 }
+.label{
+  position:absolute;
+  bottom:35px;
+  left:30px;
+}
 .u-section-1 {
   background-image: none;
 }

@@ -4,7 +4,11 @@
   top : 20px;
   left : 20px;
 }
-
+.label{
+  position:absolute;
+  left:30px;
+  bottom:25px;
+}
 .u-section-1 {
   background-image: none;
   min-height: 502px;

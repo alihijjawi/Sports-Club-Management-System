@@ -1,4 +1,5 @@
 var SERVER_URL = "http://127.0.0.1:5000";
+var userLabel = document.getElementById("label");
 var today = new Date().toISOString().split('T')[0];
 document.getElementById("date").setAttribute('min', today);//code to restrict past date selections when reserving
 document.getElementById("date").value = today;//code to let the date be today by default
@@ -13,6 +14,28 @@ var date = document.getElementById("date"); //date var
 var select = document.getElementById("select") //select var
 const color = btns[0].style.backgroundColor; //color of original select button
 loadTable();
+checkLogin(`${SERVER_URL}/checkLogin`);
+async function checkLogin(url) {
+    const response = await fetch(url);
+    const text = await response.text();
+    try {
+        const data1 = JSON.parse(text); // Try to parse it as JSON
+        // The response was a JSON object
+        // Do your JSON handling here
+        if (data1["found"])
+        {
+            userLabel.innerHTML = "Signed in as " + data1["user_name"];
+        }
+        else
+        {
+            alert("You cannot reserve courts if you are not logged in.\nPlease login or register if you do not have an account.");
+            location.href = "login";
+        }
+    } catch (err) {
+        // The response wasn't a JSON object
+        // Do your text handling here
+    }
+}
 function selectButton(event) //change select to cancel and vice versa on click
 {
     var btn = event.target;
@@ -111,7 +134,6 @@ function loadTable() {
             const data1 = JSON.parse(text); // Try to parse it as JSON
             // The response was a JSON object
             // Do your JSON handling here
-            console.log(data1);
             for (var i = 0; i < data1.length; i++) {
                 let curr = data1[i];
                 let time = curr["time"];//name of select button corresponding to a time

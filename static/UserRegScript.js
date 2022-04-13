@@ -42,11 +42,11 @@ async function myFetch(myRequest, data) {
     } catch (err) {
         // The response wasn't a JSON object
         // Do your text handling here
-        location.replace(text);
+        location.href = text;
+        alert("Your account has been successfully created! Please login using your new credentials.");
     }
 }
 function ValidateEmail(input) {
-
     var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     if (input.value.match(validRegex)) return true;
@@ -79,19 +79,6 @@ function addUser() {
         "dob": dob.value,
         "password": password.value
     };
-    /*fetch(`${SERVER_URL}/register`, {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-        .then(response => response.json())
-        .then(dat => handleResponse(dat))
-        .catch((error) => {
-            console.error('Error:', error);
-        });*/
     myFetch(`${SERVER_URL}/register`, data);
 
 }

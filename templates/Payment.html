@@ -3,15 +3,15 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Report an Issue">
+    <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
-    <title>Report Issues</title>
-    <link rel="stylesheet" href="../static/nicepage.css" media="screen">
-<link rel="stylesheet" href="../static/Report-Issues.css" media="screen">
-    <script class="u-script" type="text/javascript" src="../static/jquery.js" defer=""></script>
-    <script class="u-script" type="text/javascript" src="../static/nicepage.js" defer=""></script>
-    <meta name="generator" content="Nicepage 4.8.2, nicepage.com">
+    <title>Payment</title>
+    <link rel="stylesheet" href= "{{url_for('static',filename='nicepage.css')}}" media="screen">
+<link rel="stylesheet" href="{{url_for('static',filename='Payment.css')}}" media="screen">
+    <script class="u-script" type="text/javascript" src="{{url_for('static',filename='jquery.js')}}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{{url_for('static',filename='nicepage.js')}}" defer=""></script>
+    <meta name="generator" content="Nicepage 4.7.1, nicepage.com">
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
     
     
@@ -19,10 +19,10 @@
 		"@context": "http://schema.org",
 		"@type": "Organization",
 		"name": "",
-		"logo": "../static/images/logo.jpeg"
+		"logo": "{{url_for('static',filename='images/logo.jpeg')}}"
 }</script>
     <meta name="theme-color" content="#478ac9">
-    <meta property="og:title" content="Report Issues">
+    <meta property="og:title" content="Payment">
     <meta property="og:type" content="website">
   </head>
   <body class="u-body u-xl-mode"><header class="u-clearfix u-header u-header" id="sec-ef30"><div class="u-clearfix u-sheet u-sheet-1">
@@ -62,33 +62,74 @@
           </div>
         </nav>
         <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="677" data-image-height="623">
-          <img src="../static/images/logo.jpeg" class="u-logo-image u-logo-image-1">
+          <img src="{{url_for('static',filename='images/logo.jpeg')}}" class="u-logo-image u-logo-image-1">
         </a>
         <div class="u-image u-image-circle u-preserve-proportions u-image-2" alt="" data-image-width="225" data-image-height="225"></div>
         <label id="label" class="label u-border-2 u-btn-1"></label>
       </div></header>
-    <section class="u-align-center u-clearfix u-grey-5 u-valign-middle u-section-1" id="sec-38c7">
-      <h1 class="u-text u-text-default u-text-1">Report an Issue</h1>
-      <div class="u-form u-form-1">
-        <form action="https://nicepage.com/editor/Forms/Process" method="POST" class="u-clearfix u-form-spacing-20 u-form-vertical u-inner-form" style="padding: 10px" source="email" name="form">
-          <div class="u-form-group u-form-name u-label-none">
-            <label for="name" class="u-label">Name</label>
-            <input type="text" placeholder="Enter your Name" id="name" name="name" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-input-1" required="">
+    <section class="u-clearfix u-section-1" id="sec-5a75">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="row">
+          <div class="col-75">
+            <div class="container">
+              <form action="/action_page.php">
+        
+                <div class="row">
+                  <div class="col-50">
+                    <h3>Billing Address</h3>
+                    <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                    <input type="text" id="fname" name="firstname" placeholder="John M. Doe" pattern = "[A-Za-z\s]*">
+                    <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                    <input type="text" id="email" name="email" placeholder="john@example.com" pattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                    <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+                    <input type="text" id="adr" name="address" placeholder="542 W. 15th Street" >
+                    <label for="city"><i class="fa fa-institution"></i> City</label>
+                    <input type="text" id="city" name="city" placeholder="New York">
+        
+                    <div class="row">
+                      <div class="col-50">
+                        <label for="state">State</label>
+                        <input type="text" id="state" name="state" placeholder="NY">
+                      </div>
+                      <div class="col-50">
+                        <label for="zip">Zip</label>
+                        <input type="text" id="zip" name="zip" placeholder="10001" pattern = "[0-9\s]*">
+                      </div>
+                    </div>
+                  </div>
+        
+                  <div class="col-50">
+                    <h3>Payment</h3>
+                    <label for="fname">Accepted Cards</label>
+                    <div class="icon-container">
+                      <text style = "color:darkred">Mastercard, Visa, Paypal</text>
+                    </div>
+                    <label for="cname">Name on Card</label>
+                    <input type="text" id="cname" name="cardname" placeholder="John More Doe" pattern = "[A-Za-z\s]*">
+                    <label for="ccnum">Credit card number</label>
+                    <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444" pattern = "[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}">
+                    <label for="expmonth">Exp Month</label>
+                    <input type="text" id="expmonth" name="expmonth" placeholder="September">
+        
+                    <div class="row">
+                      <div class="col-50">
+                        <label for="expyear">Exp Year</label>
+                        <input type="text" id="expyear" name="expyear" placeholder="2022">
+                      </div>
+                      <div class="col-50">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" name="cvv" placeholder="352" pattern = "[0-9]{3}">
+                      </div>
+                    </div>
+                  </div>
+        
+                </div>
+                <button class = "btn" id = "save-button" type = "button" class = "button">Save Information</button>
+                <br><span id="error-message"></span>
+              </form>
+            </div>
           </div>
-          <div class="u-form-email u-form-group u-label-none">
-            <label for="email" class="u-label">Email</label>
-            <input type="email" placeholder="Enter a valid email address" id="email" name="email" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-input-2" required="">
-          </div>
-          <div class="u-form-group u-form-message u-label-none">
-            <label for="message" class="u-label">Message</label>
-            <textarea placeholder="Enter your message" rows="4" cols="50" id="message" name="message" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-input-3" required=""></textarea>
-          </div>
-          <div class="u-align-center u-form-group u-form-submit">
-            <button id = "add-button" class="u-border-2 u-border-custom-color-1 u-border-hover-custom-color-2 u-btn u-btn-rectangle u-btn-submit u-button-style u-custom-color-1 u-hover-custom-color-2 u-btn-1">Submit</a>
-            <input type="submit" value="submit" class="u-form-control-hidden">
-          </div>
-          <span id = "error-message" class = "error"></span>
-        </form>
+        </div>
       </div>
     </section>
     
@@ -124,6 +165,17 @@
           <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
         </div>
       </nav></footer>
+    <section class="u-backlink u-clearfix u-grey-80">
+      <a class="u-link" href="https://nicepage.com/website-templates" target="_blank">
+        <span>Website Templates</span>
+      </a>
+      <p class="u-text">
+        <span>created with</span>
+      </p>
+      <a class="u-link" href="" target="_blank">
+        <span>Website Builder Software</span>
+      </a>. 
+    </section>
   </body>
-  <script src="../static/Report-Issues.js"></script>
+  <script src = "{{url_for('static', filename = 'Payment.js')}}"></script>
 </html>
