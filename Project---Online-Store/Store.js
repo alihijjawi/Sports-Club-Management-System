@@ -1,24 +1,45 @@
 //Store
-var item_price = [22, 14, 9, 38, 6, 14]
-var q = [0, 0, 0, 0, 0, 0]
+//import inactivityTime from './../Idle-Logout'
+//import * as OS from './Online-Store.js'
 
-/*
-function updateQandP() {
-  sessionStorage.setItem("q", q);
-  sessionStorage.setItem("item_price", item_price);
+var inactivityTime = function () { 
+  var time; 
+  window.onload = resetTimer; 
+  document.onmousemove = resetTimer; 
+  document.onkeydown = resetTimer; 
+  function logout() { window.location.href = '../logout.html' } 
+  function resetTimer() { clearTimeout(time); time = setTimeout(logout, 420000) }
+};
+
+window.onload = function() { inactivityTime(); }
+
+var item1 = document.getElementById("1");
+var item2 = document.getElementById("2");
+var item3 = document.getElementById("3");
+var item4 = document.getElementById("4");
+var item5 = document.getElementById("5");
+var item6 = document.getElementById("6");
+
+item1.addEventListener("click", addItem)
+item2.addEventListener("click", addItem)
+item3.addEventListener("click", addItem)
+item4.addEventListener("click", addItem)
+item5.addEventListener("click", addItem)
+item6.addEventListener("click", addItem)
+
+const promocodes = ["YOUSS1", "YASS02", "MIRAPS", "MISTO2", "HAZ123", "ALIHIJ"]
+const fixed_item_price = [22, 14, 9, 38, 6, 14]
+var q = [0, 0, 0, 0, 0, 0]
+var item_price = [22, 14, 9, 38, 6, 14]
+
+function applyDiscount(){
+  for (let j = 0; j<item_price.length; j++) {
+      item_price[j] = 0.9*item_price[j]
+  }
 }
 
-updateQandP();
-*/
-
-var price_display1 = document.getElementById("pd1")
-var price_display2 = document.getElementById("pd2")
-var price_display3 = document.getElementById("pd3")
-var price_display4 = document.getElementById("pd4")
-var price_display5 = document.getElementById("pd5")
-var price_display6 = document.getElementById("pd6")
-
-var price_display = [price_display1, price_display2, price_display3, price_display4, price_display5, price_display6]
+var price_display = [document.getElementById("pd1"), document.getElementById("pd2"), document.getElementById("pd3"), 
+        document.getElementById("pd4"), document.getElementById("pd5"), document.getElementById("pd6")]
 
 function updateStore(){
   for (let i = 0; i<price_display.length; i++) {
@@ -28,11 +49,8 @@ function updateStore(){
 
 updateStore();
 
-function addItem(item_number) {
-
-  var n = parseInt(item_number.id)
-  q[n] = q[n] + 1
-  //updateQandP();
-
+function addItem() {
+  q[0] = q[0] + 1
 }
 
+console.log(q[0])

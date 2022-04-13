@@ -1,17 +1,32 @@
 //Cart
-var price1 = document.getElementById("p1");
-var price2 = document.getElementById("p2");
-var price3 = document.getElementById("p3");
-var price4 = document.getElementById("p4");
-var price5 = document.getElementById("p5");
-var price6 = document.getElementById("p6");
+//import inactivityTime from './Idle-Logout.js'
+//import * as OS from './Online-Store.js'
 
-var tprice1 = document.getElementById("tp1");
-var tprice2 = document.getElementById("tp2");
-var tprice3 = document.getElementById("tp3");
-var tprice4 = document.getElementById("tp4");
-var tprice5 = document.getElementById("tp5");
-var tprice6 = document.getElementById("tp6");
+var inactivityTime = function () { 
+  var time; 
+  window.onload = resetTimer; 
+  document.onmousemove = resetTimer; 
+  document.onkeydown = resetTimer; 
+  function logout() { alert("You are now logged out.").href = '../logout.html' } 
+  function resetTimer() { clearTimeout(time); time = setTimeout(logout, 420000) }
+};
+
+window.onload = function() { inactivityTime(); }
+
+const promocodes = ["YOUSS1", "YASS02", "MIRAPS", "MISTO2", "HAZ123", "ALIHIJ"]
+const fixed_item_price = [22, 14, 9, 38, 6, 14]
+let q = [0, 0, 3, 0, 2, 0]
+var item_price = [22, 14, 9, 38, 6, 14]
+
+ var p = [document.getElementById("p1"),
+                document.getElementById("p2"), 
+                document.getElementById("p3"), 
+                document.getElementById("p4"),
+                document.getElementById("p5"),
+                document.getElementById("p6")]
+
+var tp = [document.getElementById("tp1"), document.getElementById("tp2"), document.getElementById("tp3"), 
+            document.getElementById("tp4"), document.getElementById("tp5"), document.getElementById("tp6")]
 
 var item1 = document.getElementById("item1cart");
 var item2 = document.getElementById("item2cart");
@@ -23,21 +38,38 @@ var item6 = document.getElementById("item6cart");
 var total = document.getElementById("tot");
 var subtotal = document.getElementById("subtot");
 
-const promocodes = ["YOUSS1", "YASS02", "MIRAPS", "MISTO2", "HAZ123", "ALIHIJ"]
-var p = [price1, price2, price3, price4, price5, price6]
-var tp = [tprice1, tprice2, tprice3, tprice4, tprice5, tprice6]
-var q = [0,0,3,0,4,0]
-var item_price = [22, 14, 9, 38, 6, 14]
+function updateCart(){
+  q[0] = document.getElementById("q1").value;
+  q[1] = document.getElementById("q2").value;
+  q[2] = document.getElementById("q3").value;
+  q[3] = document.getElementById("q4").value;
+  q[4] = document.getElementById("q5").value;
+  q[5] = document.getElementById("q6").value;
 
-/*
-if(sessionStorage!=null){
-  q = sessionStorage.getItem("q").split(',');
-  item_price = sessionStorage.getItem("item_price").split(',');
+  fillCart();
 }
-*/
+
+
+function applyDiscount(){
+  for (let j = 0; j<item_price.length; j++) {
+      item_price[j] = 0.9*item_price[j]
+  }
+}
+
+function applyCoupon(){
+  var promocode = document.getElementsById("name-5861").value
+  for (let i = 0; i < promocodes.length; i++) {
+    if(promocodes[i] == promocode) {
+      applyDiscount(); break;
+    }
+  }
+  updateCart();
+}
+
 
 function fillCart(){
-  document.getElementById("q1").value = q[0];
+
+  document.getElementById("q1").value = 0;
   document.getElementById("q2").value = q[1];
   document.getElementById("q3").value = q[2];
   document.getElementById("q4").value = q[3];
@@ -75,27 +107,3 @@ function fillCart(){
 }
 
 fillCart();
-
- function updateCart(){
-
-  q[0] = document.getElementById("q1").value;
-  q[1] = document.getElementById("q2").value;
-  q[2] = document.getElementById("q3").value;
-  q[3] = document.getElementById("q4").value;
-  q[4] = document.getElementById("q5").value;
-  q[5] = document.getElementById("q6").value;
-
-  fillCart();
-}
-
-  function applyCoupon(){
-    promocode = document.getElementsById("name-5861").value
-    for (let i = 0; i < promocodes.length; i++) {
-      if(promocodes[i] == promocode) {
-        for (let j = 0; j<item_price.length; j++) {
-          item_price[j] = 0.9*item_price[j]
-        }
-      }
-    }
-    fillCart();
-  }
