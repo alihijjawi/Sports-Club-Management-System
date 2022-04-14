@@ -41,8 +41,47 @@ def post_match():
     timing = data['timing']
     team_1_id = data['team_1_id']
     team_2_id = data['team_2_id']
+
+    check_name = Match.query.filter(Match.name == name).first()
+    if check_name is not None:
+        print("Name already exists.")
+        return 'getmatches'
     
     match = Match(name, timing, team_1_id, team_2_id)
     db.session.add(match)
+    db.session.commit()
+    return 'getmatches'
+
+@app.route('/deletematch', methods=['GET', 'POST'])
+def delete_match():
+    games = Match.query.all()
+    if request.method == 'GET':
+        return render_template("delete_matches_form.html",
+                                games = games)
+
+    data = request.json
+    name = data['name']
+
+    Match.query.filter(Match.name == name).delete()
+    db.session.commit()
+    return 'getmatches'
+
+@app.route('/updatematch', methods=['GET', 'POST'])
+def update_match():
+    games = Match.query.all()
+    if request.method == 'GET':
+        return render_template("update_matches_form.html",
+                                games = games)
+
+    data = request.json
+    name = data['name']
+    timing = data['timing']
+    team_1_id = data['team_1_id']
+    team_2_id = data['team_2_id']
+
+    updated_match = Match.query.filter_by(name=name).first()
+    updated_match.timing = timing
+    updated_match.team_1_id = team_1_id
+    updated_match.team_2_id = team_2_id
     db.session.commit()
     return 'getmatches'

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-url="{{login}}" id="FullPage" style="font-size: 16px;">
+<html data-url="{{login}}" id = "FullPage" style="font-size: 16px;">
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="page_type" content="np-template-header-footer-from-plugin">
-  <title>View Matches</title>
+  <title>Update Match</title>
   <link rel="stylesheet" href="{{url_for('static',filename='nicepage.css')}}" media="screen">
   <link rel="stylesheet" href="{{url_for('static',filename='addMatch.css')}}" media="screen">
   <script class="u-script" type="text/javascript" src="{{url_for('static',filename='jquery.js')}}" defer=""></script>
@@ -18,11 +18,11 @@
 
 
   <script type="application/ld+json">{
-      "@context": "http://schema.org",
-      "@type": "Organization",
-      "name": "",
-      "logo": "{{url_for('static',filename='images/logo.jpeg')}}"
-  }</script>
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "",
+		"logo": "{{url_for('static',filename='images/logo.jpeg')}}"
+}</script>
   <meta name="theme-color" content="#478ac9">
   <meta property="og:title" content="Add Match">
   <meta property="og:type" content="website">
@@ -115,52 +115,48 @@
       <a class="u-border-2 u-border-black u-btn u-button-style u-hover-black u-none u-text-hover-white u-btn-1">Dark
         Mode</a>
       <h3 class="u-align-center u-headline u-text u-text-default u-text-1">
-        Upcoming Matches
+        Update Upcoming Matches
       </h3>
     </div>
   </header>
   <section class="u-clearfix u-section-1" id="sec-4ec3">
     <div class="u-clearfix u-sheet u-sheet-1">
       <div class="u-form u-form-1">
-        <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom"
+        <form action="#" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom"
           name="form-1" style="padding: 10px;">
           <div class="u-form-group u-form-name u-form-group-2">
-            <table class="styled-table">
-              <thead>
-                <tr>
-                  <th>Game Name</th>
-                  <th> - </th>
-                  <th>Home</th>
-                  <th>x</th>
-                  <th>Away</th>
-                  <th> - </th>
-                  <th>Date - Time</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for match in upcoming_matches %}
-                <tr>
-                  <td>{{ match.name }}</td>
-                  <td> - </td>
-                  <td>{{ match.team_1_id }}</td>
-                  <td>vs.</td>
-                  <td>{{ match.team_2_id }}</td>
-                  <td> - </td>
-                  <td>{{ match.timing }}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
+            <label for="game_name" class="u-label">Select Game Name</label>
+            </br>
+            <select name="game_name" id="game_name">
+              {% for game in games %}
+              <option value={{game.name}}>{{ game.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="u-form-group u-form-name u-form-group-2">
+            <label for="team1_name" class="u-label">New Team 1 Name</label>
+            <input type="text" placeholder="Update Team 1 Name" id="team1_name"
+              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+          </div>
+          <div class="u-form-group u-form-name u-form-group-2">
+            <label for="team2_name" class="u-label">New Team 2 Name</label>
+            <input type="text" placeholder="Update Team 2 Name" id="team2_name"
+              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+          </div>
+          <div class="u-form-group u-form-name u-form-group-2">
+            <label for="timing" class="u-label">New Timing</label>
+            <input type="date" placeholder="yyyy-dd-mm" id="timing" pattern="\d{4}-\d{1,2}-\d{1,2}"
+              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
           </div>
         </form>
-        <button id="match-button" type="button" class="u-btn u-btn-submit u-button-style"
-          onclick="window.location.href='/postmatches'">Add Match</button>
-        <button id="delete-button" type="button" class="u-btn u-btn-submit u-button-style"
-          onclick="window.location.href='/deletematch'">Delete Match</button>
-        <button id="update-button" type="button" class="u-btn u-btn-submit u-button-style"
-          onclick="window.location.href='/updatematch'">Update Match</button>
-      <br>
+        <div class="u-align-left u-form-group u-form-submit">
+          <button id="update-button" type="button" class="u-btn u-button-style">Update</button>
+          <button id="back-button"
+        class="u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-2">Back</button>
+        </div>
       </div>
+      <br>
+    </div>
     </div>
   </section>
 
@@ -231,6 +227,6 @@
     </nav>
   </footer>
 </body>
-<script src="{{url_for('static', filename = 'movePage.js')}}"></script>
+<script src="{{url_for('static', filename = 'updateMatch.js')}}"></script>
 
 </html>
