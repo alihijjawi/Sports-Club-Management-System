@@ -1,6 +1,6 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from flask_sqlalchemy import SQLAlchemy
 from flask import request
 from flask import jsonify
 from flask_cors import CORS
@@ -198,11 +198,10 @@ def check_payment():
     if (payment is None):
         found = False
     return jsonify({"found" : found})
-
+    
 @app.route('/store', methods=['GET'])
 def open_store():
     return render_template("Online-Store.html")
-
 
 class Ticket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
