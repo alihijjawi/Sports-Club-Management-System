@@ -203,6 +203,10 @@ def check_payment():
 def open_store():
     return render_template("Online-Store.html")
 
+@app.route('/cart', methods=['GET'])
+def open_cart():
+    return render_template("Shopping-Cart.html")
+
 class Ticket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128))
