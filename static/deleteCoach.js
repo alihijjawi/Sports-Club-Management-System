@@ -1,23 +1,9 @@
 var SERVER_URL = "http://127.0.0.1:5000";
 var errorMessage = document.getElementById("error-message");
-var addButton = document.getElementById("add-button");
+var deleteButton = document.getElementById("delete-button");
 var resetButton = document.getElementById("reset-button");
-addButton.addEventListener("click", addCoach);
+deleteButton.addEventListener("click", deleteCoach);
 resetButton.addEventListener("click", resetInput);
-
-var numbers = document.getElementsByName("num");
-for (var i=0; i<numbers.length; i++) {
-    numbers[i].addEventListener("change", validateInput);
-}
-
-function validateInput(event) {
-    if (event.target.value < parseInt(event.target.min)) {
-        event.target.value = parseInt(event.target.min);
-    }
-    else if (event.target.value > parseInt(event.target.max)) {
-        event.target.value = parseInt(event.target.max);
-    }
-}
 
 function resetInput() {
     const inputFields = document.querySelectorAll("input");
@@ -32,7 +18,7 @@ function handleResponse(data) {
     return;
 }
 
-function addCoach() {
+function deleteCoach() {
     const inputFields = document.querySelectorAll("input");
     for (let i = 0; i < inputFields.length; i++) {
         let input = inputFields[i];
@@ -42,17 +28,11 @@ function addCoach() {
         }
     }
     let coach_name = document.getElementById("coach_name")
-    let team_name = document.getElementById("team_name")
-    let wins = document.getElementById("wins")
-    let losses = document.getElementById("losses")
 
     const data = {
         "name": coach_name.value,
-        "team_name": team_name.value,
-        "wins": wins.value,
-        "losses": losses.value
     };
-    myFetch(`${SERVER_URL}/postcoach`, data);
+    myFetch(`${SERVER_URL}/deletecoach`, data);
 }
 
 async function myFetch(myRequest, data) {

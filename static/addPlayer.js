@@ -5,6 +5,23 @@ var resetButton = document.getElementById("reset-button");
 addButton.addEventListener("click", addPlayer);
 resetButton.addEventListener("click", resetInput);
 
+var numbers = document.getElementsByName("num");
+for (var i=0; i<numbers.length; i++) {
+    numbers[i].addEventListener("change", validateInput);
+}
+
+function validateInput(event) {
+    if (event.target.value < parseInt(event.target.min)) {
+        event.target.value = parseInt(event.target.min);
+        return;
+    }
+    if (event.target.value > parseInt(event.target.max)) {
+        event.target.value = parseInt(event.target.max);
+        return;
+    }
+    return;
+}
+
 function resetInput() {
     const inputFields = document.querySelectorAll("input");
     for (let i = 0; i < inputFields.length; i++) {

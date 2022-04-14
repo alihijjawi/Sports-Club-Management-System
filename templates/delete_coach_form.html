@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-url="{{login}}" id="FullPage" style="font-size: 16px;">
+<html data-url="{{login}}" id = "FullPage" style="font-size: 16px;">
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +7,8 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="page_type" content="np-template-header-footer-from-plugin">
-  <title>Player and Coach Stats</title>
+  <title>Delete Coach</title>
   <link rel="stylesheet" href="{{url_for('static',filename='nicepage.css')}}" media="screen">
-  <link rel="stylesheet" href="{{url_for('static',filename='addPlayer.css')}}" media="screen">
   <link rel="stylesheet" href="{{url_for('static',filename='addCoach.css')}}" media="screen">
   <script class="u-script" type="text/javascript" src="{{url_for('static',filename='jquery.js')}}" defer=""></script>
   <script class="u-script" type="text/javascript" src="{{url_for('static',filename='nicepage.js')}}" defer=""></script>
@@ -19,11 +18,11 @@
 
 
   <script type="application/ld+json">{
-      "@context": "http://schema.org",
-      "@type": "Organization",
-      "name": "",
-      "logo": "{{url_for('static',filename='images/logo.jpeg')}}"
-  }</script>
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "",
+		"logo": "{{url_for('static',filename='images/logo.jpeg')}}"
+}</script>
   <meta name="theme-color" content="#478ac9">
   <meta property="og:title" content="Add Match">
   <meta property="og:type" content="website">
@@ -116,106 +115,33 @@
       <a class="u-border-2 u-border-black u-btn u-button-style u-hover-black u-none u-text-hover-white u-btn-1">Dark
         Mode</a>
       <h3 class="u-align-center u-headline u-text u-text-default u-text-1">
-        Coach and Player Stats
+        Delete Coach
       </h3>
     </div>
   </header>
   <section class="u-clearfix u-section-1" id="sec-4ec3">
     <div class="u-clearfix u-sheet u-sheet-1">
       <div class="u-form u-form-1">
-        <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom"
+        <form action="#" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom"
           name="form-1" style="padding: 10px;">
           <div class="u-form-group u-form-name u-form-group-2">
-            <table class="styled-table">
-              <thead>
-                <tr>
-                  <th>Coach ID</th>
-                  <th>   </th>
-                  <th>Name</th>
-                  <th>   </th>
-                  <th>Team Name</th>
-                  <th>   </th>
-                  <th>Wins</th>
-                  <th>   </th>
-                  <th>Losses</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for coach in coaches %}
-                <tr>
-                  <td>{{ coach.id }}</td>
-                  <td>   </td>
-                  <td>{{ coach.name }}</td>
-                  <td>   </td>
-                  <td>{{ coach.team_name }}</td>
-                  <td>   </td>
-                  <td>{{ coach.wins }}</td>
-                  <td>   </td>
-                  <td>{{ coach.losses }}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
+            <label for="coach_name" class="u-label">Select Coach Name</label>
+            </br>
+            <select name="coach_name" id="coach_name">
+              {% for coach in coaches %}
+              <option value={{coach.name}}>{{ coach.name }}</option>
+              {% endfor %}
+            </select>
           </div>
-          <div class="u-form-group u-form-name u-form-group-2">
-            <table class="styled-table">
-              <thead>
-                <tr>
-                  <th>Player ID</th>
-                  <th>   </th>
-                  <th>Name</th>
-                  <th>   </th>
-                  <th>Height</th>
-                  <th>   </th>
-                  <th>Age</th>
-                  <th>   </th>
-                  <th>Attack Stat</th>
-                  <th>   </th>
-                  <th>Defense Stat</th>
-                  <th>   </th>
-                  <th>Team Name</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for player in players %}
-                <tr>
-                  <td>{{ player.id }}</td>
-                  <td>   </td>
-                  <td>{{ player.name }}</td>
-                  <td>   </td>
-                  <td>{{ player.height }}</td>
-                  <td>   </td>
-                  <td>{{ player.age }}</td>
-                  <td>   </td>
-                  <td>{{ player.attack }}</td>
-                  <td>   </td>
-                  <td>{{ player.defense }}</td>
-                  <td>   </td>
-                  <td>{{ player.team_name }}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-          
-          
         </form>
+        <div class="u-align-left u-form-group u-form-submit">
+          <button id="delete-button" type="button" class="u-btn u-button-style">Delete</button>
+          <button id="reset-button"
+        class="u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-2">Reset</button>
+        </div>
       </div>
-      <button id="coach-button" type="button" class="u-btn u-btn-submit u-button-style"
-          onclick="window.location.href='/postcoach'">Add Coach</button>
-      <button id="player-button" type="button" class="u-btn u-btn-submit u-button-style"
-          onclick="window.location.href='/postplayer'">Add Player</button>
       <br>
-      <button id="delete-coach-button" type="button" class="u-btn u-btn-submit u-button-style"
-          onclick="window.location.href='/deletecoach'">Delete Coach</button>
-      <button id="delete-player-button" type="button" class="u-btn u-btn-submit u-button-style"
-          onclick="window.location.href='/deleteplayer'">Delete Player</button>
-      <br>
-      <button id="update-coach-button" type="button" class="u-btn u-btn-submit u-button-style"
-          onclick="window.location.href='/updatecoach'">Update Coach</button>
-      <button id="update-player-button" type="button" class="u-btn u-btn-submit u-button-style"
-          onclick="window.location.href='/updateplayer'">Update Player</button>
-      </div>
+    </div>
     </div>
   </section>
 
@@ -286,5 +212,6 @@
     </nav>
   </footer>
 </body>
-<script src="{{url_for('static', filename = 'movePage.js')}}"></script>
+<script src="{{url_for('static', filename = 'deleteCoach.js')}}"></script>
+
 </html>

@@ -1,8 +1,8 @@
 var SERVER_URL = "http://127.0.0.1:5000";
 var errorMessage = document.getElementById("error-message");
-var addButton = document.getElementById("add-button");
+var updateButton = document.getElementById("update-button");
 var resetButton = document.getElementById("reset-button");
-addButton.addEventListener("click", addCoach);
+updateButton.addEventListener("click", updateCoach);
 resetButton.addEventListener("click", resetInput);
 
 var numbers = document.getElementsByName("num");
@@ -32,7 +32,7 @@ function handleResponse(data) {
     return;
 }
 
-function addCoach() {
+function updateCoach() {
     const inputFields = document.querySelectorAll("input");
     for (let i = 0; i < inputFields.length; i++) {
         let input = inputFields[i];
@@ -52,7 +52,7 @@ function addCoach() {
         "wins": wins.value,
         "losses": losses.value
     };
-    myFetch(`${SERVER_URL}/postcoach`, data);
+    myFetch(`${SERVER_URL}/updatecoach`, data);
 }
 
 async function myFetch(myRequest, data) {

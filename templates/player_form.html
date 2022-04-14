@@ -7,7 +7,7 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="page_type" content="np-template-header-footer-from-plugin">
-  <title>Add Match</title>
+  <title>Add Player</title>
   <link rel="stylesheet" href="{{url_for('static',filename='nicepage.css')}}" media="screen">
   <link rel="stylesheet" href="{{url_for('static',filename='addPlayer.css')}}" media="screen">
   <script class="u-script" type="text/javascript" src="{{url_for('static',filename='jquery.js')}}" defer=""></script>
@@ -131,28 +131,32 @@
           </div>
           <div class="u-form-group u-form-name u-form-group-2">
             <label for="height" class="u-label">Player Height</label>
-            <input type="text" placeholder="Enter Player Height" id="height"
+            <input name="num" type="number" min=100 max=400 placeholder="Enter Player Height" id="height"
               class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
           </div>
           <div class="u-form-group u-form-name u-form-group-2">
             <label for="age" class="u-label">Player Age</label>
-            <input type="text" placeholder="Enter Player Age" id="age"
+            <input name="num" type="number" min=0 max=70 placeholder="Enter Player Age" id="age"
               class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
           </div>
           <div class="u-form-group u-form-name u-form-group-2">
             <label for="attack" class="u-label">Player Attack Stat</label>
-            <input type="text" placeholder="Enter Attack Stat" id="attack"
+            <input name="num" type="number" min=0 max=100 placeholder="Enter Attack Stat" id="attack"
               class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
           </div>
           <div class="u-form-group u-form-name u-form-group-2">
             <label for="defense" class="u-label">Player Defense Stat</label>
-            <input type="text" placeholder="Enter Defense Stat" id="defense"
+            <input name="num" type="number" min=0 max=100 placeholder="Enter Defense Stat" id="defense"
               class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
           </div>
           <div class="u-form-group u-form-name u-form-group-2">
-            <label for="team_name" class="u-label">Player Team Name</label>
-            <input type="text" placeholder="Enter Team Name" id="team_name"
-              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+            <label for="team_name" class="u-label">Select Team Name</label>
+            </br>
+            <select name="team_name" id="team_name">
+              {% for team in teams %}
+              <option value={{team.name}}>{{ team.name }}</option>
+              {% endfor %}
+            </select>
           </div>
         </form>
         <div class="u-align-left u-form-group u-form-submit">

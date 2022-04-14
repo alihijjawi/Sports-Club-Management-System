@@ -1,8 +1,8 @@
 var SERVER_URL = "http://127.0.0.1:5000";
 var errorMessage = document.getElementById("error-message");
-var addButton = document.getElementById("add-button");
+var updateButton = document.getElementById("update-button");
 var resetButton = document.getElementById("reset-button");
-addButton.addEventListener("click", addCoach);
+updateButton.addEventListener("click", updatePlayer);
 resetButton.addEventListener("click", resetInput);
 
 var numbers = document.getElementsByName("num");
@@ -13,10 +13,13 @@ for (var i=0; i<numbers.length; i++) {
 function validateInput(event) {
     if (event.target.value < parseInt(event.target.min)) {
         event.target.value = parseInt(event.target.min);
+        return;
     }
-    else if (event.target.value > parseInt(event.target.max)) {
+    if (event.target.value > parseInt(event.target.max)) {
         event.target.value = parseInt(event.target.max);
+        return;
     }
+    return;
 }
 
 function resetInput() {
@@ -32,7 +35,7 @@ function handleResponse(data) {
     return;
 }
 
-function addCoach() {
+function updatePlayer() {
     const inputFields = document.querySelectorAll("input");
     for (let i = 0; i < inputFields.length; i++) {
         let input = inputFields[i];
@@ -41,18 +44,22 @@ function addCoach() {
             return;
         }
     }
-    let coach_name = document.getElementById("coach_name")
+    let player_name = document.getElementById("player_name")
+    let height = document.getElementById("height")
+    let age = document.getElementById("age")
+    let attack = document.getElementById("attack")
+    let defense = document.getElementById("defense")
     let team_name = document.getElementById("team_name")
-    let wins = document.getElementById("wins")
-    let losses = document.getElementById("losses")
 
     const data = {
-        "name": coach_name.value,
-        "team_name": team_name.value,
-        "wins": wins.value,
-        "losses": losses.value
+        "name": player_name.value,
+        "height": height.value,
+        "age": age.value,
+        "attack": attack.value,
+        "defense": defense.value,
+        "team_name": team_name.value
     };
-    myFetch(`${SERVER_URL}/postcoach`, data);
+    myFetch(`${SERVER_URL}/updateplayer`, data);
 }
 
 async function myFetch(myRequest, data) {

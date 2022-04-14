@@ -7,7 +7,7 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="page_type" content="np-template-header-footer-from-plugin">
-  <title>Add Match</title>
+  <title>Add Coach</title>
   <link rel="stylesheet" href="{{url_for('static',filename='nicepage.css')}}" media="screen">
   <link rel="stylesheet" href="{{url_for('static',filename='addCoach.css')}}" media="screen">
   <script class="u-script" type="text/javascript" src="{{url_for('static',filename='jquery.js')}}" defer=""></script>
@@ -130,19 +130,23 @@
               class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
           </div>
           <div class="u-form-group u-form-name u-form-group-2">
-            <label for="team_name" class="u-label">Coach Team Name</label>
-            <input type="text" placeholder="Enter Team Name" id="team_name"
-              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
-          </div>
-          <div class="u-form-group u-form-name u-form-group-2">
             <label for="wins" class="u-label">Coach Wins</label>
-            <input type="text" placeholder="Enter Coach Wins" id="wins"
+            <input name="num" type="number" min=0 max=1000 placeholder="Enter Coach Wins" id="wins"
               class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
           </div>
           <div class="u-form-group u-form-name u-form-group-2">
             <label for="losses" class="u-label">Coach Losses</label>
-            <input type="text" placeholder="Enter Coach Losses" id="losses"
+            <input name="num" type="number" min=0 max=1000 placeholder="Enter Coach Losses" id="losses"
               class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+          </div>
+          <div class="u-form-group u-form-name u-form-group-2">
+            <label for="team_name" class="u-label">Select Team Name</label>
+            </br>
+            <select name="team_name" id="team_name">
+              {% for team in teams %}
+              <option value={{team.name}}>{{ team.name }}</option>
+              {% endfor %}
+            </select>
           </div>
         </form>
         <div class="u-align-left u-form-group u-form-submit">
