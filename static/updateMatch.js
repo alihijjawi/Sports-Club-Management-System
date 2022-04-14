@@ -5,6 +5,15 @@ var backButton = document.getElementById("back-button");
 backButton.addEventListener("click", back);
 updateButton.addEventListener("click", updateMatch);
 
+function ValidateName(input){
+    if (!input.checkValidity()){
+        alert("Please enter a valid Input!");
+        console.log("invalid")
+        return false;
+    }
+    console.log("valid")
+    return true;
+}
 
 function resetInput() {
     const inputFields = document.querySelectorAll("input");
@@ -33,6 +42,11 @@ function updateMatch() {
     let team1_name = document.getElementById("team1_name")
     let team2_name = document.getElementById("team2_name")
     let timing = document.getElementById("timing")
+
+    if (!ValidateName(game_name)) return;
+    if (!ValidateName(team1_name)) return;
+    if (!ValidateName(team2_name)) return;
+    if (!ValidateName(timing)) return;
 
     const data = {
         "name": game_name.value,

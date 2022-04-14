@@ -5,6 +5,15 @@ var backButton = document.getElementById("back-button");
 backButton.addEventListener("click", back);
 deleteButton.addEventListener("click", deleteMatch);
 
+function ValidateName(input){
+    if (!input.checkValidity()){
+        alert("Please enter a valid Input!");
+        console.log("invalid")
+        return false;
+    }
+    console.log("valid")
+    return true;
+}
 
 function resetInput() {
     const inputFields = document.querySelectorAll("input");
@@ -30,6 +39,8 @@ function deleteMatch() {
         }
     }
     let game_name = document.getElementById("game_name")
+
+    if (!ValidateName(game_name)) return;
 
     const data = {
         "name": game_name.value
