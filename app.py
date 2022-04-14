@@ -387,6 +387,19 @@ class ReservationSchema(ma.Schema):
         fields =("name", "date","court","time")
         model = Reservation
 
+class Match(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128), unique=True)
+    timing = db.Column(db.String(128))
+    team_1_id = db.Column(db.String(128))
+    team_2_id = db.Column(db.String(128))
+
+    def __init__(self, name, timing, team_1_id, team_2_id):
+        self.name = name
+        self.timing = timing
+        self.team_1_id = team_1_id
+        self.team_2_id = team_2_id
+
 user_schema = UserSchema()
 matches_schema = MatchSchema(many=True)
 reservations_schema = ReservationSchema(many=True)
