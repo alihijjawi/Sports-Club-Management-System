@@ -51,6 +51,18 @@ def contact_info():
         db.session.commit()
     return jsonify(message)
 
+@app.route('/about',  methods=['GET'])
+def about():
+    return render_template("About.html")
+
+@app.route('/TandC',  methods=['GET'])
+def TandC():
+    return render_template("Terms-and-Conditions.html")
+
+@app.route('/vision',  methods=['GET'])
+def vision():
+    return render_template("Vision.html")
+
 @app.route('/report',  methods=['GET', 'POST'])
 def report_issue():
     if (request.method == 'GET'):
@@ -172,23 +184,66 @@ def save_info():
     message = {"error": 0, "message": "The information has been successfully saved."}
     return jsonify(message)
 
-@app.route('/getMatches', methods=['GET'])
-def get_matches_for_tickets():
-    matches = Match.query.all()
-    return jsonify(matches_schema.dump(matches))
 
-@app.route('/matches', methods=['GET','POST'])
-def matches():
-    if request.method == 'POST':
-        data = request.json
-        name = data["name"]
-        timing = data["timing"]
-        team_1_id = data["team_1_id"]
-        team_2_id = data["team_2_id"]
-        match = Match(name,timing,team_1_id,team_2_id)
-        db.session.add(match)
-        db.session.commit()
-    return jsonify({"message" : "success"})
+@app.route('/getmatches',  methods=['GET'])
+def get_match():
+    upcoming_matches = Match.query.all()
+    return render_template('matches.html', upcoming_matches = upcoming_matches)
+
+@app.route('/postmatches', methods=['GET', 'POST'])
+def post_match():
+    if request.method == 'GET':
+        return render_template("matches_form.html")
+
+    data = request.json
+    name = data['name']
+    timing = data['timing']
+    team_1_id = data['team_1_id']
+    team_2_id = data['team_2_id']
+
+    check_name = Match.query.filter(Match.name == name).first()
+    if check_name is not None:
+        print("Name already exists.")
+        return 'getmatches'
+    
+    match = Match(name, timing, team_1_id, team_2_id)
+    db.session.add(match)
+    db.session.commit()
+    return 'getmatches'
+
+@app.route('/deletematch', methods=['GET', 'POST'])
+def delete_match():
+    games = Match.query.all()
+    if request.method == 'GET':
+        return render_template("delete_matches_form.html",
+                                games = games)
+
+    data = request.json
+    name = data['name']
+
+    Match.query.filter(Match.name == name).delete()
+    db.session.commit()
+    return 'getmatches'
+
+@app.route('/updatematch', methods=['GET', 'POST'])
+def update_match():
+    games = Match.query.all()
+    if request.method == 'GET':
+        return render_template("update_matches_form.html",
+                                games = games)
+
+    data = request.json
+    name = data['name']
+    timing = data['timing']
+    team_1_id = data['team_1_id']
+    team_2_id = data['team_2_id']
+
+    updated_match = Match.query.filter_by(name=name).first()
+    updated_match.timing = timing
+    updated_match.team_1_id = team_1_id
+    updated_match.team_2_id = team_2_id
+    db.session.commit()
+    return 'getmatches'
 
 @app.route('/checkPayment', methods=['GET'])
 def check_payment():

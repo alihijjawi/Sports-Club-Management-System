@@ -8,10 +8,10 @@
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
     <title>Shopping Cart</title>
-    <link rel="stylesheet" href="../nicepage.css" media="screen">
-<link rel="stylesheet" href="Shopping-Cart.css" media="screen">
-    <script class="u-script" type="text/javascript" src="../jquery.js" defer=""></script>
-    <script class="u-script" type="text/javascript" src="../nicepage.js" defer=""></script>
+    <link rel="stylesheet" href="../static/nicepage.css" media="screen">
+<link rel="stylesheet" href="../static/Shopping-Cart.css" media="screen">
+    <script class="u-script" type="text/javascript" src="../static/jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="../static/nicepage.js" defer=""></script>
     <meta name="generator" content="Nicepage 4.7.1, nicepage.com">
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
     
@@ -26,41 +26,98 @@
     <meta property="og:title" content="Shopping Cart">
     <meta property="og:type" content="website">
   </head>
-  <body class="u-body u-xl-mode"><header class="u-clearfix u-header u-header" id="sec-ef30"><nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
-        <div class="menu-collapse" style="font-size: 1.5rem; letter-spacing: 0px; font-weight: 700;">
-          <a class="u-button-style u-custom-border-radius u-custom-color u-custom-hover-color u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-text-active-color u-custom-text-decoration u-custom-text-hover-color u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
-            <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
-            <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
-</g></svg>
-          </a>
-        </div>
-        <div class="u-custom-menu u-nav-container">
-          <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base" style="padding: 58px 36px; text-decoration: underline !important;">Store</a>
-</li><li class="u-nav-item"><a class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base" style="padding: 58px 36px; text-decoration: underline !important;">Teams</a>
-</li><li class="u-nav-item"><a class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base" style="padding: 58px 36px; text-decoration: underline !important;">Tickets</a>
-</li><li class="u-nav-item"><a class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base" style="padding: 58px 36px; text-decoration: underline !important;">Services</a>
-</li><li class="u-nav-item"><a class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base" style="padding: 58px 36px; text-decoration: underline !important;">Fans</a>
-</li><li class="u-nav-item"><a class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base" style="padding: 58px 36px; text-decoration: underline !important;">Account</a>
-</li></ul>
-        </div>
-        <div class="u-custom-menu u-nav-container-collapse">
-          <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
-            <div class="u-inner-container-layout u-sidenav-overflow">
-              <div class="u-menu-close"></div>
-              <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link">Store</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link">Teams</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link">Tickets</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link">Services</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link">Fans</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link">Account</a>
-</li></ul>
-            </div>
+  <body class="u-body u-xl-mode">
+    <header class="u-clearfix u-header u-header" id="sec-ef30">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+          <div class="menu-collapse" style="font-size: 1.5rem; letter-spacing: 0px; font-weight: 700;">
+            <a class="u-button-style u-custom-border-radius u-custom-color u-custom-hover-color u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-text-active-color u-custom-text-decoration u-custom-text-hover-color u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+              href="#">
+              <svg class="u-svg-link" viewBox="0 0 24 24">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use>
+              </svg>
+              <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px"
+                xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                  <rect y="1" width="16" height="2"></rect>
+                  <rect y="7" width="16" height="2"></rect>
+                  <rect y="13" width="16" height="2"></rect>
+                </g>
+              </svg>
+            </a>
           </div>
-          <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
-        </div>
-      </nav><a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="677" data-image-height="623">
-        <img src="../images/logo.jpeg" class="u-logo-image u-logo-image-1">
-      </a><div class="u-image u-image-circle u-preserve-proportions u-image-2" alt="" data-image-width="225" data-image-height="225"></div></header>
+          <div class="u-custom-menu u-nav-container">
+            <ul class="u-nav u-unstyled u-nav-1">
+              <li class="u-nav-item"><a
+                  href="/"
+                  class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
+                  href="/" style="padding: 58px 26px; text-decoration: underline !important;">Home</a>
+              </li>
+              <li class="u-nav-item"><a
+                  href="store"
+                  class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
+                  href="store"
+                  style="padding: 58px 26px; text-decoration: underline !important;">Store</a>
+              </li>
+              <li class="u-nav-item"><a
+                  class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
+                  style="padding: 58px 26px; text-decoration: underline !important;">Teams</a>
+              </li>
+              <li class="u-nav-item"><a
+                  href="tickets" class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
+                  style="padding: 58px 26px; text-decoration: underline !important;">Tickets</a>
+              </li>
+              <li class="u-nav-item"><a
+                  href="reserve"
+                  class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
+                  style="padding: 58px 26px; text-decoration: underline !important;">Reserve</a>
+              </li>
+              <li class="u-nav-item"><a
+                href = "getmatches"
+                  class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
+                  style="padding: 58px 26px; text-decoration: underline !important;">Matches</a>
+              </li>
+              <li class="u-nav-item"><a
+                  class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
+                  style="padding: 58px 26px; text-decoration: underline !important;">Account</a>
+              </li>
+            </ul>
+          </div>
+          <div class="u-custom-menu u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-inner-container-layout u-sidenav-overflow">
+                <div class="u-menu-close"></div>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
+                  <li class="u-nav-item"><a class="u-button-style u-nav-link" href="">Home</a>
+                  </li>
+                  <li class="u-nav-item"><a class="u-button-style u-nav-link"
+                      href="../Project---Online-Store/Online-Store.html">Store</a>
+                  </li>
+                  <li class="u-nav-item"><a class="u-button-style u-nav-link">Teams</a>
+                  </li>
+                  <li class="u-nav-item"><a class="u-button-style u-nav-link">Tickets</a>
+                  </li>
+                  <li class="u-nav-item"><a class="u-button-style u-nav-link">Reserve</a>
+                  </li>
+                  <li class="u-nav-item"><a class="u-button-style u-nav-link">Fans</a>
+                  </li>
+                  <li class="u-nav-item"><a class="u-button-style u-nav-link">Account</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+        <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="677" data-image-height="623">
+          <img src="{{url_for('static',filename='images/logo.jpeg')}}" class="u-logo-image u-logo-image-1">
+        </a>
+        <div class="u-image u-image-circle u-preserve-proportions u-image-2" alt="" data-image-width="225"
+          data-image-height="225"></div>
+        <br>
+        <label id="label" class="label u-border-2 u-btn-1"></label>
+      </div>
+    </header>
     <section class="u-clearfix u-section-1" id="sec-42ae">
       <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-cart u-cart-1">
@@ -343,7 +400,7 @@
             </table>
           </div>
           <div class="u-cart-button-container">
-            <a href="Online-Store.html" class="u-active-none u-btn u-button-style u-cart-continue-shopping u-hover-none u-none u-text-body-color u-btn-1"><span class="u-icon"><svg class="u-svg-content" viewBox="0 0 443.52 443.52" x="0px" y="0px" style="width: 1em; height: 1em;"><g><g><path d="M143.492,221.863L336.226,29.129c6.663-6.664,6.663-17.468,0-24.132c-6.665-6.662-17.468-6.662-24.132,0l-204.8,204.8    c-6.662,6.664-6.662,17.468,0,24.132l204.8,204.8c6.78,6.548,17.584,6.36,24.132-0.42c6.387-6.614,6.387-17.099,0-23.712    L143.492,221.863z"></path>
+            <a href="store" class="u-active-none u-btn u-button-style u-cart-continue-shopping u-hover-none u-none u-text-body-color u-btn-1"><span class="u-icon"><svg class="u-svg-content" viewBox="0 0 443.52 443.52" x="0px" y="0px" style="width: 1em; height: 1em;"><g><g><path d="M143.492,221.863L336.226,29.129c6.663-6.664,6.663-17.468,0-24.132c-6.665-6.662-17.468-6.662-24.132,0l-204.8,204.8    c-6.662,6.664-6.662,17.468,0,24.132l204.8,204.8c6.78,6.548,17.584,6.36,24.132-0.42c6.387-6.614,6.387-17.099,0-23.712    L143.492,221.863z"></path>
 </g>
 </g></svg><img></span>&nbsp;Continue Shopping 
             </a>
@@ -400,40 +457,74 @@
       </div>
     </section>
     
-    
-    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-b518"><nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
-      <div class="menu-collapse" style="font-weight: 700; font-size: 1.25rem;">
-        <a class="u-button-style u-custom-color u-custom-hover-color u-custom-text-active-color u-custom-text-color u-nav-link" href="#">
-          <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-f1ed"></use></svg>
-          <svg class="u-svg-content" version="1.1" id="svg-f1ed" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
-</g></svg>
-        </a>
-      </div>
-      <div class="u-custom-menu u-nav-container">
-        <ul class="u-nav u-unstyled u-nav-1">
-          <li class="u-nav-item"><a class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white" href="..\Project---Footer\Terms-and-Conditions.html" style="padding: 52px 72px;">Terms and Conditions</a></li>
-          <li class="u-nav-item"><a class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white" href="..\Project---Footer\Contact-Us.html" style="padding: 52px 72px;">Contact Us</a></li>
-          <li class="u-nav-item"><a class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white" href="..\Project---Footer\Report-Issues.html" style="padding: 52px 72px;">Report Issues</a></li>
-          <li class="u-nav-item"><a class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white" href="..\Project---Footer\Vision.html" style="padding: 52px 72px;">Vision</a></li>
-          <li class="u-nav-item"><a class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white" href="..\Project---Footer\About.html" style="padding: 52px 72px;">About</a></li>
-        </ul>
-      </div>
-      <div class="u-custom-menu u-nav-container-collapse">
-        <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
-          <div class="u-inner-container-layout u-sidenav-overflow">
-            <div class="u-menu-close"></div>
-            <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
-              <li class="u-nav-item"><a class="u-button-style u-nav-link" href="..\Project---Footer\Terms-and-Conditions.html">Terms and Conditions</a></li>
-              <li class="u-nav-item"><a class="u-button-style u-nav-link" href="..\Project---Footer\Contact-Us.html">Contact Us</a></li>
-              <li class="u-nav-item"><a class="u-button-style u-nav-link" href="..\Project---Footer\Report-Issues.html">Report Issues</a></li>
-              <li class="u-nav-item"><a class="u-button-style u-nav-link" href="..\Project---Footer\Vision.html">Vision</a></li>
-              <li class="u-nav-item"><a class="u-button-style u-nav-link" href="..\Project---Footer\About.html">About</a></li>
-            </ul>
+ 
+
+    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-b518">
+      <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+        <div class="menu-collapse" style="font-weight: 700; font-size: 1.25rem;">
+          <a class="u-button-style u-custom-color u-custom-hover-color u-custom-text-active-color u-custom-text-color u-nav-link"
+            href="#">
+            <svg class="u-svg-link" viewBox="0 0 24 24">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-f1ed"></use>
+            </svg>
+            <svg class="u-svg-content" version="1.1" id="svg-f1ed" viewBox="0 0 16 16" x="0px" y="0px"
+              xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+              <g>
+                <rect y="1" width="16" height="2"></rect>
+                <rect y="7" width="16" height="2"></rect>
+                <rect y="13" width="16" height="2"></rect>
+              </g>
+            </svg>
+          </a>
+        </div>
+        <div class="u-custom-menu u-nav-container">
+          <ul class="u-nav u-unstyled u-nav-1">
+            <li class="u-nav-item"><a
+                class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white"
+                href="TandC" style="padding: 52px 72px;">Terms and Conditions</a>
+            </li>
+            <li class="u-nav-item"><a
+                class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white"
+                href="contact" target="_blank" style="padding: 52px 72px;">Contact Us</a>
+            </li>
+            <li class="u-nav-item"><a
+                class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white"
+                href="report" style="padding: 52px 72px;">Report Issues</a>
+            </li>
+            <li class="u-nav-item"><a
+                class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white"
+                href="vision"
+                style="padding: 52px 72px;">Vision</a>
+            </li>
+            <li class="u-nav-item"><a
+                class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white" href="about"
+                style="padding: 52px 72px;">About</a>
+            </li>
+          </ul>
+        </div>
+        <div class="u-custom-menu u-nav-container-collapse">
+          <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+            <div class="u-inner-container-layout u-sidenav-overflow">
+              <div class="u-menu-close"></div>
+              <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Terms-and-Conditions.html">Terms and
+                    Conditions</a>
+                </li>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Contact-Us.html" target="_blank">Contact
+                    Us</a>
+                </li>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Report-Issues.html">Report Issues</a>
+                </li>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Vision.html">Vision</a>
+                </li>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="About.html">About</a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-        <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
-      </div>
-    </nav></footer>
+      </nav>
+    </footer>
 </body>
-<script src="Cart.js"></script>
+<script src="../static/Cart.js"></script>
 </html>
