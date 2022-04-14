@@ -17,6 +17,20 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['DEBUG'] = True
 app.secret_key = '\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
 
+
+class Match(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128), unique=True)
+    timing = db.Column(db.String(128))
+    team_1_id = db.Column(db.String(128))
+    team_2_id = db.Column(db.String(128))
+
+    def __init__(self, name, timing, team_1_id, team_2_id):
+        self.name = name
+        self.timing = timing
+        self.team_1_id = team_1_id
+        self.team_2_id = team_2_id
+
 @app.route('/checkLogin')
 def user_logged_in():
     if "user_name" in session:
@@ -78,6 +92,45 @@ def report_issue():
         db.session.add(report)
         db.session.commit()
     return jsonify(message)
+
+@app.route('/checkUserName',methods=['POST'])
+def get_user_name():
+    if (request.method == 'POST'):
+        data = request.json
+        user_name = data["user_name"]
+        currUser = User.query.filter_by(user_name=session["user_name"]).first()
+        if user_name == currUser.user_name:
+            return jsonify({"found": False})
+
+        user = User.query.filter_by(user_name=user_name).first()
+        if user is not None:
+            return jsonify({"found": True})
+        return jsonify({"found": False})
+
+@app.route('/deleteUser', methods=['GET'])
+def delete_user():
+    currUser = User.query.filter_by(user_name=session["user_name"]).first()
+    db.session.delete(currUser)
+    db.session.commit()
+    session.pop("user_name",None)
+    return jsonify({"message": "User was deleted successfully"})
+
+@app.route('/checkEmail' , methods=['POST'])
+def get_user_email():
+    if (request.method == 'POST'):
+        data = request.json
+        email = data["email"]
+        currUser = User.query.filter_by(user_name=session["user_name"]).first()
+        print("email",email,len(email))
+        print("currUser",currUser.email,len(currUser.email))
+        print (email == currUser.email)
+        if email == currUser.email:
+            return jsonify({"found": False})
+
+        user = User.query.filter_by(email=email).first()
+        if (user is not None):
+            return jsonify({"found": True})
+        return jsonify({"found": False})
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -262,6 +315,11 @@ def open_store():
 def open_cart():
     return render_template("Shopping-Cart.html")
 
+@app.route('/account', methods=['GET', 'POST'])
+def account():
+    if request.method == 'GET':
+        return render_template("Account.html")
+
 class Ticket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128))
@@ -330,19 +388,6 @@ class Reservation(db.Model):
         self.court = court
         self.time = time
 
-class Match(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128), unique=True)
-    timing = db.Column(db.String(128))
-    team_1_id = db.Column(db.String(128))
-    team_2_id = db.Column(db.String(128))
-
-    def __init__(self, name, timing, team_1_id, team_2_id):
-        self.name = name
-        self.timing = timing
-        self.team_1_id = team_1_id
-        self.team_2_id = team_2_id
-
 class PaymentInfo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_name = db.Column(db.String(128))
@@ -386,19 +431,6 @@ class ReservationSchema(ma.Schema):
     class Meta:
         fields =("name", "date","court","time")
         model = Reservation
-
-class Match(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128), unique=True)
-    timing = db.Column(db.String(128))
-    team_1_id = db.Column(db.String(128))
-    team_2_id = db.Column(db.String(128))
-
-    def __init__(self, name, timing, team_1_id, team_2_id):
-        self.name = name
-        self.timing = timing
-        self.team_1_id = team_1_id
-        self.team_2_id = team_2_id
 
 user_schema = UserSchema()
 matches_schema = MatchSchema(many=True)
