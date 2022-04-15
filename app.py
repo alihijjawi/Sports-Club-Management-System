@@ -17,6 +17,91 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['DEBUG'] = True
 app.secret_key = '\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
 
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(128))
+    last_name = db.Column(db.String(128))
+    user_name = db.Column(db.String(128), unique=True)
+    email = db.Column(db.String(128), unique=True)
+    hashed_password = db.Column(db.String(128))
+    date_of_birth = db.Column(db.String(128))
+
+    def __init__(self, first_name, last_name, user_name, email, date_of_birth, password):
+        self.user_name = user_name
+        self.first_name = first_name
+        self.last_name = last_name
+        self.date_of_birth = date_of_birth
+        self.email = email
+        self.hashed_password = bcrypt.generate_password_hash(password)
+
+class Contact(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128))
+    email = db.Column(db.String(128))
+    message = db.Column(db.String(128))
+
+    def __init__(self, name, email, message):
+        self.name = name
+        self.message = message
+        self.email = email
+
+class Report(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128))
+    email = db.Column(db.String(128))
+    message = db.Column(db.String(128))
+
+    def __init__(self, name, email, message):
+        self.name = name
+        self.message = message
+        self.email = email
+
+class Reservation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128))
+    email = db.Column(db.String(128))
+    number = db.Column(db.String(128))
+    date = db.Column(db.String(128))
+    court= db.Column(db.String(128))
+    time = db.Column(db.String(128))
+    def __init__(self, name, email, number,date,court,time):
+        self.name = name
+        self.number = number
+        self.email = email
+        self.date = date
+        self.court = court
+        self.time = time
+
+class PaymentInfo(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_name = db.Column(db.String(128))
+    full_name = db.Column(db.String(128))
+    email = db.Column(db.String(128))
+    address = db.Column(db.String(128))
+    city = db.Column(db.String(128))
+    state = db.Column(db.String(128))
+    zip_code = db.Column(db.String(128))
+    name_on_card = db.Column(db.String(128))
+    credit_card_number = db.Column(db.String(128))
+    exp_month = db.Column(db.String(128))
+    exp_year = db.Column(db.String(128))
+    cvv = db.Column(db.String(128))
+
+    def __init__(self, full_name, email, address, city, state, zip_code, name_on_card, credit_card_number, exp_month, exp_year, cvv):
+        self.user_name = session["user_name"]
+        self.full_name = full_name
+        self.email = email
+        self.address = address
+        self.city = city
+        self.state = state
+        self.zip_code = zip_code
+        self.name_on_card = name_on_card
+        self.credit_card_number = credit_card_number
+        self.exp_month = exp_month
+        self.exp_year = exp_year
+        self.cvv = cvv
+
 class Match(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), unique=True)
@@ -29,6 +114,84 @@ class Match(db.Model):
         self.timing = timing
         self.team_1_id = team_1_id
         self.team_2_id = team_2_id
+
+class UserSchema(ma.Schema):
+    class Meta:
+        fields = ("first_name", "last_name", "email", "user_name")
+        model = User
+
+class MatchSchema(ma.Schema):
+    class Meta:
+        fields = ("name", "timing")
+        model = Match
+
+class ReservationSchema(ma.Schema):
+    class Meta:
+        fields =("name", "date","court","time")
+        model = Reservation
+
+user_schema = UserSchema()
+matches_schema = MatchSchema(many=True)
+reservations_schema = ReservationSchema(many=True)
+
+class Ticket(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128))
+    email = db.Column(db.String(128))
+    number = db.Column(db.String(128))
+    match = db.Column(db.String(128))
+
+    def __init__(self, name, email, number, match):
+        self.name = name
+        self.email = email
+        self.number = number
+        self.match = match
+
+class Coach(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128), unique=True)
+    team_name = db.Column(db.String(128))
+    wins = db.Column(db.Integer)
+    losses = db.Column(db.Integer)
+
+    def __init__(self, name, team_name, wins, losses):
+        self.name = name
+        self.team_name = team_name
+        self.wins = wins
+        self.losses = losses
+
+class Player(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128), unique=True)
+    height = db.Column(db.Integer)
+    age = db.Column(db.Integer)
+    attack = db.Column(db.Integer)
+    defense = db.Column(db.Integer)
+    team_name = db.Column(db.String(128))
+
+    def __init__(self, name, height, age, attack, defense, team_name):
+        self.name = name
+        self.height = height
+        self.age = age
+        self.attack = attack
+        self.defense = defense
+        self.team_name = team_name
+
+class Team(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128), unique=True)
+    nb_of_players = db.Column(db.Integer)
+    coach_id = db.Column(db.Integer)
+    wins = db.Column(db.Integer)
+    losses = db.Column(db.Integer)
+
+
+    def __init__(self, name, nb_of_players, coach_id, wins, losses):
+        self.name = name
+        self.nb_of_players = nb_of_players
+        self.coach_id = coach_id
+        self.wins = wins
+        self.losses = losses
 
 @app.route('/checkLogin')
 def user_logged_in():
@@ -214,12 +377,13 @@ def get_tickets():
         ticket = Ticket(name, email, number, match)
         db.session.add(ticket)
         db.session.commit()
+
 @app.route('/payment', methods=['GET', 'POST'])
 def get_payment():
-    if not user_logged_in():
-        return redirect("login")
-    if request.method == 'GET':
+    if user_logged_in().json['found']:
         return render_template("Payment.html")
+    return redirect("login")
+    
 @app.route('/save', methods=['POST'])
 def save_info():
     data = request.json
@@ -323,118 +487,136 @@ def account():
     if request.method == 'GET':
         return render_template("Account.html")
 
-class Ticket(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128))
-    email = db.Column(db.String(128))
-    number = db.Column(db.String(128))
-    match = db.Column(db.String(128))
 
-    def __init__(self, name, email, number, match):
-        self.name = name
-        self.email = email
-        self.number = number
-        self.match = match
+@app.route('/getprofiles',  methods=['GET'])
+def get_profiles():
+    coaches = Coach.query.all()
+    players = Player.query.all()
+    return render_template('profiles.html',
+                            coaches = coaches,
+                            players = players)
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(128))
-    last_name = db.Column(db.String(128))
-    user_name = db.Column(db.String(128), unique=True)
-    email = db.Column(db.String(128), unique=True)
-    hashed_password = db.Column(db.String(128))
-    date_of_birth = db.Column(db.String(128))
+@app.route('/postplayer', methods=['GET', 'POST'])
+def post_player():
+    teams = Team.query.all()
+    if request.method == 'GET':
+        return render_template("player_form.html",
+                                teams = teams)
 
-    def __init__(self, first_name, last_name, user_name, email, date_of_birth, password):
-        self.user_name = user_name
-        self.first_name = first_name
-        self.last_name = last_name
-        self.date_of_birth = date_of_birth
-        self.email = email
-        self.hashed_password = bcrypt.generate_password_hash(password)
+    data = request.json
+    name = data['name']
+    height = data['height']
+    age = data['age']
+    attack = data['attack']
+    defense = data['defense']
+    team_name = data['team_name']
+    
+    check_name = Player.query.filter(Player.name == name).first()
+    if check_name is not None:
+        print("Name already exists.")
+        return 'getprofiles'
+    
+    player = Player(name, height, age, attack, defense, team_name)
+    db.session.add(player)
+    db.session.commit()
+    return 'getprofiles'
 
-class Contact(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128))
-    email = db.Column(db.String(128))
-    message = db.Column(db.String(128))
+@app.route('/postcoach', methods=['GET', 'POST'])
+def post_coach():
+    teams = Team.query.all()
+    if request.method == 'GET':
+        return render_template("coach_form.html",
+                                teams = teams)
 
-    def __init__(self, name, email, message):
-        self.name = name
-        self.message = message
-        self.email = email
+    data = request.json
+    name = data['name']
+    team_name = data['team_name']
+    wins = data['wins']
+    losses = data['losses']
 
-class Report(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128))
-    email = db.Column(db.String(128))
-    message = db.Column(db.String(128))
+    check_name = Coach.query.filter(Coach.name == name).first()
+    if check_name is not None:
+        print("Name already exists.")
+        return 'getprofiles'
+    
+    coach = Coach(name, team_name, wins, losses)
+    db.session.add(coach)
+    db.session.commit()
+    return 'getprofiles'
 
-    def __init__(self, name, email, message):
-        self.name = name
-        self.message = message
-        self.email = email
 
-class Reservation(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128))
-    email = db.Column(db.String(128))
-    number = db.Column(db.String(128))
-    date = db.Column(db.String(128))
-    court= db.Column(db.String(128))
-    time = db.Column(db.String(128))
-    def __init__(self, name, email, number,date,court,time):
-        self.name = name
-        self.number = number
-        self.email = email
-        self.date = date
-        self.court = court
-        self.time = time
+@app.route('/deleteplayer', methods=['GET', 'POST'])
+def delete_player():
+    players = Player.query.all()
+    if request.method == 'GET':
+        return render_template("delete_player_form.html",
+                                players = players)
 
-class PaymentInfo(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_name = db.Column(db.String(128))
-    full_name = db.Column(db.String(128))
-    email = db.Column(db.String(128))
-    address = db.Column(db.String(128))
-    city = db.Column(db.String(128))
-    state = db.Column(db.String(128))
-    zip_code = db.Column(db.String(128))
-    name_on_card = db.Column(db.String(128))
-    credit_card_number = db.Column(db.String(128))
-    exp_month = db.Column(db.String(128))
-    exp_year = db.Column(db.String(128))
-    cvv = db.Column(db.String(128))
+    data = request.json
+    name = data['name']
+    
+    Player.query.filter(Player.name == name).delete()
+    db.session.commit()
+    return 'getprofiles'
 
-    def __init__(self, full_name, email, address, city, state, zip_code, name_on_card, credit_card_number, exp_month, exp_year, cvv):
-        self.user_name = session["user_name"]
-        self.full_name = full_name
-        self.email = email
-        self.address = address
-        self.city = city
-        self.state = state
-        self.zip_code = zip_code
-        self.name_on_card = name_on_card
-        self.credit_card_number = credit_card_number
-        self.exp_month = exp_month
-        self.exp_year = exp_year
-        self.cvv = cvv
+@app.route('/deletecoach', methods=['GET', 'POST'])
+def delete_coach():
+    coaches = Coach.query.all()
+    if request.method == 'GET':
+        return render_template("delete_coach_form.html",
+                                coaches = coaches)
 
-class UserSchema(ma.Schema):
-    class Meta:
-        fields = ("first_name", "last_name", "email", "user_name")
-        model = User
+    data = request.json
+    name = data['name']
+    
+    Coach.query.filter(Coach.name == name).delete()
+    db.session.commit()
+    return 'getprofiles'
 
-class MatchSchema(ma.Schema):
-    class Meta:
-        fields = ("name", "timing")
-        model = Match
+@app.route('/updateplayer', methods=['GET', 'POST'])
+def update_player():
+    players = Player.query.all()
+    teams = Team.query.all()
+    if request.method == 'GET':
+        return render_template("update_player_form.html",
+                                players = players,
+                                teams = teams)
 
-class ReservationSchema(ma.Schema):
-    class Meta:
-        fields =("name", "date","court","time")
-        model = Reservation
+    data = request.json
+    name = data['name']
+    height = data['height']
+    age = data['age']
+    attack = data['attack']
+    defense = data['defense']
+    team_name = data['team_name']
 
-user_schema = UserSchema()
-matches_schema = MatchSchema(many=True)
-reservations_schema = ReservationSchema(many=True)
+    player_match = Player.query.filter_by(name=name).first()
+    player_match.height = height
+    player_match.age = age
+    player_match.attack = attack
+    player_match.defense = defense
+    player_match.team_name = team_name
+    db.session.commit()
+    return 'getprofiles'
+
+@app.route('/updatecoach', methods=['GET', 'POST'])
+def update_coach():
+    coaches = Coach.query.all()
+    teams = Team.query.all()
+    if request.method == 'GET':
+        return render_template("update_coach_form.html",
+                                coaches = coaches,
+                                teams = teams)
+
+    data = request.json
+    name = data['name']
+    team_name = data['team_name']
+    wins = data['wins']
+    losses = data['losses']
+
+    coach_match = Coach.query.filter_by(name=name).first()
+    coach_match.team_name = team_name
+    coach_match.wins = wins
+    coach_match.losses = losses
+    db.session.commit()
+    return 'getprofiles'

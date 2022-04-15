@@ -7,9 +7,9 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="page_type" content="np-template-header-footer-from-plugin">
-  <title>User Login</title>
+  <title>Update Coach</title>
   <link rel="stylesheet" href="{{url_for('static',filename='nicepage.css')}}" media="screen">
-  <link rel="stylesheet" href="{{url_for('static',filename='UserReg.css')}}" media="screen">
+  <link rel="stylesheet" href="{{url_for('static',filename='addCoach.css')}}" media="screen">
   <script class="u-script" type="text/javascript" src="{{url_for('static',filename='jquery.js')}}" defer=""></script>
   <script class="u-script" type="text/javascript" src="{{url_for('static',filename='nicepage.js')}}" defer=""></script>
   <meta name="generator" content="Nicepage 4.8.2, nicepage.com">
@@ -24,7 +24,7 @@
 		"logo": "{{url_for('static',filename='images/logo.jpeg')}}"
 }</script>
   <meta name="theme-color" content="#478ac9">
-  <meta property="og:title" content="User Registration">
+  <meta property="og:title" content="Add Match">
   <meta property="og:type" content="website">
 </head>
 
@@ -123,34 +123,47 @@
   <section class="u-clearfix u-section-1" id="sec-4ec3">
     <div class="u-clearfix u-sheet u-sheet-1">
       <div class="u-form u-form-1">
-        <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom"
+        <form action="#" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom"
           name="form-1" style="padding: 10px;">
           <div class="u-form-group u-form-name u-form-group-2">
-            <label for="user_name" class="u-label">Username</label>
-            <input type="text" placeholder="Enter your username" id="user_name"
+            <label for="coach_name" class="u-label">Select Coach Name</label>
+            </br>
+            <select name="coach_name" id="coach_name">
+              {% for coach in coaches %}
+              <option value={{coach.name}}>{{ coach.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="u-form-group u-form-name u-form-group-2">
+            <label for="wins" class="u-label">Update Coach Wins</label>
+            <input name="num" type="number" min=0 max=1000 placeholder="Enter Coach Wins" id="wins"
               class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
           </div>
-          <div class="u-form-group u-form-group-5">
-            <label for="pwd" class="u-label">Password</label>
-            <input type="password" placeholder="Enter your password" id="pwd"
-              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
+          <div class="u-form-group u-form-name u-form-group-2">
+            <label for="losses" class="u-label">Update Coach Losses</label>
+            <input name="num" type="number" min=0 max=1000 placeholder="Enter Coach Losses" id="losses"
+              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
           </div>
-          <div class="u-align-left u-form-group u-form-submit">
-            <button id="add-button" type="button" class="u-btn u-btn-submit u-button-style">Submit</button>
-            <input type="submit" value="submit" class="u-form-control-hidden">
+          <div class="u-form-group u-form-name u-form-group-2">
+            <label for="team_name" class="u-label">Update Team Name</label>
+            </br>
+            <select name="team_name" id="team_name">
+              {% for team in teams %}
+              <option value={{team.name}}>{{ team.name }}</option>
+              {% endfor %}
+            </select>
           </div>
         </form>
-      </div>
-      <button id="reset-button"
+        <div class="u-align-left u-form-group u-form-submit">
+          <button id="update-button" type="button" class="u-btn u-button-style">Update</button>
+          <button id="reset-button"
         class="u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-2">Reset</button>
-      <div></div>
-      <a href="register"
-        class="u-active-none u-border-2 u-border-palette-1-base u-bottom-left-radius-0 u-bottom-right-radius-0 u-btn u-btn-rectangle u-button-style u-hover-none u-none u-radius-0 u-top-left-radius-0 u-top-right-radius-0 u-btn-3">Don't have an account? Register Here.</a>
-      <span id="error-message" class="error"></span> <br>
+        </div>
+      </div>
+      <br>
     </div>
     </div>
   </section>
-
 
   <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-b518">
     <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
@@ -219,6 +232,6 @@
     </nav>
   </footer>
 </body>
-<script src="{{url_for('static', filename = 'UserLoginScript.js')}}"></script>
+<script src="{{url_for('static', filename = 'updateCoach.js')}}"></script>
 
 </html>
