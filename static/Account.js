@@ -18,7 +18,15 @@ var userName = document.getElementById("user_name");
 var password = document.getElementById("pwd");
 var deleteButton = document.getElementById("delete-button");
 deleteButton.addEventListener('click',deleteFunct);
+
+var userLabel = document.getElementById("label");
+var userDisplay = userLabel.style.display;
 checkLogin(`${SERVER_URL}/checkLogin`);
+async function checkLogin(url) {
+    const response = await fetch(url);
+    const text = await response.text();
+    
+}
 
 function deleteFunct(){
     deleteUser();
@@ -176,12 +184,18 @@ async function checkLogin(url) {
             email.value = data1["email"];
             userName.value = data1["user_name"];
             password.value = data1["password"];
+
+            userLabel.innerHTML = "Signed in as " + data1["user_name"];
+            userLabel.style.display = userDisplay;
         }
         else
         {
             alert("Please login or register an account if you do not have one.");
             location.href = "login";
             isLogged = false;
+
+            userLabel.innerHTML = "";
+            userLabel.style.display = "none";
         }
     } catch (err) {
         // The response wasn't a JSON object

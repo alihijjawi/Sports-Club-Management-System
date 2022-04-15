@@ -53,12 +53,11 @@
             <li class="u-nav-item"><a
                 href="/"
                 class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
-                href="Homepage.html" style="padding: 58px 26px; text-decoration: underline !important;">Home</a>
+                style="padding: 58px 26px; text-decoration: underline !important;">Home</a>
             </li>
             <li class="u-nav-item"><a
                 href="store"
                 class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
-                href="../Project---Online-Store/Online-Store.html"
                 style="padding: 58px 26px; text-decoration: underline !important;">Store</a>
             </li>
             <li class="u-nav-item"><a
@@ -66,8 +65,7 @@
                 style="padding: 58px 26px; text-decoration: underline !important;">Teams</a>
             </li>
             <li class="u-nav-item"><a
-                href="tickets"
-                class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
+                href="tickets" class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
                 style="padding: 58px 26px; text-decoration: underline !important;">Tickets</a>
             </li>
             <li class="u-nav-item"><a
@@ -92,10 +90,9 @@
             <div class="u-inner-container-layout u-sidenav-overflow">
               <div class="u-menu-close"></div>
               <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Homepage.html">Home</a>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="">Home</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link"
-                    href="../Project---Online-Store/Online-Store.html">Store</a>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link">Store</a>
                 </li>
                 <li class="u-nav-item"><a class="u-button-style u-nav-link">Teams</a>
                 </li>
@@ -113,12 +110,13 @@
           <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
         </div>
       </nav>
+      <div class="u-div-label"><label id="label"></label></div>
       <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="677" data-image-height="623">
-        <img src="../static/images/logo.jpeg" class="u-logo-image u-logo-image-1">
+        <img src="{{url_for('static',filename='images/logo.jpeg')}}" class="u-logo-image u-logo-image-1">
       </a>
       <div class="u-image u-image-circle u-preserve-proportions u-image-2" alt="" data-image-width="225"
         data-image-height="225"></div>
-      <label id="label" class="label u-border-2 u-btn-1"></label>
+      <br>
     </div>
   </header>
   <section class="u-clearfix u-grey-5 u-section-1" id="sec-9017">

@@ -36,10 +36,3 @@ async function checkLogin(url) {
         // Do your text handling here
     }
 }
-
-var backButton = document.getElementById("back-button");
-backButton.addEventListener("click", back);
-
-function back() {
-    history.back()
-}

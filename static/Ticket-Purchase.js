@@ -22,7 +22,9 @@ addButton.addEventListener("click", addUser);
 quantity.addEventListener('change',updatePrice);
 price.innerHTML = quantity.value * 10 + "$";
 getMatches(`${SERVER_URL}/getMatches`);
+
 var userLabel = document.getElementById("label");
+var userDisplay = userLabel.style.display;
 checkLogin(`${SERVER_URL}/checkLogin`);
 async function checkLogin(url) {
     const response = await fetch(url);
@@ -34,18 +36,19 @@ async function checkLogin(url) {
         if (data1["found"])
         {
             userLabel.innerHTML = "Signed in as " + data1["user_name"];
-            isLogged = true;
-            console.log(isLogged);
+            userLabel.style.display = userDisplay;
         }
         else
         {
-            userLabel.style.display="none";
+            userLabel.innerHTML = "";
+            userLabel.style.display = "none";
         }
     } catch (err) {
         // The response wasn't a JSON object
         // Do your text handling here
     }
 }
+
 async function getMatches(url) {
     const response = await fetch(url);
     const text = await response.text();
