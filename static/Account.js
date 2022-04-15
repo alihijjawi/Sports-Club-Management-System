@@ -1,4 +1,16 @@
 var SERVER_URL = "http://127.0.0.1:5000";
+
+var inactivityTime = function () { 
+    var time; 
+    window.onload = resetTimer; 
+    document.onmousemove = resetTimer; 
+    document.onkeydown = resetTimer; 
+    function logout() { window.location.href = "idlelogout" } 
+    function resetTimer() { clearTimeout(time); time = setTimeout(logout, 420000) }
+  };
+  
+window.onload = function() { inactivityTime(); }
+
 var firstName = document.getElementById("fname");
 var lastName = document.getElementById("lname");
 var email = document.getElementById("email");
@@ -7,6 +19,7 @@ var password = document.getElementById("pwd");
 var deleteButton = document.getElementById("delete-button");
 deleteButton.addEventListener('click',deleteFunct);
 checkLogin(`${SERVER_URL}/checkLogin`);
+
 function deleteFunct(){
     deleteUser();
     location.href = "/";

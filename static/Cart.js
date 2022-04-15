@@ -1,6 +1,4 @@
 //Cart
-//import inactivityTime from './Idle-Logout.js'
-//import * as OS from './Online-Store.js'
 
 var SERVER_URL = "http://127.0.0.1:5000";
 
@@ -9,7 +7,7 @@ var inactivityTime = function () {
   window.onload = resetTimer; 
   document.onmousemove = resetTimer; 
   document.onkeydown = resetTimer; 
-  function logout() { alert("You are now logged out.").href = '../logout.html' } 
+  function logout() { window.location.href = "idlelogout" } 
   function resetTimer() { clearTimeout(time); time = setTimeout(logout, 420000) }
 };
 
@@ -67,7 +65,6 @@ function applyCoupon(){
   }
   updateCart();
 }
-
 
 function fillCart(){
 

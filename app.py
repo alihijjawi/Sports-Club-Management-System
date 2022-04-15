@@ -17,7 +17,6 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['DEBUG'] = True
 app.secret_key = '\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
 
-
 class Match(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), unique=True)
@@ -43,6 +42,10 @@ def user_logged_in():
 @app.route('/')
 def home():
     return render_template("Homepage.html")
+
+@app.route('/idlelogout', methods=['GET'])
+def idle_logout():
+    return render_template("idlelogout.html")
 
 @app.route('/logout')
 def log_out():
