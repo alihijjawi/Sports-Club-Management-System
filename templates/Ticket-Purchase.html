@@ -127,8 +127,8 @@
           name="form" style="padding: 10px;">
           <div class="u-form-group u-form-message">
             <label for="number" class="u-label">Phone Number</label>
-            <input type="tel" placeholder = "ex: +961-79-170-983" id="number" name="number"
-              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" title="Phone number must match the format: +961-XX-XXX-XXX" pattern="[+]961-[0-9]{2}-[0-9]{3}-[0-9]{3}" required="required">
+            <input type="tel" placeholder = "Enter your phone number (e.g: +961-79-170983)" id="number" name="number"
+              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" title="Must match the format: +961-79-170983" pattern="[+]961-[0-9]{2}-[0-9]{6}" required="required">
           </div>
           <div class="u-form-group u-form-select u-form-group-4">
             <label for="select-a808" class="u-label">Select your Ticket</label>
@@ -152,12 +152,10 @@
               required=""></span>
           </div>
         </form>
-        <div class="u-align-left u-form-group u-form-submit">
-          <button id="add-button"
-            class="u-border-none u-btn u-btn-submit u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-1">buy
-            ticket<br>
-          </button>
-        </div>
+        <div class="u-align-left u-form-group ">
+          <label for="add-button" class="u-btn u-btn-submit u-button-style">Purchase</label>
+          <input type="submit" id="add-button" value="submit" class="u-form-control-hidden">
+        </div>  
       </div>
     </div>
   </section>

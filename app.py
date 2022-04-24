@@ -396,8 +396,7 @@ def get_tickets():
         return render_template("Ticket-Purchase.html")
     elif request.method == 'POST':
         data = request.json
-        name = data["name"]
-        email = data["email"]
+        print(data)
         number = data["number"]
         match = data["match"]
         ticket = Ticket(name, email, number, match)
@@ -406,7 +405,7 @@ def get_tickets():
 
 @app.route('/payment', methods=['GET', 'POST'])
 def get_payment():
-    if user_logged_in().json['found']:
+    if request.method == 'GET':
         return render_template("Payment.html")
     return redirect("login")
     
@@ -430,11 +429,18 @@ def save_info():
     message = {"error": 0, "message": "The information has been successfully saved."}
     return jsonify(message)
 
+@app.route('/returnMatches', methods=['GET'])
+def return_matches():
+    matches = Match.query.all()
+    return jsonify(matches_schema.dump(matches))
+
 
 @app.route('/getmatches',  methods=['GET'])
 def get_match():
     upcoming_matches = Match.query.all()
-    return render_template('matches.html', upcoming_matches = upcoming_matches)
+    return render_template('matches.html', upcoming_matches= upcoming_matches)
+
+
 
 @app.route('/postmatches', methods=['GET', 'POST'])
 def post_match():

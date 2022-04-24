@@ -12,16 +12,14 @@ var inactivityTime = function () {
 window.onload = function() { inactivityTime(); }
 
 var isLogged = false;
-var errorMessage = document.getElementById("error-message");
 var addButton = document.getElementById("add-button");
-var resetButton = document.getElementById("reset-button");
 var quantity = document.getElementById("quantity");
 var price = document.getElementById("price");
 var phone = document.getElementById("number");
 addButton.addEventListener("click", addUser);
 quantity.addEventListener('change',updatePrice);
 price.innerHTML = quantity.value * 10 + "$";
-getMatches(`${SERVER_URL}/getMatches`);
+getMatches(`${SERVER_URL}/returnMatches`);
 
 var userLabel = document.getElementById("label");
 var userDisplay = userLabel.style.display;
@@ -35,6 +33,7 @@ async function checkLogin(url) {
         // Do your JSON handling here
         if (data1["found"])
         {
+            isLogged = true;
             userLabel.innerHTML = "Signed in as " + data1["user_name"];
             userLabel.style.display = userDisplay;
         }
@@ -83,7 +82,7 @@ async function checkPaymentMethod(url) {
         }
         else
         {
-            alert("Please enter your payment information to continue.")
+            alert("Please enter your payment information to continue.");
             location.href = "payment";
         }
 
@@ -98,38 +97,14 @@ function updatePrice(){
     if (quantity.value > parseInt(quantity.max)) quantity.value = quantity.max;
     price.innerHTML = quantity.value * 10 + "$";
 }
-function resetInput() {
-    const inputFields = document.querySelectorAll("input");
-    for (let i = 0; i < inputFields.length; i++) {
-        inputFields[i].value = "";
-    }
-    errorMessage.innerHTML = "";
-    return;
-}
-function ValidatePhone(input){
-    if (!input.checkValidity())
-    {
-        alert(input.title);
-        return false;
-    }
-    return true;
-}
-function ValidateEmail(input) {
-    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-    if (input.value.match(validRegex)) return true;
-    return false;
-}
-function updatePage(content) {
-    document.getElementById("FullPage").innerHTML = content.text();
-}
+
 function addUser() {
+    console.log("OK");
     let inputFields = document.querySelectorAll("input");
-    if (!ValidatePhone(phone)) return;
     for (let i = 0; i < inputFields.length; i++) {
         let input = inputFields[i];
-        if (input.value.length == 0) {
-            alert("Some details are missing! Please fill in all the fields.");
+        if (!input.checkValidity()) {
             return;
         }
     }
