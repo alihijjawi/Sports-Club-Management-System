@@ -47,10 +47,11 @@ async function checkLogin(url) {
     }
 }
 
-var quantity = getQuantity();
-var item_price = getPrice();
-if(quantity == null) {quantity = [0,0,0,0,0,0]; saveQuantity(quantity)}
-if(item_price == null) {item_price = [22, 14, 9, 38, 6, 14]; savePrice(item_price);}
+var quantity = getQuantity()
+var item_price = getPrice()
+
+var tI = document.getElementById("totalItems")
+tI.innerHTML=quantity.reduce((partialSum, a) => partialSum + a, 0);
 
 var item1 = document.getElementById("1");
 var item2 = document.getElementById("2");
@@ -59,12 +60,27 @@ var item4 = document.getElementById("4");
 var item5 = document.getElementById("5");
 var item6 = document.getElementById("6");
 
+function addItem1() { quantity[0]+=1; tI.innerHTML=quantity.reduce((partialSum, a) => partialSum + a, 0);}
+function addItem2() { quantity[1]+=1; tI.innerHTML=quantity.reduce((partialSum, a) => partialSum + a, 0);}
+function addItem3() { quantity[2]+=1; tI.innerHTML=quantity.reduce((partialSum, a) => partialSum + a, 0);}
+function addItem4() { quantity[3]+=1; tI.innerHTML=quantity.reduce((partialSum, a) => partialSum + a, 0);}
+function addItem5() { quantity[4]+=1; tI.innerHTML=quantity.reduce((partialSum, a) => partialSum + a, 0);}
+function addItem6() { quantity[5]+=1; tI.innerHTML=quantity.reduce((partialSum, a) => partialSum + a, 0);}
+
+function save(){
+  savePrice(item_price);
+  saveQuantity(quantity);
+}
+
 item1.addEventListener("click", addItem1)
 item2.addEventListener("click", addItem2)
 item3.addEventListener("click", addItem3)
 item4.addEventListener("click", addItem4)
 item5.addEventListener("click", addItem5)
 item6.addEventListener("click", addItem6)
+
+var SC = document.getElementById("SCbutton")
+SC.addEventListener("click", save)
 
 var price_display = [document.getElementById("pd1"), document.getElementById("pd2"), document.getElementById("pd3"), 
         document.getElementById("pd4"), document.getElementById("pd5"), document.getElementById("pd6")]
@@ -77,9 +93,3 @@ function updateStore(){
 
 updateStore();
 
-function addItem1() { quantity[0]+=1; saveQuantity(quantity);}
-function addItem2() { quantity[1]+=1; saveQuantity(quantity);}
-function addItem3() { quantity[2]+=1; saveQuantity(quantity);}
-function addItem4() { quantity[3]+=1; saveQuantity(quantity);}
-function addItem5() { quantity[4]+=1; saveQuantity(quantity);}
-function addItem6() { quantity[5]+=1; saveQuantity(quantity);}
