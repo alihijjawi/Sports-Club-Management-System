@@ -36,12 +36,8 @@ async function checkLogin(url) {
         // Do your text handling here
     }
 }
-
-var errorMessage = document.getElementById("error-message");
 var addButton = document.getElementById("add-button");
-var resetButton = document.getElementById("reset-button");
 addButton.addEventListener("click", authenticate);
-resetButton.addEventListener("click", resetInput);
 
 async function myFetch(myRequest, data) {
     const response = await fetch(myRequest, {
@@ -70,7 +66,6 @@ function resetInput() {
     for (let i = 0; i < inputFields.length; i++) {
         inputFields[i].value = "";
     }
-    errorMessage.innerHTML = "";
     return;
 }
 function handleResponse(data) {
@@ -81,10 +76,7 @@ function authenticate() {
     const inputFields = document.querySelectorAll("input");
     for (let i = 0; i < inputFields.length; i++) {
         let input = inputFields[i];
-        if (input.value.length == 0) {
-            alert("Some details are missing! Please fill in all the fields.");
-            return;
-        }
+        if (!input.checkValidity()) return;
     }
     let userName = document.getElementById("user_name")
     let password = document.getElementById("pwd")

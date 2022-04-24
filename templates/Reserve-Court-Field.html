@@ -228,7 +228,7 @@
 
           <div class="u-form-group u-form-name">
             <label for="name" class="u-label">Name</label>
-            <input type="text" placeholder="Enter your Name" id="name" name="name"
+            <input type="name" maxlength="64" pattern="^[a-zA-Z]+\s?[a-zA-Z]+$" title="Enter at most two words with one space in between (letters only)." placeholder="Enter your Name" id="name" name="name"
               class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
           </div>
           <div class="u-form-email u-form-group">
@@ -239,12 +239,16 @@
           <div class="u-form-group u-form-phone u-form-group-7">
             <label for="number" class="u-label">Phone</label>
             <input type="tel"
-              pattern="\+?\d{0,3}[\s\(\-]?([0-9]{2,3})[\s\)\-]?([\s\-]?)([0-9]{3})[\s\-]?([0-9]{2})[\s\-]?([0-9]{2})"
+              pattern="[+][0-9]{3}-[0-9]{2}-[0-9]{6}"
+              title="Format should be: +961-79-170983"
               placeholder="Enter your phone (e.g. +96179170983)" id="number" name="number"
               class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
           </div>
+          <div class="u-align-left u-form-group u-form-submit">
+            <label for="reserve-btn" class="u-btn u-btn-submit u-button-style">Reserve</label>
+            <input type="submit" id="reserve-btn" value="submit" class="u-form-control-hidden">
+          </div>
         </form>
-        <button id="reserve-btn" class="u-btn u-btn-submit u-button-style">RESERVE</button>
       </div>
     </div>
   </section>

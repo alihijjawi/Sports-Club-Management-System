@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-url="{{login}}" id = "FullPage" style="font-size: 16px;">
+<html data-url="{{login}}" id="FullPage" style="font-size: 16px;">
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,37 +50,31 @@
         </div>
         <div class="u-custom-menu u-nav-container">
           <ul class="u-nav u-unstyled u-nav-1">
-            <li class="u-nav-item"><a
-                href="/"
+            <li class="u-nav-item"><a href="/"
                 class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
                 style="padding: 58px 26px; text-decoration: underline !important;">Home</a>
             </li>
-            <li class="u-nav-item"><a
-                href="store"
+            <li class="u-nav-item"><a href="store"
                 class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
                 style="padding: 58px 26px; text-decoration: underline !important;">Store</a>
             </li>
-            <li class="u-nav-item"><a
-              href="teams"
+            <li class="u-nav-item"><a href="teams"
                 class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
                 style="padding: 58px 26px; text-decoration: underline !important;">Teams</a>
             </li>
-            <li class="u-nav-item"><a
-                href="tickets" class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
+            <li class="u-nav-item"><a href="tickets"
+                class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
                 style="padding: 58px 26px; text-decoration: underline !important;">Tickets</a>
             </li>
-            <li class="u-nav-item"><a
-                href="reserve"
+            <li class="u-nav-item"><a href="reserve"
                 class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
                 style="padding: 58px 26px; text-decoration: underline !important;">Reserve</a>
             </li>
-            <li class="u-nav-item"><a
-              href = "getmatches"
+            <li class="u-nav-item"><a href="getmatches"
                 class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
                 style="padding: 58px 26px; text-decoration: underline !important;">Matches</a>
             </li>
-            <li class="u-nav-item"><a
-              href ="account"
+            <li class="u-nav-item"><a href="account"
                 class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
                 style="padding: 58px 26px; text-decoration: underline !important;">Account</a>
             </li>
@@ -123,29 +117,32 @@
   <section class="u-clearfix u-section-1" id="sec-4ec3">
     <div class="u-clearfix u-sheet u-sheet-1">
       <div class="u-form u-form-1">
-        <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom"
-          name="form-1" style="padding: 10px;">
+        <form class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom" name="form-1"
+          style="padding: 10px;">
           <div class="u-form-group u-form-name u-form-group-2">
             <label for="user_name" class="u-label">Username</label>
-            <input type="text" placeholder="Enter your username" id="user_name"
+            <input type="text" placeholder="Enter your username" id="user_name" maxlength="32"
+              pattern="[A-za-z]{1}[A-za-z0-9-_]{0,32}"
+              title="Username must begin with a letter and must not contain special characters other than: -,_."
               class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
           </div>
           <div class="u-form-group u-form-group-5">
             <label for="pwd" class="u-label">Password</label>
             <input type="password" placeholder="Enter your password" id="pwd"
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[?!@#$%^&*_=+-]).{8,32}$" minlength="8" maxlength="32"
+              title="Password must contain: between 8 and 32 characters, at least 1 uppercase letter, at least 1 lowercase letter, at least 1 number, at least 1 special character."
               class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
           </div>
           <div class="u-align-left u-form-group u-form-submit">
-            <button id="add-button" type="button" class="u-btn u-btn-submit u-button-style">Submit</button>
-            <input type="submit" value="submit" class="u-form-control-hidden">
+            <label for="add-button" class="u-btn u-btn-submit u-button-style">Submit</label>
+            <input type="submit" id="add-button" value="submit" class="u-form-control-hidden">
           </div>
         </form>
       </div>
-      <button id="reset-button"
-        class="u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-2">Reset</button>
       <div></div>
       <a href="register"
-        class="u-active-none u-border-2 u-border-palette-1-base u-bottom-left-radius-0 u-bottom-right-radius-0 u-btn u-btn-rectangle u-button-style u-hover-none u-none u-radius-0 u-top-left-radius-0 u-top-right-radius-0 u-btn-3">Don't have an account? Register Here.</a>
+        class="u-active-none u-border-2 u-border-palette-1-base u-bottom-left-radius-0 u-bottom-right-radius-0 u-btn u-btn-rectangle u-button-style u-hover-none u-none u-radius-0 u-top-left-radius-0 u-top-right-radius-0 u-btn-3">Don't
+        have an account? Register Here.</a>
       <span id="error-message" class="error"></span> <br>
     </div>
     </div>
@@ -173,20 +170,19 @@
       <div class="u-custom-menu u-nav-container">
         <ul class="u-nav u-unstyled u-nav-1">
           <li class="u-nav-item"><a
-              class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white"
-              href="TandC" style="padding: 52px 72px;">Terms and Conditions</a>
+              class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white" href="TandC"
+              style="padding: 52px 72px;">Terms and Conditions</a>
           </li>
           <li class="u-nav-item"><a
-              class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white"
-              href="contact" target="_blank" style="padding: 52px 72px;">Contact Us</a>
+              class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white" href="contact"
+              target="_blank" style="padding: 52px 72px;">Contact Us</a>
           </li>
           <li class="u-nav-item"><a
-              class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white"
-              href="report" style="padding: 52px 72px;">Report Issues</a>
+              class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white" href="report"
+              style="padding: 52px 72px;">Report Issues</a>
           </li>
           <li class="u-nav-item"><a
-              class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white"
-              href="vision"
+              class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white" href="vision"
               style="padding: 52px 72px;">Vision</a>
           </li>
           <li class="u-nav-item"><a

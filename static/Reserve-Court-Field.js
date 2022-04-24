@@ -10,10 +10,13 @@ var inactivityTime = function () {
   };
   
 window.onload = function() { inactivityTime(); }
-
+var date = document.getElementById("date"); //date var
 var userLabel = document.getElementById("label");
 var today = new Date().toISOString().split('T')[0];
-document.getElementById("date").setAttribute('min', today);//code to restrict past date selections when reserving
+var yearFromNow = new Date();
+yearFromNow.setFullYear(yearFromNow.getFullYear()+1);
+date.setAttribute('min', today);//code to restrict past date selections when reserving
+date.setAttribute('max',yearFromNow.toISOString().split('T')[0]); //max date is a year from now
 document.getElementById("date").value = today;//code to let the date be today by default
 var btns = document.getElementsByName("select-btn");
 for (var i = 0; i < btns.length; i++) {
@@ -22,7 +25,6 @@ for (var i = 0; i < btns.length; i++) {
 document.getElementById("reserve-btn").addEventListener("click", addReservation);
 document.getElementById("select").addEventListener('change', loadTable);
 document.getElementById("date").addEventListener('change', loadTable);
-var date = document.getElementById("date"); //date var
 var select = document.getElementById("select") //select var
 const color = btns[0].style.backgroundColor; //color of original select button
 loadTable();
@@ -103,11 +105,11 @@ function addReservation() {
     var name = document.getElementById("name");
     var email = document.getElementById("email");
     var number = document.getElementById("number");
-    if (name.value.length == 0 || email.value.length == 0 || number.value.length == 0) {
-        console.log(name.id);
-        return;
+    for (var i=0;i<inputFields.length;i++){
+        if (!inputFields[i].checkValidity()){
+            return;
+        }
     }
-
     var name = document.getElementById("name");
     var email = document.getElementById("email");
     var number = document.getElementById("number");
@@ -116,7 +118,6 @@ function addReservation() {
     for (var i = 0; i < btns.length; i++) {
         if (btns[i].innerHTML == "CANCEL") // this means button has been selected
         {
-            console.log(btns[i].id);
             const data = {
                 "name": name.value,
                 "email": email.value,
@@ -125,7 +126,6 @@ function addReservation() {
                 "court": court,
                 "time": btns[i].id
             };
-            console.log(data);
             myFetch(`${SERVER_URL}/reserve`, data);
         }
     }

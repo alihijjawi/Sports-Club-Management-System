@@ -10,7 +10,13 @@ var inactivityTime = function () {
   };
   
 window.onload = function() { inactivityTime(); }
-
+var date = document.getElementById("dob");
+var maxDate = new Date(); //Date 13 years ago
+maxDate.setFullYear(maxDate.getFullYear()-13);
+var minDate = new Date();//Date 99 years ago
+minDate.setFullYear(minDate.getFullYear()-99);
+date.setAttribute('min',minDate.toISOString().split('T')[0]);
+date.setAttribute('max',maxDate.toISOString().split('T')[0]);
 var userLabel = document.getElementById("label");
 var userDisplay = userLabel.style.display;
 checkLogin(`${SERVER_URL}/checkLogin`);
@@ -37,26 +43,15 @@ async function checkLogin(url) {
     }
 }
 
-var errorMessage = document.getElementById("error-message");
 var addButton = document.getElementById("add-button");
-var resetButton = document.getElementById("reset-button");
 addButton.addEventListener("click", addUser);
-resetButton.addEventListener("click", resetInput);
-function resetInput() {
-    const inputFields = document.querySelectorAll("input");
-    for (let i = 0; i < inputFields.length; i++) {
-        inputFields[i].value = "";
-    }
-    errorMessage.innerHTML = "";
-    return;
-}
 function handleResponse(response) {
     text = response.text();
     try {
         const data = JSON.parse(text); // Try to parse the response as JSON
         // The response was a JSON object
         // Do your JSON handling here
-        errorMessage.innerHTML = data["message"];
+        alert(data["message"]);
     } catch (err) {
         // The response wasn't a JSON object
         // Do your text handling here
@@ -76,31 +71,19 @@ async function myFetch(myRequest, data) {
         const data1 = JSON.parse(text); // Try to parse it as JSON
         // The response was a JSON object
         // Do your JSON handling here
-        errorMessage.innerHTML = data1["message"];
+        alert(data1["message"]);
     } catch (err) {
         // The response wasn't a JSON object
         // Do your text handling here
-        location.href = text;
-        alert("Your account has been successfully created! Please login using your new credentials.");
+        location.href = "/";
+        alert("Your account has been successfully created.\nWelcome to the official site of Panthers Sports Club!");
     }
-}
-function ValidateEmail(input) {
-    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-    if (input.value.match(validRegex)) return true;
-    return false;
-}
-function updatePage(content) {
-    document.getElementById("FullPage").innerHTML = content.text();
 }
 function addUser() {
     let inputFields = document.querySelectorAll("input");
     for (let i = 0; i < inputFields.length; i++) {
         let input = inputFields[i];
-        if (input.value.length == 0) {
-            errorMessage.innerHTML = "Some details are missing! Please fill in all the fields.";
-            return;
-        }
+        if (!input.checkValidity()) return;
     }
     let firstName = document.getElementById("fname");
     console.log(firstName);
