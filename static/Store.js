@@ -1,4 +1,4 @@
-import { getQuantity, saveQuantity, clearQuantity, getPrice, savePrice, clearPrice } from "./localStorage";
+import { getQuantity, saveQuantity, clearQuantity, getPrice, savePrice, clearPrice } from "./localStorage.js";
 
 var SERVER_URL = "http://127.0.0.1:5000";
 
@@ -46,6 +46,12 @@ async function checkLogin(url) {
         // Do your text handling here
     }
 }
+
+var quantity = getQuantity();
+var item_price = getPrice();
+if(quantity == null) {quantity = [0,0,0,0,0,0]; saveQuantity(quantity)}
+if(item_price == null) {item_price = [22, 14, 9, 38, 6, 14]; savePrice(item_price);}
+
 var item1 = document.getElementById("1");
 var item2 = document.getElementById("2");
 var item3 = document.getElementById("3");
@@ -59,9 +65,6 @@ item3.addEventListener("click", addItem3)
 item4.addEventListener("click", addItem4)
 item5.addEventListener("click", addItem5)
 item6.addEventListener("click", addItem6)
-
-var quantity = [0, 0, 0, 0, 0, 0]
-var item_price = [22, 14, 9, 38, 6, 14]
 
 var price_display = [document.getElementById("pd1"), document.getElementById("pd2"), document.getElementById("pd3"), 
         document.getElementById("pd4"), document.getElementById("pd5"), document.getElementById("pd6")]

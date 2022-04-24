@@ -1,4 +1,4 @@
-import { getQuantity, saveQuantity, clearQuantity, getPrice, savePrice, clearPrice } from "./localStorage";
+import { getQuantity, saveQuantity, clearQuantity, getPrice, savePrice, clearPrice } from "./localStorage.js";
 
 var SERVER_URL = "http://127.0.0.1:5000";
 
@@ -48,7 +48,11 @@ async function checkLogin(url) {
 }
 
 const promocodes = ["YOUSS1", "YASS02", "MIRAPS", "MISTO2", "HAZ123", "ALIHIJ"]
-var quantity = getQuantity()
+var readOnlyQuantity = getQuantity()
+var quantity = [0, 0, 0, 0, 0, 0]
+for(let i=0; i<quantity.length; i++){
+  quantity[i] = readOnlyQuantity[i]
+}
 var item_price = getPrice()
 
 var promobutton = document.getElementById("promobutton")
@@ -93,7 +97,7 @@ function applyDiscount(){
 }
 
 function applyCoupon(){
-  var promocode = document.getElementsById("name-5861").value
+  var promocode = document.getElementById("name-5861").value
   for (let i = 0; i < promocodes.length; i++) {
     if(promocodes[i] == promocode) {
       applyDiscount(); break;
@@ -111,17 +115,17 @@ function fillCart(){
   document.getElementById("q5").value = quantity[4];
   document.getElementById("q6").value = quantity[5]; 
 
-  if(q[0] != 0) item1.style.display = "tr"
+  if(quantity[0] != 0) item1.style.display = "tr"
   else item1.style.display = "none"
-  if(q[1] != 0) item2.style.display = "tr"
+  if(quantity[1] != 0) item2.style.display = "tr"
   else item2.style.display = "none"
-  if(q[2] != 0) item3.style.display = "tr"
+  if(quantity[2] != 0) item3.style.display = "tr"
   else item3.style.display = "none"
-  if(q[3] != 0) item4.style.display = "tr"
+  if(quantity[3] != 0) item4.style.display = "tr"
   else item4.style.display = "none"
-  if(q[4] != 0) item5.style.display = "tr"
+  if(quantity[4] != 0) item5.style.display = "tr"
   else item5.style.display = "none"
-  if(q[5] != 0) item6.style.display = "tr"
+  if(quantity[5] != 0) item6.style.display = "tr"
   else item6.style.display = "none"
 
   for (let i = 0; i < promocodes.length; i++) {
