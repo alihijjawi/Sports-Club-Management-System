@@ -6,7 +6,7 @@ from flask import jsonify
 from flask_cors import CORS
 from flask import session, url_for, redirect, render_template
 from flask_marshmallow import Marshmallow
-
+import jwt
 app = Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:mira@127.0.0.1:3306/users'
@@ -16,6 +16,29 @@ ma = Marshmallow(app)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['DEBUG'] = True
 app.secret_key = '\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
+
+def create_token(user_id):
+ payload = {
+ 'exp': datetime.datetime.utcnow() + datetime.timedelta(days=4),
+ 'iat': datetime.datetime.utcnow(),
+ 'sub': user_id
+ }
+ return jwt.encode(
+ payload,
+ SECRET_KEY,
+ algorithm='HS256'
+ )
+
+def extract_auth_token(authenticated_request):
+ auth_header = authenticated_request.headers.get('Authorization')
+ if auth_header:
+    return auth_header.split(" ")[1]
+ else:
+    return None
+
+def decode_token(token):
+ payload = jwt.decode(token, SECRET_KEY, 'HS256')
+ return payload['sub']
 
 
 class User(db.Model):
@@ -195,6 +218,7 @@ class Team(db.Model):
 
 @app.route('/checkLogin')
 def user_logged_in():
+    print(session)
     if "user_name" in session:
         user = User.query.filter_by(user_name=session["user_name"]).first()
         temp = user_schema.dump(user)
@@ -312,6 +336,7 @@ def auth_user():
     if not bcrypt.check_password_hash(found.hashed_password,password):
         return jsonify({"message": "Invalid credentials"})
     session['user_name'] = user_name
+    print(session)
     return "/"
 
 
@@ -335,6 +360,7 @@ def create_user():
     user = User(first_name, last_name, user_name, email, date_of_birth, password)
     db.session.add(user)
     db.session.commit()
+    session["user_name"] = user_name
     return "login"
 
 @app.route('/reserve',methods=['GET','POST'])
@@ -370,8 +396,7 @@ def get_tickets():
         return render_template("Ticket-Purchase.html")
     elif request.method == 'POST':
         data = request.json
-        name = data["name"]
-        email = data["email"]
+        print(data)
         number = data["number"]
         match = data["match"]
         ticket = Ticket(name, email, number, match)
@@ -380,7 +405,7 @@ def get_tickets():
 
 @app.route('/payment', methods=['GET', 'POST'])
 def get_payment():
-    if user_logged_in().json['found']:
+    if request.method == 'GET':
         return render_template("Payment.html")
     return redirect("login")
     
@@ -404,11 +429,18 @@ def save_info():
     message = {"error": 0, "message": "The information has been successfully saved."}
     return jsonify(message)
 
+@app.route('/returnMatches', methods=['GET'])
+def return_matches():
+    matches = Match.query.all()
+    return jsonify(matches_schema.dump(matches))
+
 
 @app.route('/getmatches',  methods=['GET'])
 def get_match():
     upcoming_matches = Match.query.all()
-    return render_template('matches.html', upcoming_matches = upcoming_matches)
+    return render_template('matches.html', upcoming_matches= upcoming_matches)
+
+
 
 @app.route('/postmatches', methods=['GET', 'POST'])
 def post_match():
