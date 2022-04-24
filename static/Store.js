@@ -1,3 +1,5 @@
+import { getQuantity, saveQuantity, clearQuantity, getPrice, savePrice, clearPrice } from "./localStorage";
+
 var SERVER_URL = "http://127.0.0.1:5000";
 
 var inactivityTime = function () { 
@@ -51,23 +53,15 @@ var item4 = document.getElementById("4");
 var item5 = document.getElementById("5");
 var item6 = document.getElementById("6");
 
-item1.addEventListener("click", addItem)
-item2.addEventListener("click", addItem)
-item3.addEventListener("click", addItem)
-item4.addEventListener("click", addItem)
-item5.addEventListener("click", addItem)
-item6.addEventListener("click", addItem)
+item1.addEventListener("click", addItem1)
+item2.addEventListener("click", addItem2)
+item3.addEventListener("click", addItem3)
+item4.addEventListener("click", addItem4)
+item5.addEventListener("click", addItem5)
+item6.addEventListener("click", addItem6)
 
-const promocodes = ["YOUSS1", "YASS02", "MIRAPS", "MISTO2", "HAZ123", "ALIHIJ"]
-const fixed_item_price = [22, 14, 9, 38, 6, 14]
-var q = [0, 0, 0, 0, 0, 0]
+var quantity = [0, 0, 0, 0, 0, 0]
 var item_price = [22, 14, 9, 38, 6, 14]
-
-function applyDiscount(){
-  for (let j = 0; j<item_price.length; j++) {
-      item_price[j] = 0.9*item_price[j]
-  }
-}
 
 var price_display = [document.getElementById("pd1"), document.getElementById("pd2"), document.getElementById("pd3"), 
         document.getElementById("pd4"), document.getElementById("pd5"), document.getElementById("pd6")]
@@ -80,8 +74,9 @@ function updateStore(){
 
 updateStore();
 
-function addItem() {
-  q[0] = q[0] + 1
-}
-
-console.log(q[0])
+function addItem1() { quantity[0]+=1; saveQuantity(quantity);}
+function addItem2() { quantity[1]+=1; saveQuantity(quantity);}
+function addItem3() { quantity[2]+=1; saveQuantity(quantity);}
+function addItem4() { quantity[3]+=1; saveQuantity(quantity);}
+function addItem5() { quantity[4]+=1; saveQuantity(quantity);}
+function addItem6() { quantity[5]+=1; saveQuantity(quantity);}

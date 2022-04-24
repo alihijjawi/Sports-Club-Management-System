@@ -1,3 +1,5 @@
+import { clearQuantity, clearPrice } from "./localStorage";
+
 var SERVER_URL = "http://127.0.0.1:5000";
 
 var inactivityTime = function () { 
@@ -10,6 +12,9 @@ var inactivityTime = function () {
   };
   
 window.onload = function() { inactivityTime(); }
+
+clearPrice();
+clearQuantity();
 
 var loginButton = document.getElementById("login-button");
 var logoutButton = document.getElementById("logout-button");

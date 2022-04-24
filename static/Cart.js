@@ -1,4 +1,4 @@
-//Cart
+import { getQuantity, saveQuantity, clearQuantity, getPrice, savePrice, clearPrice } from "./localStorage";
 
 var SERVER_URL = "http://127.0.0.1:5000";
 
@@ -48,16 +48,17 @@ async function checkLogin(url) {
 }
 
 const promocodes = ["YOUSS1", "YASS02", "MIRAPS", "MISTO2", "HAZ123", "ALIHIJ"]
-const fixed_item_price = [22, 14, 9, 38, 6, 14]
-let q = [0, 0, 3, 0, 2, 0]
-var item_price = [22, 14, 9, 38, 6, 14]
+var quantity = getQuantity()
+var item_price = getPrice()
 
- var p = [document.getElementById("p1"),
-                document.getElementById("p2"), 
-                document.getElementById("p3"), 
-                document.getElementById("p4"),
-                document.getElementById("p5"),
-                document.getElementById("p6")]
+var promobutton = document.getElementById("promobutton")
+promobutton.addEventListener("click", applyCoupon())
+
+//var checkout = document.getElementById("checkout")
+//checkout.addEventListener("click", )
+
+var p = [document.getElementById("p1"), document.getElementById("p2"), document.getElementById("p3"), 
+                document.getElementById("p4"), document.getElementById("p5"), document.getElementById("p6")]
 
 var tp = [document.getElementById("tp1"), document.getElementById("tp2"), document.getElementById("tp3"), 
             document.getElementById("tp4"), document.getElementById("tp5"), document.getElementById("tp6")]
@@ -73,16 +74,17 @@ var total = document.getElementById("tot");
 var subtotal = document.getElementById("subtot");
 
 function updateCart(){
-  q[0] = document.getElementById("q1").value;
-  q[1] = document.getElementById("q2").value;
-  q[2] = document.getElementById("q3").value;
-  q[3] = document.getElementById("q4").value;
-  q[4] = document.getElementById("q5").value;
-  q[5] = document.getElementById("q6").value;
+  quantity[0] = document.getElementById("q1").value;
+  quantity[1] = document.getElementById("q2").value;
+  quantity[2] = document.getElementById("q3").value;
+  quantity[3] = document.getElementById("q4").value;
+  quantity[4] = document.getElementById("q5").value;
+  quantity[5] = document.getElementById("q6").value;
+
+  saveQuantity(quantity);
 
   fillCart();
 }
-
 
 function applyDiscount(){
   for (let j = 0; j<item_price.length; j++) {
@@ -102,12 +104,12 @@ function applyCoupon(){
 
 function fillCart(){
 
-  document.getElementById("q1").value = 0;
-  document.getElementById("q2").value = q[1];
-  document.getElementById("q3").value = q[2];
-  document.getElementById("q4").value = q[3];
-  document.getElementById("q5").value = q[4];
-  document.getElementById("q6").value = q[5]; 
+  document.getElementById("q1").value = quantity[0];
+  document.getElementById("q2").value = quantity[1];
+  document.getElementById("q3").value = quantity[2];
+  document.getElementById("q4").value = quantity[3];
+  document.getElementById("q5").value = quantity[4];
+  document.getElementById("q6").value = quantity[5]; 
 
   if(q[0] != 0) item1.style.display = "tr"
   else item1.style.display = "none"
@@ -127,12 +129,12 @@ function fillCart(){
   }
 
   for (let i = 0; i < promocodes.length; i++) {
-    tp[i].innerHTML = "$" + String(item_price[i]*q[i])
+    tp[i].innerHTML = "$" + String(item_price[i]*quantity[i])
   }
 
   var t = 0
   for (let i = 0; i<tp.length; i++) {
-    t += item_price[i]*q[i]
+    t += item_price[i]*quantity[i]
   }
 
   subtotal.innerHTML = "$" + String(t)
