@@ -105,6 +105,7 @@ function addUser() {
     for (let i = 0; i < inputFields.length; i++) {
         let input = inputFields[i];
         if (!input.checkValidity()) {
+            alert(input.title);
             return;
         }
     }
