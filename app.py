@@ -208,13 +208,37 @@ class Team(db.Model):
     wins = db.Column(db.Integer)
     losses = db.Column(db.Integer)
 
-
     def __init__(self, name, nb_of_players, coach_id, wins, losses):
         self.name = name
         self.nb_of_players = nb_of_players
         self.coach_id = coach_id
         self.wins = wins
         self.losses = losses
+
+class Discussion(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(128))
+    parent = db.Column(db.Integer)
+    content = db.Column(db.String(4000))
+    date_added = db.Column(db.String(128))
+
+    def __init__(self, username, parent, content, date_added):
+        self.username = username
+        self.parent = parent
+        self.content = content
+        self.date_added = date_added
+
+class Reviews(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(128))
+    content = db.Column(db.String(4000))
+    date_added = db.Column(db.String(128))
+
+    def __init__(self, username, parent, content, date_added):
+        self.username = username
+        self.content = content
+        self.date_added = date_added
+
 
 @app.route('/checkLogin')
 def user_logged_in():
@@ -652,3 +676,23 @@ def update_coach():
     coach_match.losses = losses
     db.session.commit()
     return 'getprofiles'
+
+@app.route('/discussion', methods=['GET', 'POST'])
+def get_discussion():
+    if request.method == 'GET':
+        return render_template('Discussion-Forum.html')
+    data = request.json
+    newpost = Discussion(session['user_name'], data['parent'], data['content'], data['date_added'])
+    db.session.add(newpost)
+    db.session.commit()
+    return render_template('Discussion-Forum.html')
+
+@app.route('/reviews', methods=['GET', 'POST'])
+def get_reviews():
+    if request.method == 'GET':
+        return 'about'
+    data = request.json
+    newpost = Discussion(session['user_name'], data['content'], data['date_added'])
+    db.session.add(newpost)
+    db.session.commit()
+    return render_template('Discussion-Forum.html')
