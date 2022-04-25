@@ -9,7 +9,7 @@ from flask_marshmallow import Marshmallow
 import jwt
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:mira@127.0.0.1:3306/users'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Fuckapple123123@127.0.0.1:3306/430'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 ma = Marshmallow(app)
@@ -138,6 +138,17 @@ class Match(db.Model):
         self.team_1_id = team_1_id
         self.team_2_id = team_2_id
 
+class Events(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    event_name = db.Column(db.String(128))
+    event_location = db.Column(db.String(128))
+    event_time = db.Column(db.String(128))
+
+    def __init__(self, event_name, event_location, event_time):
+        self.event_name = event_name
+        self.event_location = event_location
+        self.event_time = event_time
+
 class UserSchema(ma.Schema):
     class Meta:
         fields = ("first_name", "last_name", "email", "user_name")
@@ -238,6 +249,8 @@ class Reviews(db.Model):
         self.username = username
         self.content = content
         self.date_added = date_added
+
+
 
 
 @app.route('/checkLogin')
@@ -464,7 +477,10 @@ def get_match():
     upcoming_matches = Match.query.all()
     return render_template('matches.html', upcoming_matches= upcoming_matches)
 
-
+@app.route('/getevents', methods = ['GET', 'POST'])
+def get_event():
+    upcoming_events = Events.query.all()
+    return render_template('events.html', upcoming_events = upcoming_events )
 
 @app.route('/postmatches', methods=['GET', 'POST'])
 def post_match():
@@ -487,6 +503,27 @@ def post_match():
     db.session.commit()
     return 'getmatches'
 
+@app.route('/postevents', methods = ['GET','POST'])
+def post_event():
+    if request.method == 'GET':
+        return render_template("events_form.html")
+    
+    data = request.json
+    event_name = data['name']
+    event_time = data['timing']
+    event_location = data['location']
+
+    print(event_time)
+    check_event = Events.query.filter(Events.event_time == event_time).first()
+    if check_event is not None:
+        print("This day is already booked. Please choose another")
+        
+        return 'getevents'
+    event = Events(event_name, event_location, event_time)
+    db.session.add(event)
+    db.session.commit()
+    return 'getevents'
+
 @app.route('/deletematch', methods=['GET', 'POST'])
 def delete_match():
     games = Match.query.all()
@@ -500,6 +537,20 @@ def delete_match():
     Match.query.filter(Match.name == name).delete()
     db.session.commit()
     return 'getmatches'
+
+@app.route('/deleteevents', methods = ['GET','POST'])
+def delete_event():
+    events = Events.query.all()
+    if request.method == 'GET':
+        return render_template("delete_events_form.html",
+                                    events = events)
+    data = request.json
+    event_name = data['name']
+    print("NAME IS", event_name)
+    Events.query.filter(Events.event_name == event_name).delete()
+    print('HERE')
+    db.session.commit()
+    return 'getevents'
 
 @app.route('/updatematch', methods=['GET', 'POST'])
 def update_match():
@@ -520,6 +571,9 @@ def update_match():
     updated_match.team_2_id = team_2_id
     db.session.commit()
     return 'getmatches'
+
+
+
 
 @app.route('/checkPayment', methods=['GET'])
 def check_payment():
