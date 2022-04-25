@@ -27,7 +27,13 @@ let card_num = document.getElementById("ccnum")
 let exp_month = document.getElementById("expmonth")
 let exp_year = document.getElementById("expyear")
 let cvv = document.getElementById("cvv")
+
+var loginButton = document.getElementById("login-button");
+var logoutButton = document.getElementById("logout-button");
+var loginDisplay = loginButton.style.display;
+var logoutDisplay = logoutButton.style.display;
 var userLabel = document.getElementById("label");
+var userDisplay = userLabel.style.display;
 checkLogin(`${SERVER_URL}/checkLogin`);
 async function checkLogin(url) {
     const response = await fetch(url);
@@ -38,19 +44,25 @@ async function checkLogin(url) {
         // Do your JSON handling here
         if (data1["found"])
         {
+            logoutButton.style.display = logoutDisplay;
+            loginButton.style.display = "none";
             userLabel.innerHTML = "Signed in as " + data1["user_name"];
-            full_name.value = data1["first_name"] + " " + data1["last_name"];
-            email.value = data1["email"];
+            userLabel.style.display = userDisplay;
         }
         else
         {
-            userLabel.style.display="none";
+            logoutButton.style.display = "none";
+            loginButton.style.display = loginDisplay;
+            userLabel.innerHTML = "";
+            userLabel.style.display = "none";
         }
     } catch (err) {
         // The response wasn't a JSON object
         // Do your text handling here
     }
 }
+
+
 async function saveInfo(url,data) {
     const response = await fetch(url,{
         method: 'POST',

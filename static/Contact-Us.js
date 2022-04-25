@@ -14,11 +14,16 @@ window.onload = function() { inactivityTime(); }
 var errorMessage = document.getElementById("error-message");
 var addButton = document.getElementById("add-button");
 addButton.addEventListener("click", subMessage);
-var userLabel = document.getElementById("label");
-var userDisplay = userLabel.style.display;
+
 var message = document.getElementById("message");
 var full_name = document.getElementById("name");
 var email = document.getElementById("email");
+var loginButton = document.getElementById("login-button");
+var logoutButton = document.getElementById("logout-button");
+var loginDisplay = loginButton.style.display;
+var logoutDisplay = logoutButton.style.display;
+var userLabel = document.getElementById("label");
+var userDisplay = userLabel.style.display;
 checkLogin(`${SERVER_URL}/checkLogin`);
 async function checkLogin(url) {
     const response = await fetch(url);
@@ -29,19 +34,25 @@ async function checkLogin(url) {
         // Do your JSON handling here
         if (data1["found"])
         {
+            logoutButton.style.display = logoutDisplay;
+            loginButton.style.display = "none";
             userLabel.innerHTML = "Signed in as " + data1["user_name"];
-            full_name.value = data1["first_name"] + " " + data1["last_name"];
-            email.value = data1["email"];
+            userLabel.style.display = userDisplay;
         }
         else
         {
-            userLabel.style.display="none";
+            logoutButton.style.display = "none";
+            loginButton.style.display = loginDisplay;
+            userLabel.innerHTML = "";
+            userLabel.style.display = "none";
         }
     } catch (err) {
         // The response wasn't a JSON object
         // Do your text handling here
     }
 }
+
+
 function handleResponse(data) {
     alert(data["message"]);
     return;
