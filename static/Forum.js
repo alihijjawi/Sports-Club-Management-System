@@ -45,3 +45,31 @@ async function checkLogin(url) {
     }
 }
 
+var postdiv = document.getElementById("addpost")
+var commentdiv = document.getElementById("addcomment")
+postdiv.style.display="none"
+commentdiv.style.display="none"
+
+var sc = document.getElementById("showcomment")
+sc.addEventListener("click", showComment)
+function showComment(){
+    commentdiv.style.display="block"
+}
+
+var sp = document.getElementById("showpost")
+sp.addEventListener("click", showPost)
+function showPost(){
+    postdiv.style.display="block"
+}
+
+var ac = document.getElementById("commentbutton")
+ac.addEventListener("click", addComment)
+function addComment(){
+    commentdiv.style.display="none"
+}
+
+var ac = document.getElementById("postbutton")
+ac.addEventListener("click", addPost)
+function addPost(){
+    postdiv.style.display="none"
+}

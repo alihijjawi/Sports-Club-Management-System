@@ -36,3 +36,4 @@ async function checkLogin(url) {
         // Do your text handling here
     }
 }
+

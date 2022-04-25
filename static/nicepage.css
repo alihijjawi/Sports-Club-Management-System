@@ -37615,9 +37615,8 @@ a.u-link.u-text-hover-grey-90:hover {
 }
 
 .u-header .u-logo-image-1 {
-  margin: -75px auto 0 0;
-  width: 200px;
-  height: 200px;
+  width: 175px;
+  height: 175px;
 }
 
 .u-header .u-image-2 {
@@ -37625,7 +37624,7 @@ a.u-link.u-text-hover-grey-90:hover {
   height: 110px;
   background-image: url("images/userprof.png");
   background-position: 50% 50%;
-  margin: -77px 78px 0 auto;
+  margin: -100px 78px 0 auto;
 }
 
 .u-header .u-btn-1 {
