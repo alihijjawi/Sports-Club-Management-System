@@ -251,8 +251,6 @@ class Reviews(db.Model):
         self.date_added = date_added
 
 
-
-
 @app.route('/checkLogin')
 def user_logged_in():
     print(session)
@@ -733,20 +731,26 @@ def update_coach():
 
 @app.route('/discussion', methods=['GET', 'POST'])
 def get_discussion():
-    if request.method == 'GET':
-        return render_template('Discussion-Forum.html')
-    data = request.json
-    newpost = Discussion(session['user_name'], data['parent'], data['content'], data['date_added'])
-    db.session.add(newpost)
-    db.session.commit()
-    return render_template('Discussion-Forum.html')
+    if request.method == 'POST':
+        data = request.json
+        newpost = Discussion(session['user_name'], data['parent'], data['title'], data['content'], datetime.datetime.utcnow())
+        db.session.add(newpost)
+        db.session.commit()
+    posts = Discussion.query.filter_by(parent=0).all()
+    posts.reverse()
+    comments=[]
+    for p in posts:
+        pcomments = Discussion.query.filter_by(parent=p.id).all()
+        comments.append(pcomments)
+    return render_template('Discussion-Forum.html', posts=posts, comments=comments)    
 
 @app.route('/reviews', methods=['GET', 'POST'])
 def get_reviews():
-    if request.method == 'GET':
-        return 'about'
-    data = request.json
-    newpost = Discussion(session['user_name'], data['content'], data['date_added'])
-    db.session.add(newpost)
-    db.session.commit()
-    return render_template('Discussion-Forum.html')
+    if request.method == 'POST':    
+        data = request.json
+        newpost = Reviews(session['user_name'], data['title'], data['content'], datetime.datetime.utcnow())
+        db.session.add(newpost)
+        db.session.commit()
+    reviews = Reviews.query.all()
+    return render_template('About.html', reviews=reviews)
+    
