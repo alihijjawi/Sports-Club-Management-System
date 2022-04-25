@@ -204,7 +204,9 @@
             <div class="u-container-style u-tab-pane" id="link-tab-d7e7" role="tabpanel" aria-labelledby="tab-d7e7">
               <div class="u-container-layout u-container-layout-4">
                 <div class="u-container-style u-tab-pane u-block-7c8c-34" id="link-tab-d7e7" role="tabpanel" aria-labelledby="tab-d7e7">
-                  <div class="u-container-layout u-block-7c8c-35"><a href="https://nicepage.com/website-templates" class="u-border-1 u-border-custom-color-1 u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-3 u-text-body-alt-color u-block-7c8c-57">Add Review</a><div class="u-form u-block-7c8c-58">
+                  <div class="u-container-layout u-block-7c8c-35">
+                    <a id="addreview" class="u-border-1 u-border-custom-color-1 u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-3 u-text-body-alt-color u-block-7c8c-57">Add Review</a>
+            <div id="showreview" class="u-form u-block-7c8c-58">
               <form action="https://nicepage.com/editor/Forms/Process" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="email" name="form">
                 
                 
@@ -218,27 +220,35 @@
                   <textarea placeholder="Write Something..." rows="4" cols="50" id="message-6797" name="message" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-block-7c8c-64" required=""></textarea>
                 </div>
                 <div class="u-align-right u-form-group u-form-submit u-block-7c8c-65">
-                  <a href="#" class="u-border-none u-btn u-btn-submit u-button-style u-custom-color-1 u-hover-custom-color-2 u-block-7c8c-66">POST</a>
+                  <a id="postreview" class="u-border-none u-btn u-btn-submit u-button-style u-custom-color-1 u-hover-custom-color-2 u-block-7c8c-66">POST</a>
                   <input type="submit" value="submit" class="u-form-control-hidden">
                 </div>
-                <div class="u-form-send-message u-form-send-success">Thank you! Your message has been sent.</div>
-                <div class="u-form-send-error u-form-send-message">Unable to send your message. Please fix errors then try again.</div>
-                <input type="hidden" value="" name="recaptchaResponse">
               </form>
             </div><div class="u-blog u-expanded-width u-block-7c8c-50"><div class="u-repeater u-block-7c8c-51">
-              <div class="u-blog-post u-container-style u-repeater-item u-block-7c8c-52" data-blog-post-id="7">
-                <div class="u-container-layout u-similar-container u-block-7c8c-53">
-                  <h2 class="u-blog-control u-text u-block-7c8c-54">
-                    <a class="u-post-header-link" href="7">My Thoughts</a>
-                  </h2>
-                  
-                  <div class="u-blog-control u-metadata u-block-7c8c-55">
-                    <span class="u-meta-date u-meta-icon">Mon Apr 25 2022</span>
-                  </div>
-                  <div class="u-blog-control u-post-content u-text u-block-7c8c-56">I love EECE 430!</div>
-                  
-                </div>
-              </div>
+              <table class="styled-table">
+                <thead>
+                  <tr>
+                    <th>Reviews</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for r in reviews %}
+                  <tr>
+                    <div class="u-blog-post u-container-style u-repeater-item u-block-7c8c-52" data-blog-post-id="7">
+                      <div class="u-container-layout u-similar-container u-block-7c8c-53">
+                        <h2 class="u-blog-control u-text u-block-7c8c-54">
+                          <a class="u-post-header-link" href="7">{{r.title}}</a>
+                        </h2>
+                        <div class="u-blog-control u-metadata u-block-7c8c-55">
+                          <span class="u-meta-date u-meta-icon">{{ r.date_added }} by {{ r.username }}</span>
+                        </div>
+                        <div class="u-blog-control u-post-content u-text u-block-7c8c-56">{{ r.content }}</div>
+                      </div>
+                    </div>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
             </div></div></div>
                 </div>
               </div>

@@ -131,31 +131,86 @@
     </div><div class="u-container-style u-post-details u-block-a44f-18" data-blog-post-id="7">
       <div class="u-container-layout u-block-a44f-19">
         
-        
-        
-        
-      <h2 class="u-blog-control u-text u-block-a44f-20">
-          <a class="u-post-header-link" href="7">My Thoughts</a>
-        </h2><span class="u-border-2 u-border-palette-1-base u-file-icon u-icon u-icon-circle u-block-a44f-24"><img src="../static/images/3964085.png" alt="" data-original-src="np://user.desktop.nicepage.com/Site_2465015654/images/3964085.png" data-color="#000000"></span><div class="u-blog-control u-metadata u-text-grey-30 u-block-a44f-21">
-          <span class="u-meta-date u-meta-icon">Mon Apr 25 2022</span>
-          <span class="u-meta-category u-meta-icon">Category</span>
-          <span class="u-meta-comments u-meta-icon">Comments (0)</span>
-        </div><div class="u-align-justify u-blog-control u-post-content u-text u-block-a44f-22">I love EECE 430!</div>
-        <a id="showcomment" class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-style u-none u-text-palette-1-base u-block-a44f-31">Add Comment</a>
-        <div id="addcomment" class="u-form u-block-a44f-41">
-         <form method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="email" name="form">
-        
-        <div class="u-form-group u-form-name u-label-none u-block-a44f-42">
-          <label for="name-6797" class="u-label u-block-a44f-43">Comment</label>
-          <input id="commentcontent" type="text" placeholder="Comment" id="name-6797" name="comment" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-block-a44f-44" required="">
-        </div>
+        <table id="t1" class="styled-table">
+          <thead>
+            <tr>
+              <th>Posts</th>
+            </tr>
+          </thead>
+          <tbody>
+            <script>
+             for(let i=0; i<posts.length; i++) {
+               document.write(
+                <tr>
+                  <h2 class="u-blog-control u-text u-block-a44f-20">
+                   <a class="u-post-header-link" href="7">{posts[i].title} by {posts[i].user_name}</a>
+                    </h2><span class="u-border-2 u-border-palette-1-base u-file-icon u-icon u-icon-circle u-block-a44f-24">
+                      <img src="../static/images/3964085.png" alt="" data-original-src="np://user.desktop.nicepage.com/Site_2465015654/images/3964085.png" data-color="#000000"/></span>
+                      <div class="u-blog-control u-metadata u-text-grey-30 u-block-a44f-21">
+                      <span class="u-meta-date u-meta-icon">{posts[i].date_added}</span>
+                      <a class="u-meta-comments u-meta-icon">Comments ({comments[i].length})</a>
 
-        <div class="u-align-right u-form-group u-form-submit u-block-a44f-45">
-          <a id="commentbutton" class="u-border-none u-btn u-btn-submit u-button-style u-custom-color-1 u-hover-custom-color-2 u-block-a44f-46">POST</a>
-          <input type="submit" value="submit" class="u-form-control-hidden">
-        </div>
-      </form>
-    </div></div>
+                      <table id="t2" class="styled-table">
+                        <tbody>
+                          <script>
+                          for(let j=0; j<comments.length[i]; j++) {
+                            document.write(
+                              <tr>
+                                <h2 class="u-blog-control u-text u-block-a44f-20">
+                                <a class="u-post-header-link" href="7">{posts[i].title} by {posts[i].user_name}</a>
+                                  </h2><span class="u-border-2 u-border-palette-1-base u-file-icon u-icon u-icon-circle u-block-a44f-24">
+                                    <img src="../static/images/3964085.png" alt="" data-original-src="np://user.desktop.nicepage.com/Site_2465015654/images/3964085.png" data-color="#000000"/></span>
+                                    <div class="u-blog-control u-metadata u-text-grey-30 u-block-a44f-21">
+                                    <span class="u-meta-date u-meta-icon">{posts[i].date_added}</span>
+                                    <a class="u-meta-comments u-meta-icon">Comments ({comments[i].length})</a>
+                                  </div>
+                                  <div class="u-align-justify u-blog-control u-post-content u-text u-block-a44f-22">{posts[i].content}</div>
+                                  <a id={"showcomment"+i.toString()} class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-style u-none u-text-palette-1-base u-block-a44f-31">Add Comment</a>
+                                  <div id={"addcomment"+i.toString()} class="u-form u-block-a44f-41">
+                                  <form method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="email" name="form">
+                                  
+                                  <div class="u-form-group u-form-name u-label-none u-block-a44f-42">
+                                    <label for={"commentcontent"+i.toString()} class="u-label u-block-a44f-43">Comment</label>
+                                    <input id={"commentcontent"+i.toString()} type="text" placeholder="Comment" name="comment" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-block-a44f-44" required=""/>
+                                  </div>
+
+                                  <div class="u-align-right u-form-group u-form-submit u-block-a44f-45">
+                                    <a id={"commentbutton"+i.toString()} class="u-border-none u-btn u-btn-submit u-button-style u-custom-color-1 u-hover-custom-color-2 u-block-a44f-46">POST</a>
+                                    <input type="submit" value="submit" class="u-form-control-hidden"/>
+                                  </div>
+                                </form>
+                              </div>
+                              </tr>
+                            );              
+                          }
+                        </script>
+                        </tbody>
+                      </table>   
+
+                    </div>
+                    <div class="u-align-justify u-blog-control u-post-content u-text u-block-a44f-22">{posts[i].content}</div>
+                    <a id={"showcomment"+i.toString()} class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-style u-none u-text-palette-1-base u-block-a44f-31">Add Comment</a>
+                    <div id={"addcomment"+i.toString()} class="u-form u-block-a44f-41">
+                    <form method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="email" name="form">
+                    
+                    <div class="u-form-group u-form-name u-label-none u-block-a44f-42">
+                      <label for={"commentcontent"+i.toString()} class="u-label u-block-a44f-43">Comment</label>
+                      <input id={"commentcontent"+i.toString()} type="text" placeholder="Comment" name="comment" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-block-a44f-44" required=""/>
+                    </div>
+
+                    <div class="u-align-right u-form-group u-form-submit u-block-a44f-45">
+                      <a id={"commentbutton"+i.toString()} class="u-border-none u-btn u-btn-submit u-button-style u-custom-color-1 u-hover-custom-color-2 u-block-a44f-46">POST</a>
+                      <input type="submit" value="submit" class="u-form-control-hidden"/>
+                    </div>
+                  </form>
+                </div>
+                </tr>
+               );              
+             }
+          </script>
+          </tbody>
+        </table>        
+      </div>
     </div></div>
   <style data-mode="XL">@media (min-width: 1200px) {
   .u-block-a44f-2 {
