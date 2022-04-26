@@ -31,7 +31,6 @@ async function checkLogin(url) {
             loginButton.style.display = "none";
             userLabel.innerHTML = "Signed in as " + data1["user_name"];
             userLabel.style.display = userDisplay;
-            return true;
         }
         else
         {
@@ -39,11 +38,50 @@ async function checkLogin(url) {
             loginButton.style.display = loginDisplay;
             userLabel.innerHTML = "";
             userLabel.style.display = "none";
-            return false;
         }
     } catch (err) {
         // The response wasn't a JSON object
         // Do your text handling here
+    }
+}
+
+var del=[]
+var i = 0
+while(document.getElementById("del"+i.toString())){
+    del.push(document.getElementById("del"+i.toString()))
+    del[i].addEventListener("click", deletePost)
+    i+=1;
+}
+function deletePost(){
+    var buttons = document.getElementsByTagName("button")
+    var buttonsCount = buttons.length
+    var delid = 0
+    for(let i=0; i<buttonsCount; i++)
+        buttons[i].onclick = function(e){ delid = i; }
+
+    myFetch(`${SERVER_URL}/deletereview`, {"id":delid}, 'POST')
+}
+
+async function myFetch(myRequest, data, type) {
+    if(type=='POST'){
+        await fetch(myRequest, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+    }
+    else{
+        await fetch(myRequest, {
+            method: 'GET',
+            mode: 'cors'
+        }).then(
+            response=>response.text()
+        ).then(
+            document.write(response)
+        )
     }
 }
 
@@ -76,27 +114,7 @@ function postReview(){
         "title": document.getElementById("name-6797").value,
         "content": document.getElementById("message-6797").value
     };
-    myFetch(`${SERVER_URL}/reviews`, data); 
+    myFetch(`${SERVER_URL}/postreviews`, data, 'POST'); 
+    myFetch(`${SERVER_URL}/about`, {}, 'GET'); 
 }
 
-async function myFetch(myRequest, data) {
-    const response = await fetch(myRequest, {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    });
-    const text = await response.text();
-    try {
-        const data1 = JSON.parse(text); // Try to parse it as JSON
-        // The response was a JSON object
-        // Do your JSON handling here
-        errorMessage.innerHTML = data1["message"];
-    } catch (err) {
-        // The response wasn't a JSON object
-        // Do your text handling here
-        location.replace(text);
-    }
-}

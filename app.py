@@ -6,16 +6,29 @@ from flask import jsonify
 from flask_cors import CORS
 from flask import session, url_for, redirect, render_template
 from flask_marshmallow import Marshmallow
+
 import jwt
+from datetime import datetime
+from dateutil import parser
+
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
+
+
+
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Fuckapple123123@127.0.0.1:3306/430'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:rootroot@127.0.0.1:3306/scms'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 ma = Marshmallow(app)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['DEBUG'] = True
 app.secret_key = '\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
+
+
 
 def create_token(user_id):
  payload = {
@@ -24,9 +37,9 @@ def create_token(user_id):
  'sub': user_id
  }
  return jwt.encode(
- payload,
- SECRET_KEY,
- algorithm='HS256'
+    payload,
+    SECRET_KEY,
+    algorithm='HS256'
  )
 
 def extract_auth_token(authenticated_request):
@@ -149,37 +162,44 @@ class Events(db.Model):
         self.event_location = event_location
         self.event_time = event_time
 
-class UserSchema(ma.Schema):
-    class Meta:
-        fields = ("first_name", "last_name", "email", "user_name")
-        model = User
+class Sponsorship(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    company_name = db.Column(db.String(128))
+    point_of_contact = db.Column(db.String(128))
+    billing_address = db.Column(db.String(128))
+    phone_number = db.Column(db.String(128))
+    email = db.Column(db.String(128))
+    website = db.Column(db.String(128))
 
-class MatchSchema(ma.Schema):
-    class Meta:
-        fields = ("name", "timing")
-        model = Match
+    def __init__(self, company_name, point_of_contact, billing_address, phone_number, email, website):
+        self.company_name = company_name
+        self.point_of_contact = point_of_contact
+        self.billing_address = billing_address
+        self.phone_number = phone_number
+        self.email = email
+        self.website = website
 
-class ReservationSchema(ma.Schema):
-    class Meta:
-        fields =("name", "date","court","time")
-        model = Reservation
+class OnlineStore(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    item_name = db.Column(db.String(128))
+    price = db.Column(db.Float)
+    date = db.Column(db.DateTime)
 
-user_schema = UserSchema()
-matches_schema = MatchSchema(many=True)
-reservations_schema = ReservationSchema(many=True)
+    def __init__(self, item_name, price, date):
+        self.item_name = item_name
+        self.price = price
+        self.date = date
 
 class Ticket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128))
-    email = db.Column(db.String(128))
     number = db.Column(db.String(128))
     match = db.Column(db.String(128))
+    date = db.Column(db.DateTime)
 
-    def __init__(self, name, email, number, match):
-        self.name = name
-        self.email = email
+    def __init__(self, number, match, date):
         self.number = number
         self.match = match
+        self.date = date
 
 class Coach(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -249,6 +269,38 @@ class Reviews(db.Model):
         self.username = username
         self.content = content
         self.date_added = date_added
+
+
+
+class UserSchema(ma.Schema):
+    class Meta:
+        fields = ("first_name", "last_name", "email", "user_name")
+        model = User
+
+class MatchSchema(ma.Schema):
+    class Meta:
+        fields = ("name", "timing")
+        model = Match
+
+class ReservationSchema(ma.Schema):
+    class Meta:
+        fields =("name", "date","court","time")
+        model = Reservation
+
+class OnlineStoreSchema(ma.Schema):
+    class Meta:
+        fields = ("item_name", "price", "date")
+        model = OnlineStore
+
+class TicketSchema(ma.Schema):
+    class Meta:
+        fields = ("number", "match", "date")
+        model = Ticket
+
+user_schema = UserSchema()
+matches_schema = MatchSchema(many=True)
+reservations_schema = ReservationSchema(many=True)
+
 
 
 @app.route('/checkLogin')
@@ -432,9 +484,12 @@ def get_tickets():
     elif request.method == 'POST':
         data = request.json
         print(data)
+
         number = data["number"]
         match = data["match"]
-        ticket = Ticket(name, email, number, match)
+        date = datetime.datetime.utcnow()
+
+        ticket = Ticket(number, match, date)
         db.session.add(ticket)
         db.session.commit()
 
@@ -569,8 +624,6 @@ def update_match():
     updated_match.team_2_id = team_2_id
     db.session.commit()
     return 'getmatches'
-
-
 
 
 @app.route('/checkPayment', methods=['GET'])
@@ -753,4 +806,72 @@ def get_reviews():
         db.session.commit()
     reviews = Reviews.query.all()
     return render_template('About.html', reviews=reviews)
+
+@app.route('/sponsors', methods=['GET', 'POST'])
+def submit():
+    if request.method == "POST":
+        data = request.json
+
+        company_name = data['company_name']
+        point_of_contact = data['point_of_contact']
+        billing_address = data['billing_address']
+        phone_number = data['phone_number']
+        email = data['email']
+        website = data['website']
+
+        form = Sponsorship(company_name, point_of_contact, billing_address, phone_number, email, website)
+
+        db.session.add(form)
+        db.session.commit()
     
+    return render_template('sponsorship.html')
+
+@app.route('/store_report', methods=['GET', 'POST'])
+def store_report():
+    if request.method == "POST":
+        data = request.json
+
+        start_date = parser.parse(data['start_date'])
+        end_date = parser.parse(data['end_date'])
+
+        entries = OnlineStore.query.filter(OnlineStore.date.between(start_date, end_date)).all()
+        
+        dates = []
+        prices = []
+        for entry in entries:
+            dates.append(entry.date)
+            prices.append(entry.price)
+
+        print(dates)
+        
+        plt.plot_date(dates, prices)
+        plt.xlabel("Date")
+        plt.ylabel("Revenue ($)")
+        plt.gcf().autofmt_xdate()
+        plt.savefig('static/images/reports/store_report.png')
+
+    return render_template('store_report.html')
+
+@app.route('/ticket_report', methods=['GET', 'POST'])
+def ticket_report():
+    if request.method == "POST":
+        data = request.json
+
+        start_date = parser.parse(data['start_date'])
+        end_date = parser.parse(data['end_date'])
+
+        entries = Ticket.query.filter(Ticket.date.between(start_date, end_date)).all()
+        
+        dates = []
+        prices = []
+        for entry in entries:
+            dates.append(entry.date)
+            prices.append(10 * int(entry.number))
+        
+        plt.plot_date(dates, prices)
+        plt.xlabel("Date")
+        plt.ylabel("Revenue ($)")
+        plt.gcf().autofmt_xdate()
+        plt.savefig('static/images/reports/ticket_report.png')
+
+    return render_template('ticket_report.html')

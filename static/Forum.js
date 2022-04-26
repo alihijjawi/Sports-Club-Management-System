@@ -48,12 +48,23 @@ async function checkLogin(url) {
 }
 
 var postdiv = document.getElementById("addpost")
-var commentdiv = document.getElementById("addcomment")
+var commentdiv = []
+var i = 0
+while(document.getElementById("addcomment"+i.toString)){
+    commentdiv.push(document.getElementById("addcomment"+i.toString))
+    commentdiv[i].style.display="none"
+    i+=1
+}
 postdiv.style.display="none"
-commentdiv.style.display="none"
 
-var sc = document.getElementById("showcomment")
-sc.addEventListener("click", showComment)
+var sc = []
+i = 0
+while(document.getElementById("showcomment"+i.toString)){
+    sc.push(document.getElementById("showcomment"+i.toString))
+    sc[i].addEventListener("click", showComment)
+    i+=1
+}
+
 function showComment(){
     if(userLabel.innerHTML != "") commentdiv.style.display="block";
     else{
@@ -72,8 +83,14 @@ function showPost(){
     }
 }
 
-var ac = document.getElementById("commentbutton")
-ac.addEventListener("click", addComment)
+var ac = []
+i = 0
+while(document.getElementById("commentbutton"+i.toString)){
+    ac.push(document.getElementById("commentbutton"+i.toString))
+    ac[i].addEventListener("click", addComment)
+    i+=1
+}
+
 function addComment(){
     var buttons = document.getElementsByTagName("a")
     var buttonsCount = buttons.length
@@ -88,17 +105,17 @@ function addComment(){
             return;
         }
     }
-    commentdiv.style.display="none"
     const data = {
         "title": document.getElementById("name-6797").value,
         "content": document.getElementById("message-6797").value,
         "parent":parseInt(id[13])
     };
+    commentdiv.style.display="none"
     myFetch(`${SERVER_URL}/discussion`, data); 
 }
 
-var ac = document.getElementById("postbutton")
-ac.addEventListener("click", addPost)
+var ap = document.getElementById("postbutton")
+ap.addEventListener("click", addPost)
 function addPost(){
     const inputFields = document.querySelectorAll("input");
     for (let i = 0; i < inputFields.length; i++) {
@@ -107,12 +124,12 @@ function addPost(){
             return;
         }
     }
-    postdiv.style.display="none"
     const data = {
         "title": document.getElementById("name-6797").value,
         "content": document.getElementById("message-6797").value,
         "parent":0
     };
+    postdiv.style.display="none"
     myFetch(`${SERVER_URL}/discussion`, data); 
 }
 
@@ -130,7 +147,6 @@ async function myFetch(myRequest, data) {
         const data1 = JSON.parse(text); // Try to parse it as JSON
         // The response was a JSON object
         // Do your JSON handling here
-        errorMessage.innerHTML = data1["message"];
     } catch (err) {
         // The response wasn't a JSON object
         // Do your text handling here
