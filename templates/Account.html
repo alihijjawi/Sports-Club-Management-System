@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-url="{{login}}" id = "FullPage" style="font-size: 16px;">
+<html style="font-size: 16px;">
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,29 +7,26 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="page_type" content="np-template-header-footer-from-plugin">
-  <title>My Account</title>
-  <link rel="stylesheet" href="{{url_for('static',filename='nicepage.css')}}" media="screen">
-  <link rel="stylesheet" href="{{url_for('static',filename='UserReg.css')}}" media="screen">
-  <script class="u-script" type="text/javascript" src="{{url_for('static',filename='jquery.js')}}" defer=""></script>
-  <script class="u-script" type="text/javascript" src="{{url_for('static',filename='nicepage.js')}}" defer=""></script>
-  <meta name="generator" content="Nicepage 4.8.2, nicepage.com">
-  <link id="u-theme-google-font" rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
-
+  <title>Account</title>
+  <link rel="stylesheet" href="../static/nicepage.css" media="screen">
+  <link rel="stylesheet" href="../static/Account.css" media="screen">
+  <script class="u-script" type="text/javascript" src="../static/jquery.js" defer=""></script>
+  <script class="u-script" type="text/javascript" src="../static/nicepage.js" defer=""></script>
 
   <script type="application/ld+json">{
 		"@context": "http://schema.org",
 		"@type": "Organization",
 		"name": "",
-		"logo": "{{url_for('static',filename='images/logo.jpeg')}}"
+		"logo": "../static/images/logo.jpeg"
 }</script>
   <meta name="theme-color" content="#478ac9">
-  <meta property="og:title" content="User Registration">
+  <meta property="og:title" content="Account">
   <meta property="og:type" content="website">
 </head>
 
 <body class="u-body u-xl-mode">
   <header class="u-clearfix u-header u-header" id="sec-ef30">
+    <div class="u-clearfix u-sheet u-sheet-1">
       <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
         <div class="menu-collapse" style="font-size: 1.5rem; letter-spacing: 0px; font-weight: 700;">
           <a class="u-button-style u-custom-border-radius u-custom-color u-custom-hover-color u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-text-active-color u-custom-text-decoration u-custom-text-hover-color u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
@@ -50,67 +47,55 @@
         <div class="u-custom-menu u-nav-container">
           <ul class="u-nav u-unstyled u-nav-1">
             <li class="u-nav-item"><a
-              href ="account"
                 class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
-                style="padding: 20px 20px; margin-top: -10px; margin-left: -10px; margin-right:-20x; text-decoration: underline !important;">Account</a>
+                href="Homepage.html" style="padding: 58px 26px; text-decoration: underline !important;">Home</a>
             </li>
             <li class="u-nav-item"><a
-                href="/discussion"
                 class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
-                style="padding: 20px 20px; margin-top: -10px; margin-left: -10px; margin-right:-20x; text-decoration: underline !important;">Discussion</a>
+                href="../Project---Online-Store/Online-Store.html"
+                style="padding: 58px 26px; text-decoration: underline !important;">Store</a>
             </li>
             <li class="u-nav-item"><a
-              href="events" class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
-              style="padding: 20px 20px; margin-top: -10px; margin-left: -10px; margin-right:-20x; text-decoration: underline !important;">Events</a>
-          </li>
-          <li class="u-nav-item"><a
-            href = "getmatches"
-              class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
-              style="padding: 20px 20px; margin-top: -10px; margin-left: -10px; margin-right:-20x; text-decoration: underline !important;">Matches</a>
-          </li>
-          <li class="u-nav-item"><a
-            href="reserve"
-            class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
-            style="padding: 20px 20px; margin-top: -10px; margin-left: -10px; margin-right:-20x; text-decoration: underline !important;">Reserve</a>
-            <li class="u-nav-item"><a
-              href="sponsors"
-              class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
-              style="padding: 20px 20px; margin-top: -10px; margin-left: -10px; margin-right:-20x; text-decoration: underline !important;">Sponsors</a>
-          </li>
-        </li>
-            <li class="u-nav-item"><a
-                href="store"
                 class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
-                style="padding: 20px 20px; margin-top: -10px; margin-left: -10px; margin-right:-20x; text-decoration: underline !important;">Store</a>
+                style="padding: 58px 26px; text-decoration: underline !important;">Teams</a>
             </li>
             <li class="u-nav-item"><a
-                href="teams"
                 class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
-                style="padding: 20px 20px; margin-top: -10px; margin-left: -10px; margin-right: -20px; text-decoration: underline !important;">Teams</a>
-            </li>          
-                      
-          </ul> 
+                style="padding: 58px 26px; text-decoration: underline !important;">Tickets</a>
+            </li>
+            <li class="u-nav-item"><a
+                class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
+                style="padding: 58px 26px; text-decoration: underline !important;">Services</a>
+            </li>
+            <li class="u-nav-item"><a
+                class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
+                style="padding: 58px 26px; text-decoration: underline !important;">Fans</a>
+            </li>
+            <li class="u-nav-item"><a
+                class="u-button-style u-hover-palette-5-dark-1 u-nav-link u-palette-5-light-1 u-text-active-palette-2-base"
+                style="padding: 58px 26px; text-decoration: underline !important;">Account</a>
+            </li>
+          </ul>
         </div>
         <div class="u-custom-menu u-nav-container-collapse">
           <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
             <div class="u-inner-container-layout u-sidenav-overflow">
               <div class="u-menu-close"></div>
               <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
-                <li class="u-nav-item"><a class="u-button-style u-nav-link">Account</a>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Homepage.html">Home</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link">Discussion</a>
-                </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link">Events</a>
-                </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link">Matches</a>
-                </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link">Reserve</a>
-                </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link">Sponsors</a>
-                </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link">Store</a>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link"
+                    href="../Project---Online-Store/Online-Store.html">Store</a>
                 </li>
                 <li class="u-nav-item"><a class="u-button-style u-nav-link">Teams</a>
+                </li>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link">Tickets</a>
+                </li>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link">Services</a>
+                </li>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link">Fans</a>
+                </li>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link">Account</a>
                 </li>
               </ul>
             </div>
@@ -118,55 +103,149 @@
           <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
         </div>
       </nav>
-      <div class="u-div-label"><label id="label"></label></div>
-      <a href="/" class="u-image u-logo u-image-1" data-image-width="300" data-image-height="300">
-        <img src="{{url_for('static',filename='images/logo.jpeg')}}" class="u-logo-image u-logo-image-1">
+      <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="677" data-image-height="623">
+        <img src="../static/images/logo.jpeg" class="u-logo-image u-logo-image-1">
       </a>
-      <div class="u-image u-image-circle u-preserve-proportions u-image-2" alt=""></div>
-      <a href="login" id="login-button" class="u-border-2 u-btn u-button-style u-btn-1">Login here</a>
-      <a href="logout" id="logout-button" class="u-border-2 u-btn u-button-style u-btn-1">Logout here</a>   
+      <h3 class="u-align-center u-headline u-text u-text-default u-text-1">
+        <a>Account Information<br>
+        </a>
+      </h3>
+    </div>
   </header>
-  <section class="u-clearfix u-section-1" id="sec-4ec3">
+  <section class="u-align-left u-clearfix u-section-1" id="sec-17a3">
     <div class="u-clearfix u-sheet u-sheet-1">
-      <div class="u-form u-form-1">
-        <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom"
-          name="form-1" style="padding: 10px;">
+      <div class="u-expanded-width u-tab-links-align-justify u-tabs u-tabs-1">
+        <ul class="u-spacing-30 u-tab-list u-unstyled" role="tablist">
+          <li class="u-tab-item" role="presentation">
+            <a class="active u-active-custom-color-1 u-button-style u-tab-link u-tab-link-1" id="link-tab-081f"
+              href="#tab-081f" role="tab" aria-controls="tab-081f" aria-selected="true">Edit Profile</a>
+          </li>
+          <li class="u-tab-item" role="presentation">
+            <a class="u-active-custom-color-1 u-button-style u-tab-link u-tab-link-2" id="link-tab-4d57"
+              href="#tab-4d57" role="tab" aria-controls="tab-4d57" aria-selected="false">Change Password<br>
+            </a>
+          </li>
+          <li class="u-tab-item u-tab-item-3" role="presentation">
+            <a class="u-active-custom-color-1 u-button-style u-tab-link u-tab-link-3" id="tab-d7e7"
+              href="#link-tab-d7e7" role="tab" aria-controls="link-tab-d7e7" aria-selected="false">Payment Info</a>
+          </li>
+        </ul>
+        <div class="u-tab-content">
+          <div class="u-container-style u-tab-active u-tab-pane" id="tab-081f" role="tabpanel"
+            aria-labelledby="link-tab-081f">
+            <div class="u-container-layout u-container-layout-1">
+              <div class="u-form u-form-1">
+                <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form"
+                  source="custom" name="form" style="padding: 10px;">
+                  <div class="u-form-group u-form-name">
+                    <label for="fname" class="u-label">First Name</label>
+                    <input type="text" maxlength="32" pattern="[A-Za-z]{1,32}"
+                      title="Enter a name with letters only and no spaces." placeholder="Enter your first name"
+                      id="fname" name="name" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+                      required="">
+                  </div>
+                  <div class="u-form-group u-form-name u-form-group-2">
+                    <label for="lname" class="u-label">Last Name</label>
+                    <input type="text" maxlength="32" pattern="[A-Za-z]{1,32}"
+                      title="Enter a name with letters only and no spaces." placeholder="Enter your last name"
+                      id="lname" name="name-1" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+                      required="">
+                  </div>
+                  <div class="u-form-group u-form-name u-form-group-3">
+                    <label for="username" class="u-label">Username</label>
+                    <input type="text" placeholder="Enter your username" maxlength="32"
+                      pattern="[A-za-z]{1}[A-za-z0-9-_]{0,32}"
+                      title="Username must begin with a letter and must not contain special characters other than: -,_."
+                      id="username" name="name-2" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+                      required="">
+                  </div>
+                  <div class="u-form-email u-form-group">
+                    <label for="email" class="u-label">Email</label>
+                    <input type="email" placeholder="Enter a valid email address" id="email" name="email"
+                      class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+                  </div>
+                  <div class="u-align-center u-form-group u-form-submit">
+                    <label for="submit-btn"
+                      class="u-border-none u-btn u-btn-submit u-button-style u-custom-color-1 u-hover-custom-color-7 u-btn-1">Submit
+                      Changes
+                    </label>
+                    <input type="submit" id="submit-btn" value="submit" class="u-form-control-hidden">
+                  </div>
 
+                </form>
+              </div>
+              <div class="u-image u-image-circle u-preserve-proportions u-image-1" alt="" data-image-width="225"
+                data-image-height="225"></div>
+                <button name="edit" id="edit-fname" class="u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-hover-palette-2-base u-radius-2 u-btn-2">EDIT</button>
+                <button name="edit" id="edit-lname" class="u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-hover-palette-2-base u-radius-2 u-btn-3">EDIT</button>
+                <button name="edit" id="edit-username" class="u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-hover-palette-2-base u-radius-2 u-btn-4">EDIT</button>
+                <button  id="edit-pic" class="u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-7 u-radius-2 u-btn-5">Change Profile Picture</button>
+                <button name="edit" id="edit-email" class="u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-hover-palette-2-base u-radius-2 u-btn-6">EDIT</button>
+                <button  id="delete-btn" class="u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-7 u-radius-2 u-btn-7">Delete User</button>
+            </div>
+          </div>
+          <div class="u-container-style u-tab-pane" id="tab-4d57" role="tabpanel" aria-labelledby="link-tab-4d57">
+            <div class="u-container-layout u-container-layout-2">
+              <div class="u-form u-form-2">
+                <form class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom" name="form-1"
+                  style="padding: 10px;">
+                  <div class="u-form-group u-form-name">
+                    <label for="old-password" class="u-label">Old Password</label>
+                    <input type="password" placeholder="Enter your old password" id="old-password" name="password"
+                      class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+                  </div>
+                  <div class="u-form-group u-form-group-7">
+                    <label for="new-password" class="u-label">New Password</label>
+                    <input pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[?!@#$%^&*_=+-]).{8,32}$" minlength="8"
+                      maxlength="32"
+                      title="Password must contain: between 8 and 32 characters, at least 1 uppercase letter, at least 1 lowercase letter, at least 1 number, at least 1 special character."
+                      type="password" placeholder="Enter your new password" id="new-password" name="password-1"
+                      class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
+                  </div>
+                  <div class="u-form-group u-form-group-8">
+                    <label for="confirm-password" class="u-label">Confirm New Password</label>
+                    <input type="password" placeholder="Confirm your new password" id="confirm-password"
+                      name="password-2" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
+                  </div>
+                  <div class="u-align-center u-form-group u-form-submit">
+                    <button
+                      class="u-border-none u-btn u-btn-submit u-button-style u-custom-color-1 u-hover-custom-color-7 u-btn-7">Change
+                      Password
+                    </button>
+                    <input type="submit" value="submit" class="u-form-control-hidden">
+                  </div>
 
-          <div class="u-form-group u-form-name">
-            <label for="fname" class="u-label">First Name</label>
-            <input type="text" placeholder="Change your first name" id="fname"
-              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+                </form>
+              </div>
+            </div>
           </div>
-          <div class="u-form-group u-form-name u-form-group-2">
-            <label for="lname" class="u-label">Last Name</label>
-            <input type="text" placeholder="Change your last name" id="lname"
-              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+          <div class="u-container-style u-tab-pane" id="link-tab-d7e7" role="tabpanel" aria-labelledby="tab-d7e7">
+            <div class="u-container-layout u-container-layout-3">
+              <div class="u-form u-form-3">
+                <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form"
+                  source="custom" name="form-2" style="padding: 10px;">
+                  <div class="u-form-email u-form-group">
+                    <label for="payment-method" class="u-label">Current Payment Method</label><br>
+                    <span id="payment-method" 
+                      class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">No payment method
+                  </span>
+                  <div class="u-align-center u-form-group u-form-submit">
+                    <br>
+                    <button href="payment"
+                      class="u-border-none u-btn u-btn-submit u-button-style u-custom-color-1 u-hover-custom-color-7 u-btn-8">Change
+                      Payment Method
+                    </button>
+                    <input type="submit" value="submit" class="u-form-control-hidden">
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
-          <div class="u-form-group u-form-name u-form-group-2">
-            <label for="user_name" class="u-label">Username</label>
-            <input type="text" pattern="[A-Za-z0-9]+" placeholder="Change your username" id="user_name"
-              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
-          </div>
-          <div class="u-form-email u-form-group">
-            <label for="email" class="u-label">Email</label>
-            <input type="email" placeholder="Change your email address" id="email"
-              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
-          </div>
-          <div class="u-form-group u-form-group-5">
-            <label for="pwd" class="u-label">Password</label>
-            <input type="password" placeholder="Change your password" id="pwd"
-              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
-          </div>
-          <div class="u-align-left u-form-group u-form-submit">
-            <button id="delete-button" type="button" class="u-btn u-btn-submit u-button-style">Delete User</button>
-            <input type="submit" value="submit" class="u-form-control-hidden">
-          </div>
-        </form>
+        </div>
       </div>
     </div>
-    </div>
   </section>
+
 
   <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-b518">
     <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
@@ -190,23 +269,22 @@
         <ul class="u-nav u-unstyled u-nav-1">
           <li class="u-nav-item"><a
               class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white"
-              href="TandC" style="padding: 52px 72px;">Terms and Conditions</a>
+              href="Terms-and-Conditions.html" style="padding: 52px 72px;">Terms and Conditions</a>
           </li>
           <li class="u-nav-item"><a
               class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white"
-              href="contact" target="_blank" style="padding: 52px 72px;">Contact Us</a>
+              href="Contact-Us.html" target="_blank" style="padding: 52px 72px;">Contact Us</a>
           </li>
           <li class="u-nav-item"><a
               class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white"
-              href="report" style="padding: 52px 72px;">Report Issues</a>
+              href="Report-Issues.html" style="padding: 52px 72px;">Report Issues</a>
           </li>
           <li class="u-nav-item"><a
               class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white"
-              href="vision"
               style="padding: 52px 72px;">Vision</a>
           </li>
           <li class="u-nav-item"><a
-              class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white" href="about"
+              class="u-button-style u-custom-color-1 u-hover-custom-color-2 u-nav-link u-text-white" href="About.html"
               style="padding: 52px 72px;">About</a>
           </li>
         </ul>
@@ -224,16 +302,29 @@
               </li>
               <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Report-Issues.html">Report Issues</a>
               </li>
-              <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Vision.html">Vision</a>
+              <li class="u-nav-item"><a class="u-button-style u-nav-link">Vision</a>
               </li>
               <li class="u-nav-item"><a class="u-button-style u-nav-link" href="About.html">About</a>
               </li>
             </ul>
           </div>
         </div>
+        <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
       </div>
     </nav>
   </footer>
+  <section class="u-backlink u-clearfix u-grey-80">
+    <a class="u-link" href="https://nicepage.com/website-templates" target="_blank">
+      <span>Website Templates</span>
+    </a>
+    <p class="u-text">
+      <span>created with</span>
+    </p>
+    <a class="u-link" href="" target="_blank">
+      <span>Website Builder Software</span>
+    </a>.
+  </section>
 </body>
 <script src="{{url_for('static', filename = 'Account.js')}}"></script>
+
 </html>

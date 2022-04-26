@@ -14,17 +14,49 @@ window.onload = function() { inactivityTime(); }
 var firstName = document.getElementById("fname");
 var lastName = document.getElementById("lname");
 var email = document.getElementById("email");
-var userName = document.getElementById("user_name");
+var userName = document.getElementById("username");
 var password = document.getElementById("pwd");
-var deleteButton = document.getElementById("delete-button");
+var deleteButton = document.getElementById("delete-btn");
 deleteButton.addEventListener('click',deleteFunct);
+var btns = document.getElementsByName("edit");
+const color = btns[0].style.backgroundColor; //color of original edit button
+console.log(btns);
+for (var i=0;i<btns.length;i++){ //disable all input at initialization
+    var currBtn = btns[i];
+    var inputName = currBtn.id.split('-')[1];
+    var input = document.getElementById(inputName);
+    input.disabled = true;
+    input.addEventListener('input',invalidInput);
+}
+function invalidInput(event){
+    var inputElem = event.target;
+    console.log(inputElem.id);
+    var btnElem = document.getElementById("edit-"+inputElem.id);
+    if (inputElem.reportValidity()){
+        btnElem.disabled = false;
+    }
+    else{
+        btnElem.disabled = true;
+    }
+}
+function changeButton(event) //change edit to save and vice versa on click
+{
+    var btn = event.target;
+    var inputName = btn.id.split('-')[1];
+    var input = document.getElementById(inputName);
+    if (btn.innerHTML == "EDIT") {
+        btn.innerHTML = "SAVE";
+        input.disabled=false;
+    }
+    else {
+        btn.innerHTML = "EDIT";
+        input.disabled=true;
+    }
+}
+for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener('click',changeButton);
+}
 
-var loginButton = document.getElementById("login-button");
-var logoutButton = document.getElementById("logout-button");
-var loginDisplay = loginButton.style.display;
-var logoutDisplay = logoutButton.style.display;
-var userLabel = document.getElementById("label");
-var userDisplay = userLabel.style.display;
 checkLogin(`${SERVER_URL}/checkLogin`);
 async function checkLogin(url) {
     const response = await fetch(url);
@@ -41,19 +73,9 @@ async function checkLogin(url) {
             email.value = data1["email"];
             userName.value = data1["user_name"];
             password.value = data1["password"];
-            
-            logoutButton.style.display = logoutDisplay;
-            loginButton.style.display = "none";
-            userLabel.innerHTML = "Signed in as " + data1["user_name"];
-            userLabel.style.display = userDisplay;
         }
         else
         {
-            logoutButton.style.display = "none";
-            loginButton.style.display = loginDisplay;
-            userLabel.innerHTML = "";
-            userLabel.style.display = "none";
-
             alert("Please login or register an account if you do not have one.");
             location.href = "login";
             isLogged = false;
@@ -203,16 +225,4 @@ function change(){
 }
 function revert(){
     checkLogin(`${SERVER_URL}/checkLogin`);
-}
-function selectButton(event) //change select to cancel and vice versa on click
-{
-    var btn = event.target;
-    if (btn.innerHTML == "SELECT") {
-        btn.style.backgroundColor = "red";
-        btn.innerHTML = "CANCEL";
-    }
-    else {
-        btn.style.backgroundColor = color;
-        btn.innerHTML = "SELECT";
-    }
 }
