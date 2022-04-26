@@ -199,23 +199,21 @@
                     <input pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[?!@#$%^&*_=+-]).{8,32}$" minlength="8"
                       maxlength="32"
                       title="Password must contain: between 8 and 32 characters, at least 1 uppercase letter, at least 1 lowercase letter, at least 1 number, at least 1 special character."
-                      type="password" placeholder="Enter your new password" id="new-password" name="password-1"
+                      type="password" placeholder="Enter your new password" id="new-password" 
                       class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
                   </div>
                   <div class="u-form-group u-form-group-8">
                     <label for="confirm-password" class="u-label">Confirm New Password</label>
-                    <input type="password" placeholder="Confirm your new password" id="confirm-password"
-                      name="password-2" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
+                    <input type="password" minlength="8" maxlength="32" placeholder="Confirm your new password" id="confirm-password"
+                      class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
                   </div>
-                  <div class="u-align-center u-form-group u-form-submit">
-                    <button
-                      class="u-border-none u-btn u-btn-submit u-button-style u-custom-color-1 u-hover-custom-color-7 u-btn-7">Change
-                      Password
-                    </button>
-                    <input type="submit" value="submit" class="u-form-control-hidden">
-                  </div>
-
+        
                 </form>
+                <div class="u-align-center u-form-group u-form-submit">
+                  <button
+                    id="change-password" class="u-border-none u-btn u-btn-submit u-button-style u-custom-color-1 u-hover-custom-color-7 u-btn-7">Change Your Password
+                  </button>
+                </div>
               </div>
             </div>
           </div>

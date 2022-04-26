@@ -305,6 +305,24 @@ reservations_schema = ReservationSchema(many=True)
 
 
 
+@app.route('/changePassword',methods=["POST"])
+def check_password():
+    data = request.json
+    password = data["password"]
+    new_password = data["new_password"]
+    currUsername = session["user_name"]
+    user = User.query.filter_by(user_name=currUsername).first()
+    if (not bcrypt.check_password_hash(user.hashed_password,password)):
+        return jsonify({"message":"The old account password you entered is incorrect."})
+    if (bcrypt.check_password_hash(user.hashed_password,new_password)):
+        return jsonify({"message": "You cannot use your old password as your new password."})
+    user.hashed_password = bcrypt.generate_password_hash(new_password)
+    db.session.commit()
+    return jsonify({"message": "Your password has been successfully changed."})
+
+
+
+
 @app.route('/checkLogin')
 def user_logged_in():
     print(session)
