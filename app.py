@@ -641,6 +641,25 @@ def update_match():
     db.session.commit()
     return 'getmatches'
 
+@app.route('/updateEvent', methods=['GET', 'POST'])
+def update_event():
+    events = Events.query.all()
+    if request.method == 'GET':
+        return render_template("update_event_form.html",
+                                events = events)
+
+    data = request.json
+    event_name = data['event_name']
+    event_time = data['event_time']
+    event_location = data['event_location']
+   
+    updated_event = Events.query.filter_by(event_name=event_name).first()
+
+    
+    updated_event.event_time = event_time
+    updated_event.event_location = event_location
+    db.session.commit()
+    return 'getevents'
 
 @app.route('/checkPayment', methods=['GET'])
 def check_payment():

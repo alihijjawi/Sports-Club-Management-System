@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-url="{{login}}" id="FullPage" style="font-size: 16px;">
+<html data-url="{{login}}" id = "FullPage" style="font-size: 16px;">
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="page_type" content="np-template-header-footer-from-plugin">
-  <title>View Matches</title>
+  <title>Update Match</title>
   <link rel="stylesheet" href="{{url_for('static',filename='nicepage.css')}}" media="screen">
   <link rel="stylesheet" href="{{url_for('static',filename='addMatch.css')}}" media="screen">
   <script class="u-script" type="text/javascript" src="{{url_for('static',filename='jquery.js')}}" defer=""></script>
@@ -18,11 +18,11 @@
 
 
   <script type="application/ld+json">{
-      "@context": "http://schema.org",
-      "@type": "Organization",
-      "name": "",
-      "logo": "{{url_for('static',filename='images/logo.jpeg')}}"
-  }</script>
+    "@context": "http://schema.org",
+    "@type": "Organization",
+    "name": "",
+    "logo": "{{url_for('static',filename='images/logo.jpeg')}}"
+}</script>
   <meta name="theme-color" content="#478ac9">
   <meta property="og:title" content="Add Match">
   <meta property="og:type" content="website">
@@ -129,42 +129,38 @@
   <section class="u-clearfix u-section-1" id="sec-4ec3">
     <div class="u-clearfix u-sheet u-sheet-1">
       <div class="u-form u-form-1">
-        <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom"
+        <form action="#" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom"
           name="form-1" style="padding: 10px;">
           <div class="u-form-group u-form-name u-form-group-2">
-            <table class="styled-table">
-              <thead>
-                <tr>
-                  <th>Event</th>
-                  <th> - </th>
-                  <th>Location - Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for event in upcoming_events %}
-                <tr>
-                  <td>{{ event.event_name }}</td>
-                  <td> - </td>
-                  <td>{{ event.event_location }}</td>
-                  <td> - </td>
-                  <td>{{ event.event_time }}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
+            <label for="event_name" class="u-label">Select Event Name</label>
+            </br>
+            <select name="event_name" id="event_name">
+              {% for event in events %}
+              <option value={{event.event_name}}>{{ event.event_name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="u-form-group u-form-name u-form-group-2">
+            <label for="location" class="u-label">New Location</label>
+            <input type="text" placeholder="Update Location" id="location" pattern="[A-Za-z][A-Z0-9a-z\s]*"
+              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+          </div>
+          <div class="u-form-group u-form-name u-form-group-2">
+            <label for="timing" class="u-label">New Timing</label>
+            <input type="date" placeholder="yyyy-dd-mm" id="timing" pattern="\d{4}-\d{1,2}-\d{1,2}"
+              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
           </div>
         </form>
-        <button id="event-button" type="button" class="u-btn u-btn-submit u-button-style"
-          onclick="window.location.href='/postevents'">Add Event</button>
-        <button id="delete-button" type="button" class="u-btn u-btn-submit u-button-style"
-          onclick="window.location.href='/deleteevents'">Delete Event</button>
-        <button id="update-button" type="button" class="u-btn u-btn-submit u-button-style"
-          onclick="window.location.href='/updateEvent'">Update Event</button>
-      <br>
+        <div class="u-align-left u-form-group u-form-submit">
+          <button id="update-button" type="button" class="u-btn u-button-style">Update</button>
+          <button id="back-button" onclick="document.location = 'getevents'"
+        class="u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-2">Back</button>
+        </div>
       </div>
+      <br>
+    </div>
     </div>
   </section>
-
 
   <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-b518">
     <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
@@ -233,6 +229,6 @@
     </nav>
   </footer>
 </body>
-<script src="{{url_for('static', filename = 'movePageEvents.js')}}"></script>
+<script src="{{url_for('static', filename = 'updateEvent.js')}}"></script>
 
 </html>
