@@ -203,12 +203,9 @@
             <br>
             <div class="u-container-style u-tab-pane" id="link-tab-d7e7" role="tabpanel" aria-labelledby="tab-d7e7">
               <div class="u-container-layout u-container-layout-4">
-                <div class="u-container-style u-tab-pane u-block-7c8c-34" id="link-tab-d7e7" role="tabpanel" aria-labelledby="tab-d7e7">
-                  <div class="u-container-layout u-block-7c8c-35">
-                    <a id="addreview" class="u-border-1 u-border-custom-color-1 u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-3 u-text-body-alt-color u-block-7c8c-57">Add Review</a>
+                <a id="addreview" class="u-border-1 u-border-custom-color-1 u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-3 u-text-body-alt-color">Add Review</a>
             <div id="showreview" class="u-form u-block-7c8c-58">
               <form action="https://nicepage.com/editor/Forms/Process" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="email" name="form">
-                
                 
                 <div class="u-form-group u-form-name u-label-none u-block-7c8c-59">
                   <label for="name-6797" class="u-label u-block-7c8c-60">Title</label>
@@ -224,39 +221,25 @@
                   <input type="submit" value="submit" class="u-form-control-hidden">
                 </div>
               </form>
-            </div><div class="u-blog u-expanded-width u-block-7c8c-50"><div class="u-repeater u-block-7c8c-51">
-              <table class="styled-table">
-                <thead>
-                  <tr>
-                    <th>Reviews</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for r in reviews %}
-                  <tr>
-                    <div class="u-blog-post u-container-style u-repeater-item u-block-7c8c-52" data-blog-post-id="7">
-                      <div class="u-container-layout u-similar-container u-block-7c8c-53">
-                        <h2 class="u-blog-control u-text u-block-7c8c-54">
-                          <a class="u-post-header-link" href="7">{{r.title}}</a>
-                        </h2>
-                        <div class="u-blog-control u-metadata u-block-7c8c-55">
-                          <span class="u-meta-date u-meta-icon">{{ r.date_added }} by {{ r.username }}</span>
-                        </div>
-                        <div class="u-blog-control u-post-content u-text u-block-7c8c-56">{{ r.content }}</div>
+            </div>
+            <div class="u-blog u-expanded-width u-block-7c8c-50">
+               {% for r in reviews %}
+                  <div class="u-blog-post u-container-style u-repeater-item u-block-7c8c-52">
+                     <div class="u-container-layout u-similar-container u-block-7c8c-53">
+                       <h4 class="u-text">{{r.title}}</h4>
+                       <button id="del"+{{loop.index0|string}} style="float: right;">
+                        <span class="u-file-icon u-icon u-icon-circle">
+                          <img src="../static/images/3964085.png" data-color="#000000"/>
+                        </span>
+                      </button>
+                        <div class="u-metadata">
+                          <span class="u-meta-date u-meta-icon"> {{ r.username }} added this on {{ r.date_added }}</span>
+                        </div>       
+                        <div class="u-post-content u-text u-block-7c8c-56"> <h5>{{ r.content }}</h5></div>
                       </div>
                     </div>
-                  </tr>
                   {% endfor %}
-                </tbody>
-              </table>
-            </div></div></div>
-                </div>
-              </div>
-            </div>
-            <div class="u-container-style u-tab-pane" id="link-tab-6219" role="tabpanel" aria-labelledby="tab-6219">
-              <div class="u-container-layout u-container-layout-5">
-
-              </div>
+            </div></div>
             </div>
           </div>
         </div>

@@ -13,8 +13,9 @@ from dateutil import parser
 
 import matplotlib.pyplot as plt
 import matplotlib
-
 matplotlib.use('Agg')
+
+
 
 app = Flask(__name__)
 CORS(app)
@@ -25,33 +26,32 @@ bcrypt = Bcrypt(app)
 ma = Marshmallow(app)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['DEBUG'] = True
-SECRET_KEY = '\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
+app.secret_key = '\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
+
 
 
 def create_token(user_id):
-    payload = {
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(days=4),
-        'iat': datetime.datetime.utcnow(),
-        'sub': user_id
-    }
-    return jwt.encode(
-        payload,
-        SECRET_KEY,
-        algorithm='HS256'
-    )
-
+ payload = {
+ 'exp': datetime.datetime.utcnow() + datetime.timedelta(days=4),
+ 'iat': datetime.datetime.utcnow(),
+ 'sub': user_id
+ }
+ return jwt.encode(
+    payload,
+    SECRET_KEY,
+    algorithm='HS256'
+ )
 
 def extract_auth_token(authenticated_request):
-    auth_header = authenticated_request.headers.get('Authorization')
-    if auth_header:
-        return auth_header.split(" ")[1]
-    else:
-        return None
-
+ auth_header = authenticated_request.headers.get('Authorization')
+ if auth_header:
+    return auth_header.split(" ")[1]
+ else:
+    return None
 
 def decode_token(token):
-    payload = jwt.decode(token, SECRET_KEY, 'HS256')
-    return payload['sub']
+ payload = jwt.decode(token, SECRET_KEY, 'HS256')
+ return payload['sub']
 
 
 class User(db.Model):
@@ -71,7 +71,6 @@ class User(db.Model):
         self.email = email
         self.hashed_password = bcrypt.generate_password_hash(password)
 
-
 class Contact(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128))
@@ -82,7 +81,6 @@ class Contact(db.Model):
         self.name = name
         self.message = message
         self.email = email
-
 
 class Report(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -95,24 +93,21 @@ class Report(db.Model):
         self.message = message
         self.email = email
 
-
 class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128))
     email = db.Column(db.String(128))
     number = db.Column(db.String(128))
     date = db.Column(db.String(128))
-    court = db.Column(db.String(128))
+    court= db.Column(db.String(128))
     time = db.Column(db.String(128))
-
-    def __init__(self, name, email, number, date, court, time):
+    def __init__(self, name, email, number,date,court,time):
         self.name = name
         self.number = number
         self.email = email
         self.date = date
         self.court = court
         self.time = time
-
 
 class PaymentInfo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -129,8 +124,7 @@ class PaymentInfo(db.Model):
     exp_year = db.Column(db.String(128))
     cvv = db.Column(db.String(128))
 
-    def __init__(self, full_name, email, address, city, state, zip_code, name_on_card, credit_card_number, exp_month,
-                 exp_year, cvv):
+    def __init__(self, full_name, email, address, city, state, zip_code, name_on_card, credit_card_number, exp_month, exp_year, cvv):
         self.user_name = session["user_name"]
         self.full_name = full_name
         self.email = email
@@ -143,7 +137,6 @@ class PaymentInfo(db.Model):
         self.exp_month = exp_month
         self.exp_year = exp_year
         self.cvv = cvv
-
 
 class Match(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -158,9 +151,8 @@ class Match(db.Model):
         self.team_1_id = team_1_id
         self.team_2_id = team_2_id
 
-
 class Events(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key = True)
     event_name = db.Column(db.String(128))
     event_location = db.Column(db.String(128))
     event_time = db.Column(db.String(128))
@@ -169,7 +161,6 @@ class Events(db.Model):
         self.event_name = event_name
         self.event_location = event_location
         self.event_time = event_time
-
 
 class Sponsorship(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -188,7 +179,6 @@ class Sponsorship(db.Model):
         self.email = email
         self.website = website
 
-
 class OnlineStore(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     item_name = db.Column(db.String(128))
@@ -200,7 +190,6 @@ class OnlineStore(db.Model):
         self.price = price
         self.date = date
 
-
 class Ticket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     number = db.Column(db.String(128))
@@ -211,7 +200,6 @@ class Ticket(db.Model):
         self.number = number
         self.match = match
         self.date = date
-
 
 class Coach(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -225,7 +213,6 @@ class Coach(db.Model):
         self.team_name = team_name
         self.wins = wins
         self.losses = losses
-
 
 class Player(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -244,7 +231,6 @@ class Player(db.Model):
         self.defense = defense
         self.team_name = team_name
 
-
 class Team(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), unique=True)
@@ -260,35 +246,30 @@ class Team(db.Model):
         self.wins = wins
         self.losses = losses
 
-
 class Discussion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(128))
     parent = db.Column(db.Integer)
-    title = db.Column(db.String(500))
     content = db.Column(db.String(4000))
     date_added = db.Column(db.String(128))
 
-    def __init__(self, username, parent, title, content, date_added):
+    def __init__(self, username, parent, content, date_added):
         self.username = username
         self.parent = parent
-        self.title = title
         self.content = content
         self.date_added = date_added
-
 
 class Reviews(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(128))
-    title = db.Column(db.String(500))
     content = db.Column(db.String(4000))
     date_added = db.Column(db.String(128))
 
-    def __init__(self, username, title, content, date_added):
+    def __init__(self, username, parent, content, date_added):
         self.username = username
-        self.title = title
         self.content = content
         self.date_added = date_added
+
 
 
 class UserSchema(ma.Schema):
@@ -296,34 +277,30 @@ class UserSchema(ma.Schema):
         fields = ("first_name", "last_name", "email", "user_name")
         model = User
 
-
 class MatchSchema(ma.Schema):
     class Meta:
         fields = ("name", "timing")
         model = Match
 
-
 class ReservationSchema(ma.Schema):
     class Meta:
-        fields = ("name", "date", "court", "time")
+        fields =("name", "date","court","time")
         model = Reservation
-
 
 class OnlineStoreSchema(ma.Schema):
     class Meta:
         fields = ("item_name", "price", "date")
         model = OnlineStore
 
-
 class TicketSchema(ma.Schema):
     class Meta:
         fields = ("number", "match", "date")
         model = Ticket
 
-
 user_schema = UserSchema()
 matches_schema = MatchSchema(many=True)
 reservations_schema = ReservationSchema(many=True)
+
 
 
 @app.route('/checkLogin')
@@ -336,24 +313,20 @@ def user_logged_in():
         return jsonify(temp)
     return jsonify({"found": False})
 
-
 @app.route('/')
 def home():
     return render_template("Homepage.html")
 
-
 @app.route('/idlelogout', methods=['GET'])
 def idle_logout():
     return render_template("idlelogout.html")
-
 
 @app.route('/logout')
 def log_out():
     session.pop("user_name", None)
     return redirect("/")
 
-
-@app.route('/contact', methods=['GET', 'POST'])
+@app.route('/contact',  methods=['GET', 'POST'])
 def contact_info():
     if request.method == "GET":
         return render_template("Contact-Us.html")
@@ -362,32 +335,26 @@ def contact_info():
     email = data['email']
     message = data['message']
     contact = Contact(name, email, message)
-    found = Contact.query.filter_by(name=name, email=email, message=message).first()
+    found = Contact.query.filter_by(name = name, email = email, message = message).first()
     message = {"message": "Your message was received."}
     if (found is None):
         db.session.add(contact)
         db.session.commit()
     return jsonify(message)
 
-
-@app.route('/about', methods=['GET'])
+@app.route('/about',  methods=['GET'])
 def about():
-    revs = Reviews.query.all()
-    revs.reverse()
-    return render_template('About.html', reviews=revs)
+    return render_template("About.html")
 
-
-@app.route('/TandC', methods=['GET'])
+@app.route('/TandC',  methods=['GET'])
 def TandC():
     return render_template("Terms-and-Conditions.html")
 
-
-@app.route('/vision', methods=['GET'])
+@app.route('/vision',  methods=['GET'])
 def vision():
     return render_template("Vision.html")
 
-
-@app.route('/report', methods=['GET', 'POST'])
+@app.route('/report',  methods=['GET', 'POST'])
 def report_issue():
     if (request.method == 'GET'):
         return render_template("Report-Issues.html")
@@ -396,15 +363,14 @@ def report_issue():
     email = data['email']
     message = data['message']
     report = Report(name, email, message)
-    found = Report.query.filter_by(name=name, email=email, message=message).first()
+    found = Report.query.filter_by(name = name, email = email, message = message).first()
     message = {"message": "Your issue was reported. \nOur team will get back to you soon."}
     if (found is None):
         db.session.add(report)
         db.session.commit()
     return jsonify(message)
 
-
-@app.route('/checkUserName', methods=['POST'])
+@app.route('/checkUserName',methods=['POST'])
 def get_user_name():
     if (request.method == 'POST'):
         data = request.json
@@ -418,25 +384,23 @@ def get_user_name():
             return jsonify({"found": True})
         return jsonify({"found": False})
 
-
 @app.route('/deleteUser', methods=['GET'])
 def delete_user():
     currUser = User.query.filter_by(user_name=session["user_name"]).first()
     db.session.delete(currUser)
     db.session.commit()
-    session.pop("user_name", None)
+    session.pop("user_name",None)
     return jsonify({"message": "User was deleted successfully"})
 
-
-@app.route('/checkEmail', methods=['POST'])
+@app.route('/checkEmail' , methods=['POST'])
 def get_user_email():
     if (request.method == 'POST'):
         data = request.json
         email = data["email"]
         currUser = User.query.filter_by(user_name=session["user_name"]).first()
-        print("email", email, len(email))
-        print("currUser", currUser.email, len(currUser.email))
-        print(email == currUser.email)
+        print("email",email,len(email))
+        print("currUser",currUser.email,len(currUser.email))
+        print (email == currUser.email)
         if email == currUser.email:
             return jsonify({"found": False})
 
@@ -455,8 +419,8 @@ def auth_user():
     password = data['password']
     found = User.query.filter_by(user_name=user_name).first()
     if found is None:
-        return jsonify({"error": 1, "message": "Invalid credentials"})
-    if not bcrypt.check_password_hash(found.hashed_password, password):
+        return jsonify({"error": 1, "message" : "Invalid credentials"})
+    if not bcrypt.check_password_hash(found.hashed_password,password):
         return jsonify({"message": "Invalid credentials"})
     session['user_name'] = user_name
     print(session)
@@ -486,8 +450,7 @@ def create_user():
     session["user_name"] = user_name
     return "login"
 
-
-@app.route('/reserve', methods=['GET', 'POST'])
+@app.route('/reserve',methods=['GET','POST'])
 def show_reserve():
     if request.method == 'GET':
         return render_template("Reserve-Court-Field.html")
@@ -506,15 +469,13 @@ def show_reserve():
     db.session.commit()
     return jsonify(reservations_schema.dump([reservation]))
 
-
-@app.route('/updateReserve', methods=['POST'])  # update court and field reservation table given date and court/field
+@app.route('/updateReserve',methods=['POST']) #update court and field reservation table given date and court/field
 def update_table():
     data = request.json
     date = data["date"]
     court = data["court"]
-    reservations = Reservation.query.filter_by(date=date, court=court).all()
+    reservations = Reservation.query.filter_by(date =date, court = court).all()
     return jsonify(reservations_schema.dump(reservations))
-
 
 @app.route('/tickets', methods=['GET', 'POST'])
 def get_tickets():
@@ -532,14 +493,12 @@ def get_tickets():
         db.session.add(ticket)
         db.session.commit()
 
-
 @app.route('/payment', methods=['GET', 'POST'])
 def get_payment():
     if request.method == 'GET':
         return render_template("Payment.html")
     return redirect("login")
-
-
+    
 @app.route('/save', methods=['POST'])
 def save_info():
     data = request.json
@@ -554,13 +513,11 @@ def save_info():
     exp_month = data['exp_month']
     exp_year = data['exp_year']
     cvv = data['cvv']
-    info = PaymentInfo(full_name, email, address, city, state, zip_code, name_on_card, credit_card_number, exp_month,
-                       exp_year, cvv)
+    info = PaymentInfo(full_name, email, address, city, state, zip_code, name_on_card, credit_card_number, exp_month, exp_year, cvv)
     db.session.add(info)
     db.session.commit()
     message = {"error": 0, "message": "The information has been successfully saved."}
     return jsonify(message)
-
 
 @app.route('/returnMatches', methods=['GET'])
 def return_matches():
@@ -568,17 +525,15 @@ def return_matches():
     return jsonify(matches_schema.dump(matches))
 
 
-@app.route('/getmatches', methods=['GET'])
+@app.route('/getmatches',  methods=['GET'])
 def get_match():
     upcoming_matches = Match.query.all()
-    return render_template('matches.html', upcoming_matches=upcoming_matches)
+    return render_template('matches.html', upcoming_matches= upcoming_matches)
 
-
-@app.route('/getevents', methods=['GET', 'POST'])
+@app.route('/getevents', methods = ['GET', 'POST'])
 def get_event():
     upcoming_events = Events.query.all()
-    return render_template('events.html', upcoming_events=upcoming_events)
-
+    return render_template('events.html', upcoming_events = upcoming_events )
 
 @app.route('/postmatches', methods=['GET', 'POST'])
 def post_match():
@@ -595,18 +550,17 @@ def post_match():
     if check_name is not None:
         print("Name already exists.")
         return 'getmatches'
-
+    
     match = Match(name, timing, team_1_id, team_2_id)
     db.session.add(match)
     db.session.commit()
     return 'getmatches'
 
-
-@app.route('/postevents', methods=['GET', 'POST'])
+@app.route('/postevents', methods = ['GET','POST'])
 def post_event():
     if request.method == 'GET':
         return render_template("events_form.html")
-
+    
     data = request.json
     event_name = data['name']
     event_time = data['timing']
@@ -616,20 +570,19 @@ def post_event():
     check_event = Events.query.filter(Events.event_time == event_time).first()
     if check_event is not None:
         print("This day is already booked. Please choose another")
-
+        
         return 'getevents'
     event = Events(event_name, event_location, event_time)
     db.session.add(event)
     db.session.commit()
     return 'getevents'
 
-
 @app.route('/deletematch', methods=['GET', 'POST'])
 def delete_match():
     games = Match.query.all()
     if request.method == 'GET':
         return render_template("delete_matches_form.html",
-                               games=games)
+                                games = games)
 
     data = request.json
     name = data['name']
@@ -638,13 +591,12 @@ def delete_match():
     db.session.commit()
     return 'getmatches'
 
-
-@app.route('/deleteevents', methods=['GET', 'POST'])
+@app.route('/deleteevents', methods = ['GET','POST'])
 def delete_event():
     events = Events.query.all()
     if request.method == 'GET':
         return render_template("delete_events_form.html",
-                               events=events)
+                                    events = events)
     data = request.json
     event_name = data['name']
     print("NAME IS", event_name)
@@ -653,13 +605,12 @@ def delete_event():
     db.session.commit()
     return 'getevents'
 
-
 @app.route('/updatematch', methods=['GET', 'POST'])
 def update_match():
     games = Match.query.all()
     if request.method == 'GET':
         return render_template("update_matches_form.html",
-                               games=games)
+                                games = games)
 
     data = request.json
     name = data['name']
@@ -682,18 +633,15 @@ def check_payment():
     found = True
     if (payment is None):
         found = False
-    return jsonify({"found": found})
-
-
+    return jsonify({"found" : found})
+    
 @app.route('/store', methods=['GET'])
 def open_store():
     return render_template("Online-Store.html")
 
-
 @app.route('/cart', methods=['GET'])
 def open_cart():
     return render_template("Shopping-Cart.html")
-
 
 @app.route('/account', methods=['GET', 'POST'])
 def account():
@@ -701,21 +649,20 @@ def account():
         return render_template("Account.html")
 
 
-@app.route('/getprofiles', methods=['GET'])
+@app.route('/getprofiles',  methods=['GET'])
 def get_profiles():
     coaches = Coach.query.all()
     players = Player.query.all()
     return render_template('profiles.html',
-                           coaches=coaches,
-                           players=players)
-
+                            coaches = coaches,
+                            players = players)
 
 @app.route('/postplayer', methods=['GET', 'POST'])
 def post_player():
     teams = Team.query.all()
     if request.method == 'GET':
         return render_template("player_form.html",
-                               teams=teams)
+                                teams = teams)
 
     data = request.json
     name = data['name']
@@ -724,24 +671,23 @@ def post_player():
     attack = data['attack']
     defense = data['defense']
     team_name = data['team_name']
-
+    
     check_name = Player.query.filter(Player.name == name).first()
     if check_name is not None:
         print("Name already exists.")
         return 'getprofiles'
-
+    
     player = Player(name, height, age, attack, defense, team_name)
     db.session.add(player)
     db.session.commit()
     return 'getprofiles'
-
 
 @app.route('/postcoach', methods=['GET', 'POST'])
 def post_coach():
     teams = Team.query.all()
     if request.method == 'GET':
         return render_template("coach_form.html",
-                               teams=teams)
+                                teams = teams)
 
     data = request.json
     name = data['name']
@@ -753,7 +699,7 @@ def post_coach():
     if check_name is not None:
         print("Name already exists.")
         return 'getprofiles'
-
+    
     coach = Coach(name, team_name, wins, losses)
     db.session.add(coach)
     db.session.commit()
@@ -765,30 +711,28 @@ def delete_player():
     players = Player.query.all()
     if request.method == 'GET':
         return render_template("delete_player_form.html",
-                               players=players)
+                                players = players)
 
     data = request.json
     name = data['name']
-
+    
     Player.query.filter(Player.name == name).delete()
     db.session.commit()
     return 'getprofiles'
-
 
 @app.route('/deletecoach', methods=['GET', 'POST'])
 def delete_coach():
     coaches = Coach.query.all()
     if request.method == 'GET':
         return render_template("delete_coach_form.html",
-                               coaches=coaches)
+                                coaches = coaches)
 
     data = request.json
     name = data['name']
-
+    
     Coach.query.filter(Coach.name == name).delete()
     db.session.commit()
     return 'getprofiles'
-
 
 @app.route('/updateplayer', methods=['GET', 'POST'])
 def update_player():
@@ -796,8 +740,8 @@ def update_player():
     teams = Team.query.all()
     if request.method == 'GET':
         return render_template("update_player_form.html",
-                               players=players,
-                               teams=teams)
+                                players = players,
+                                teams = teams)
 
     data = request.json
     name = data['name']
@@ -816,15 +760,14 @@ def update_player():
     db.session.commit()
     return 'getprofiles'
 
-
 @app.route('/updatecoach', methods=['GET', 'POST'])
 def update_coach():
     coaches = Coach.query.all()
     teams = Team.query.all()
     if request.method == 'GET':
         return render_template("update_coach_form.html",
-                               coaches=coaches,
-                               teams=teams)
+                                coaches = coaches,
+                                teams = teams)
 
     data = request.json
     name = data['name']
@@ -839,42 +782,30 @@ def update_coach():
     db.session.commit()
     return 'getprofiles'
 
-
 @app.route('/discussion', methods=['GET', 'POST'])
 def get_discussion():
     if request.method == 'POST':
         data = request.json
-        newpost = Discussion(session['user_name'], data['parent'], data['title'], data['content'],
-                             datetime.datetime.utcnow())
+        newpost = Discussion(session['user_name'], data['parent'], data['title'], data['content'], datetime.datetime.utcnow())
         db.session.add(newpost)
         db.session.commit()
     posts = Discussion.query.filter_by(parent=0).all()
     posts.reverse()
-    comments = []
+    comments=[]
     for p in posts:
         pcomments = Discussion.query.filter_by(parent=p.id).all()
         comments.append(pcomments)
-    return render_template('Discussion-Forum.html', posts=posts, comments=comments)
+    return render_template('Discussion-Forum.html', posts=posts, comments=comments)    
 
-
-@app.route('/postreviews', methods=['POST'])
-def post_reviews():
-    data = request.json
-    newpost = Reviews(session['user_name'], data['title'], data['content'],
-                      datetime.utcnow().strftime("%m/%d/%Y, %H:%M:%S"))
-    db.session.add(newpost)
-    db.session.commit()
-    return jsonify({'found': True})
-
-
-@app.route('/deletereview', methods=['POST'])
-def del_reviews():
-    data = request.json
-    rev = Reviews.query.filter_by(id=data["id"]).first()
-    db.session.delete(rev)
-    db.session.commit()
-    return jsonify({"message": "Review was deleted successfully"})
-
+@app.route('/reviews', methods=['GET', 'POST'])
+def get_reviews():
+    if request.method == 'POST':    
+        data = request.json
+        newpost = Reviews(session['user_name'], data['title'], data['content'], datetime.datetime.utcnow())
+        db.session.add(newpost)
+        db.session.commit()
+    reviews = Reviews.query.all()
+    return render_template('About.html', reviews=reviews)
 
 @app.route('/sponsors', methods=['GET', 'POST'])
 def submit():
@@ -892,9 +823,8 @@ def submit():
 
         db.session.add(form)
         db.session.commit()
-
+    
     return render_template('sponsorship.html')
-
 
 @app.route('/store_report', methods=['GET', 'POST'])
 def store_report():
@@ -905,7 +835,7 @@ def store_report():
         end_date = parser.parse(data['end_date'])
 
         entries = OnlineStore.query.filter(OnlineStore.date.between(start_date, end_date)).all()
-
+        
         dates = []
         prices = []
         for entry in entries:
@@ -913,7 +843,7 @@ def store_report():
             prices.append(entry.price)
 
         print(dates)
-
+        
         plt.plot_date(dates, prices)
         plt.xlabel("Date")
         plt.ylabel("Revenue ($)")
@@ -921,7 +851,6 @@ def store_report():
         plt.savefig('static/images/reports/store_report.png')
 
     return render_template('store_report.html')
-
 
 @app.route('/ticket_report', methods=['GET', 'POST'])
 def ticket_report():
@@ -932,13 +861,13 @@ def ticket_report():
         end_date = parser.parse(data['end_date'])
 
         entries = Ticket.query.filter(Ticket.date.between(start_date, end_date)).all()
-
+        
         dates = []
         prices = []
         for entry in entries:
             dates.append(entry.date)
             prices.append(10 * int(entry.number))
-
+        
         plt.plot_date(dates, prices)
         plt.xlabel("Date")
         plt.ylabel("Revenue ($)")
