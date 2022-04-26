@@ -646,10 +646,20 @@ def update_match():
 def check_payment():
     user_name = session["user_name"]
     payment = PaymentInfo.query.filter_by(user_name=user_name).first()
-    found = True
-    if (payment is None):
-        found = False
-    return jsonify({"found" : found})
+    if (payment is not None):
+        credit_card_number = payment.credit_card_number[15:20]
+        exp_month = payment.exp_month
+        exp_year = payment.exp_year
+        return jsonify({"found": True,"credit_card_number": "****"+credit_card_number,"exp":"Expires on "+exp_month+", "+exp_year})
+    return jsonify({"found" : False})
+
+@app.route('/removePayment', methods=['GET'])
+def remove_payment():
+    user_name = session["user_name"]
+    PaymentInfo.query.filter_by(user_name=user_name).delete()
+    db.session.commit()
+    return jsonify({"message":"The payment method has been successfully removed."})
+
     
 @app.route('/store', methods=['GET'])
 def open_store():

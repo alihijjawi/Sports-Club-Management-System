@@ -8,7 +8,7 @@ var inactivityTime = function () {
     function logout() { window.location.href = "idlelogout" }
     function resetTimer() { clearTimeout(time); time = setTimeout(logout, 420000) }
 };
-
+checkPayment();
 window.onload = function () { inactivityTime(); }
 var initialData;
 var firstName = document.getElementById("fname");
@@ -21,8 +21,10 @@ deleteButton.addEventListener('click', deleteFunct);
 var submitButton = document.getElementById("submit-btn");
 submitButton.addEventListener('click', submitChanges);
 var changePasswordButton = document.getElementById("change-password");
-changePasswordButton.addEventListener('click',changePass);
+changePasswordButton.addEventListener('click', changePass);
 var btns = document.getElementsByName("edit");
+var removePaymentButton= document.getElementById("delete-payment");
+const displayBtn = removePaymentButton.style.display;
 const color = btns[0].style.backgroundColor; //color of original edit button
 console.log(btns);
 for (var i = 0; i < btns.length; i++) { //disable all input at initialization
@@ -43,13 +45,55 @@ function validatePassword() {
     }
 }
 changePasswordButton.disabled = true;
-old_password = document.getElementById("old-password");
+var old_password = document.getElementById("old-password");
 password.oninput = validatePassword;
 confirm_password.oninput = validatePassword;
 const passwordFields = ["old-password", "new-password", "confirm-password"];
 for (var i = 0; i < passwordFields.length; i++) {
     var curr = document.getElementById(passwordFields[i]);
     curr.addEventListener('input', onChangePassword);
+}
+var paymentButton = document.getElementById("payment-btn");
+var paymentMethod = document.getElementById("payment-method");
+paymentButton.addEventListener('click', paymentRedirect);
+function paymentRedirect() {
+    location.href = "payment";
+}
+removePaymentButton.addEventListener('click',removePayment);
+async function removePayment() {
+    const response = await fetch(`${SERVER_URL}/removePayment`, {
+        method: 'GET',
+        mode: 'cors',
+    });
+    const text = await response.text();
+    const data1 = JSON.parse(text); // Try to parse it as JSON
+    // The response was a JSON object
+    // Do your JSON handling here
+    alert(data1["message"]);
+    paymentMethod.innerHTML = "No payment method";
+    paymentButton.innerHTML = "Add Payment Method";
+    removePaymentButton.style.display = "none";
+}
+async function checkPayment() {
+    const response = await fetch(`${SERVER_URL}/checkPayment`, {
+        method: 'GET',
+        mode: 'cors',
+    });
+    const text = await response.text();
+    const data1 = JSON.parse(text); // Try to parse it as JSON
+    // The response was a JSON object
+    // Do your JSON handling here
+    var found = data1["found"];
+    if (found) {
+        paymentMethod.innerHTML = "VISA " + data1["credit_card_number"] + " " + data1["exp"];
+        paymentButton.innerHTML = "Change Payment Method";
+        removePaymentButton.style.display = displayBtn;
+    }
+    else {
+        paymentMethod.innerHTML = "No payment method";
+        paymentButton.innerHTML = "Add Payment Method";
+        removePaymentButton.style.display = "none";
+    }
 }
 function onChangePassword() {
     for (var i = 0; i < passwordFields.length; i++) {
@@ -81,8 +125,8 @@ function enableSubmit() {
     }
     submitButton.disabled = false;
 }
-function changePass(){
-    changePassword({"password":old_password.value, "new_password":password.value});
+function changePass() {
+    changePassword({ "password": old_password.value, "new_password": password.value });
 }
 async function changePassword(data) {
     const response = await fetch(`${SERVER_URL}/changePassword`, {
