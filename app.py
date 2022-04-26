@@ -250,23 +250,27 @@ class Discussion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(128))
     parent = db.Column(db.Integer)
+    title = db.Column(db.String(500))
     content = db.Column(db.String(4000))
     date_added = db.Column(db.String(128))
 
-    def __init__(self, username, parent, content, date_added):
+    def __init__(self, username, parent, title, content, date_added):
         self.username = username
         self.parent = parent
+        self.title = title
         self.content = content
         self.date_added = date_added
 
 class Reviews(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(128))
+    title = db.Column(db.String(500))
     content = db.Column(db.String(4000))
     date_added = db.Column(db.String(128))
 
-    def __init__(self, username, parent, content, date_added):
+    def __init__(self, username, title, content, date_added):
         self.username = username
+        self.title = title
         self.content = content
         self.date_added = date_added
 
@@ -344,7 +348,9 @@ def contact_info():
 
 @app.route('/about',  methods=['GET'])
 def about():
-    return render_template("About.html")
+    revs = Reviews.query.all()
+    revs.reverse()
+    return render_template('About.html', reviews=revs)
 
 @app.route('/TandC',  methods=['GET'])
 def TandC():
@@ -797,15 +803,21 @@ def get_discussion():
         comments.append(pcomments)
     return render_template('Discussion-Forum.html', posts=posts, comments=comments)    
 
-@app.route('/reviews', methods=['GET', 'POST'])
-def get_reviews():
-    if request.method == 'POST':    
-        data = request.json
-        newpost = Reviews(session['user_name'], data['title'], data['content'], datetime.datetime.utcnow())
-        db.session.add(newpost)
-        db.session.commit()
-    reviews = Reviews.query.all()
-    return render_template('About.html', reviews=reviews)
+@app.route('/postreviews', methods=['POST'])
+def post_reviews():
+    data = request.json
+    newpost = Reviews(session['user_name'], data['title'], data['content'], datetime.utcnow().strftime("%m/%d/%Y, %H:%M:%S"))
+    db.session.add(newpost)
+    db.session.commit()
+    return jsonify({'found':True})
+
+@app.route('/deletereview', methods=['POST'])
+def del_reviews():
+    data = request.json
+    rev = Reviews.query.filter_by(id=data["id"]).first()
+    db.session.delete(rev)
+    db.session.commit()
+    return jsonify({"message": "Review was deleted successfully"})
 
 @app.route('/sponsors', methods=['GET', 'POST'])
 def submit():
