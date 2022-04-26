@@ -118,7 +118,7 @@ async function myFetch(myRequest, data) {
 }
 
 function back() {
-    fetch(`${SERVER_URL}/getevents`, {
+    myFetch(`${SERVER_URL}/getevents`, {
         method: 'GET',
         mode: 'cors'
     })
