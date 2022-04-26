@@ -31,6 +31,7 @@ async function checkLogin(url) {
             loginButton.style.display = "none";
             userLabel.innerHTML = "Signed in as " + data1["user_name"];
             userLabel.style.display = userDisplay;
+            return true;
         }
         else
         {
@@ -38,9 +39,64 @@ async function checkLogin(url) {
             loginButton.style.display = loginDisplay;
             userLabel.innerHTML = "";
             userLabel.style.display = "none";
+            return false;
         }
     } catch (err) {
         // The response wasn't a JSON object
         // Do your text handling here
+    }
+}
+
+var sr = document.getElementById("showreview")
+sr.style.display="none"
+
+var ar = document.getElementById("addreview")
+var pr = document.getElementById("postreview")
+ar.addEventListener("click", addReview)
+pr.addEventListener("click", postReview)
+
+function addReview(){
+    if(userLabel.innerHTML != "") sr.style.display="block";
+    else{
+        alert("You cannot add posts to the forum if you are not logged in to your account.\nPlease login or register if you do not have an account.");
+        location.href = "login";
+    }
+}
+
+function postReview(){
+    sr.style.display="none"  
+    const inputFields = document.querySelectorAll("input");
+    for (let i = 0; i < inputFields.length; i++) {
+        let input = inputFields[i];
+        if (input.value.length == 0) {
+            return;
+        }
+    }
+    const data = {
+        "title": document.getElementById("name-6797").value,
+        "content": document.getElementById("message-6797").value
+    };
+    myFetch(`${SERVER_URL}/reviews`, data); 
+}
+
+async function myFetch(myRequest, data) {
+    const response = await fetch(myRequest, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    const text = await response.text();
+    try {
+        const data1 = JSON.parse(text); // Try to parse it as JSON
+        // The response was a JSON object
+        // Do your JSON handling here
+        errorMessage.innerHTML = data1["message"];
+    } catch (err) {
+        // The response wasn't a JSON object
+        // Do your text handling here
+        location.replace(text);
     }
 }
