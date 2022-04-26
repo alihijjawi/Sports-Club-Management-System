@@ -19,13 +19,14 @@ matplotlib.use('Agg')
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:rootroot@127.0.0.1:3306/scms'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:mira@127.0.0.1:3306/users'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 ma = Marshmallow(app)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['DEBUG'] = True
+app.secret_key = '\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
 SECRET_KEY = '\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
 
 
@@ -303,6 +304,7 @@ reservations_schema = ReservationSchema(many=True)
 
 
 
+
 @app.route('/checkLogin')
 def user_logged_in():
     print(session)
@@ -375,10 +377,6 @@ def get_user_name():
     if (request.method == 'POST'):
         data = request.json
         user_name = data["user_name"]
-        currUser = User.query.filter_by(user_name=session["user_name"]).first()
-        if user_name == currUser.user_name:
-            return jsonify({"found": False})
-
         user = User.query.filter_by(user_name=user_name).first()
         if user is not None:
             return jsonify({"found": True})
@@ -647,7 +645,22 @@ def open_cart():
 def account():
     if request.method == 'GET':
         return render_template("Account.html")
-
+    else:
+        data = request.json
+        first_name = data["first_name"]
+        last_name = data["last_name"]
+        user_name = data["user_name"]
+        email = data["email"]
+        currUserName = session["user_name"]
+        user = User.query.filter_by(user_name=currUserName).first()
+        user.first_name = first_name
+        user.last_name = last_name
+        user.user_name = user_name
+        user.email = email
+        session["user_name"] = user_name
+        print(session)
+        db.session.commit()
+        return "OK"
 
 @app.route('/getprofiles',  methods=['GET'])
 def get_profiles():

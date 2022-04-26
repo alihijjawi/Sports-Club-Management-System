@@ -10,7 +10,7 @@ var inactivityTime = function () {
   };
   
 window.onload = function() { inactivityTime(); }
-
+var initialData ;
 var firstName = document.getElementById("fname");
 var lastName = document.getElementById("lname");
 var email = document.getElementById("email");
@@ -18,6 +18,8 @@ var userName = document.getElementById("username");
 var password = document.getElementById("pwd");
 var deleteButton = document.getElementById("delete-btn");
 deleteButton.addEventListener('click',deleteFunct);
+var submitButton = document.getElementById("submit-btn");
+submitButton.addEventListener('click',submitChanges);
 var btns = document.getElementsByName("edit");
 const color = btns[0].style.backgroundColor; //color of original edit button
 console.log(btns);
@@ -30,7 +32,6 @@ for (var i=0;i<btns.length;i++){ //disable all input at initialization
 }
 function invalidInput(event){
     var inputElem = event.target;
-    console.log(inputElem.id);
     var btnElem = document.getElementById("edit-"+inputElem.id);
     if (inputElem.reportValidity()){
         btnElem.disabled = false;
@@ -38,6 +39,15 @@ function invalidInput(event){
     else{
         btnElem.disabled = true;
     }
+}
+function enableSubmit(){
+    const editBtns = document.getElementsByName("edit");
+    for (var i=0;i<editBtns.length;i++){
+        if (editBtns[i].innerHTML=="SAVE"){
+            return;
+        }
+    }
+    submitButton.disabled=false;
 }
 function changeButton(event) //change edit to save and vice versa on click
 {
@@ -47,10 +57,12 @@ function changeButton(event) //change edit to save and vice versa on click
     if (btn.innerHTML == "EDIT") {
         btn.innerHTML = "SAVE";
         input.disabled=false;
+        submitButton.disabled=true;
     }
     else {
         btn.innerHTML = "EDIT";
         input.disabled=true;
+        enableSubmit();
     }
 }
 for (var i = 0; i < btns.length; i++) {
@@ -67,12 +79,12 @@ async function checkLogin(url) {
         // Do your JSON handling here
         if (data1["found"])
         {
+            initialData = data1;
             isLogged = true;
             firstName.value = data1["first_name"];
             lastName.value = data1["last_name"];
             email.value = data1["email"];
             userName.value = data1["user_name"];
-            password.value = data1["password"];
         }
         else
         {
@@ -90,20 +102,7 @@ function deleteFunct(){
     deleteUser();
     location.href = "/";
 }
-async function logoutUser(){
-    const response = await fetch(`${SERVER_URL}/deleteUser`);
-    const text = await response.text();
-    try {
-        const data1 = JSON.parse(text); // Try to parse it as JSON
-        // The response was a JSON object
-        // Do your JSON handling here
-        alert(data1["message"]);
-        location.href = "/";
-    } catch (err) {
-        // The response wasn't a JSON object
-        // Do your text handling here
-    }
-}
+
 async function deleteUser(){
     const response = await fetch(`${SERVER_URL}/deleteUser`);
     const text = await response.text();
@@ -137,6 +136,44 @@ async function updateUser(data) {
         // Do your text handling here
     }
 }
+async function checkUser(data){
+    var x = await checkUserName(data);
+    return x;
+}
+async function checkUserEmail(){
+    if (userName.value != initialData["user_name"]){
+        const userExists = await checkUserName({"user_name":userName.value});
+        if (userExists){
+            alert("This username is already associated with an account");
+            return;
+        }
+    }
+    if (email.value != initialData["email"]){
+        const emailExists = await checkEmail({"email" : email.value});
+        if (emailExists){
+            alert("This email is already associated with an account");
+            return;
+        }
+    }
+    const newData = {"first_name":firstName.value,
+                     "last_name":lastName.value,
+                     "user_name":userName.value,
+                     "email":email.value
+    };
+    updateAccount(newData);
+    alert("Changes to your account information have been saved.");
+
+}
+async function updateAccount(data) {
+    const response = await fetch(`${SERVER_URL}/account`, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+}
 async function checkUserName(data) {
     const response = await fetch(`${SERVER_URL}/checkUserName`, {
         method: 'POST',
@@ -152,7 +189,6 @@ async function checkUserName(data) {
         // The response was a JSON object
         // Do your JSON handling here
         if (data1["found"]){
-            alert("This username is already associated with an account");
             return true;
         }
         return false;
@@ -176,10 +212,9 @@ async function checkEmail(data) {
         // The response was a JSON object
         // Do your JSON handling here
         if (data1["found"]){
-            alert("This email is already associated with an account");
-            return false;
+            return true;
         }
-        return true;
+        return false;
     } catch (err) {
         // The response wasn't a JSON object
         // Do your text handling here
@@ -225,4 +260,16 @@ function change(){
 }
 function revert(){
     checkLogin(`${SERVER_URL}/checkLogin`);
+}
+function submitChanges(){
+    console.log("CLICKED");
+    const inputFields = ["fname","lname","email","username"];
+    for (let i = 0; i < inputFields.length; i++) {
+        console.log("IN LOOP");
+        var id = inputFields[i];
+        var curr = document.getElementById(id);
+        if (!curr.reportValidity()) return;
+    }
+    console.log("DONE LOOP");
+    checkUserEmail();
 }

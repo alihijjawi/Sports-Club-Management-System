@@ -141,7 +141,7 @@
                     <label for="fname" class="u-label">First Name</label>
                     <input type="text" maxlength="32" pattern="[A-Za-z]{1,32}"
                       title="Enter a name with letters only and no spaces." placeholder="Enter your first name"
-                      id="fname" name="name" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+                      id="fname" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
                       required="">
                   </div>
                   <div class="u-form-group u-form-name u-form-group-2">
@@ -156,20 +156,20 @@
                     <input type="text" placeholder="Enter your username" maxlength="32"
                       pattern="[A-za-z]{1}[A-za-z0-9-_]{0,32}"
                       title="Username must begin with a letter and must not contain special characters other than: -,_."
-                      id="username" name="name-2" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+                      id="username"  class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
                       required="">
                   </div>
                   <div class="u-form-email u-form-group">
                     <label for="email" class="u-label">Email</label>
-                    <input type="email" placeholder="Enter a valid email address" id="email" name="email"
+                    <input type="email" placeholder="Enter a valid email address" id="email" 
                       class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
                   </div>
                   <div class="u-align-center u-form-group u-form-submit">
-                    <label for="submit-btn"
+                    <button id="submit-btn"
                       class="u-border-none u-btn u-btn-submit u-button-style u-custom-color-1 u-hover-custom-color-7 u-btn-1">Submit
                       Changes
-                    </label>
-                    <input type="submit" id="submit-btn" value="submit" class="u-form-control-hidden">
+                  </button>
+                    
                   </div>
 
                 </form>
