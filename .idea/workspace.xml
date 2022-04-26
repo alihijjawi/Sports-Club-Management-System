@@ -2,22 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="02baa409-7ada-4f85-997d-a917bedea9b6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/static/generate_store_report.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/generate_ticket_report.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/adidas.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/nike.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/panther.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/puma.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/reebok.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/nicepage_2.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/sponsorship.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/store_report.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/submit_form.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/ticket_report.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/sponsorship.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/store_report.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/ticket_report.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/About.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/About.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/About.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/About.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/Forum.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/Forum.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/nicepage.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/nicepage.css" afterDir="false" />
@@ -67,5 +53,16 @@
       <updated>1648321902301</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
