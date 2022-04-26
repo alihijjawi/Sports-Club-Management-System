@@ -1,0 +1,9 @@
+flask
+flask-cors
+flask-marshmallow
+flask-sqlalchemy
+flask-bcrypt
+jwt
+python-dateutil
+matplotlib
+pymysql
