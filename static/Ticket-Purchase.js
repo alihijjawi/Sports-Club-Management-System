@@ -37,6 +37,7 @@ async function checkLogin(url) {
         // Do your JSON handling here
         if (data1["found"])
         {
+            isLogged = true;
             logoutButton.style.display = logoutDisplay;
             loginButton.style.display = "none";
             userLabel.innerHTML = "Signed in as " + data1["user_name"];
