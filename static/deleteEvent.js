@@ -85,11 +85,12 @@ function deleteEvent() {
         }
     }
     let event_name = document.getElementById("event_name")
-
+    console.log(event_name)
     if (!ValidateName(event_name)) return;
-
+    console.log(event_name.value)
     const data = {
         "name": event_name.value
+        
     };
     myFetch(`${SERVER_URL}/deleteevents`, data);
 }
@@ -117,7 +118,7 @@ async function myFetch(myRequest, data) {
 }
 
 function back() {
-    fetch(`${SERVER_URL}/getevents`, {
+    myFetch(`${SERVER_URL}/getevents`, {
         method: 'GET',
         mode: 'cors'
     })

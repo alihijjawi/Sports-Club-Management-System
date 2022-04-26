@@ -49,6 +49,16 @@ async function checkLogin(url) {
 }
 
 
+
+
+var errorMessage = document.getElementById("error-message");
+var addButton = document.getElementById("add-button");
+var resetButton = document.getElementById("reset-button");
+addButton.addEventListener("click", addEvent);
+resetButton.addEventListener("click", resetInput);
+
+
+
 var date = document.getElementById("timing"); //date var
 var today = new Date().toISOString().split('T')[0];
 var yearFromNow = new Date();
@@ -56,12 +66,6 @@ yearFromNow.setFullYear(yearFromNow.getFullYear()+1);
 date.setAttribute('min', today);//code to restrict past date selections when reserving
 date.setAttribute('max',yearFromNow.toISOString().split('T')[0]); //max date is a year from now
 document.getElementById("date").value = today;//code to let the date be today by default
-
-var errorMessage = document.getElementById("error-message");
-var addButton = document.getElementById("add-button");
-var resetButton = document.getElementById("reset-button");
-addButton.addEventListener("click", addEvent);
-resetButton.addEventListener("click", resetInput);
 
 function ValidateName(input){
     if (!input.checkValidity()){
