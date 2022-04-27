@@ -33,8 +33,8 @@ SECRET_KEY = '\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8
 
 def create_token(user_id):
  payload = {
- 'exp': datetime.datetime.utcnow() + datetime.timedelta(days=4),
- 'iat': datetime.datetime.utcnow(),
+ 'exp': datetime.utcnow() + datetime.timedelta(days=4),
+ 'iat': datetime.utcnow(),
  'sub': user_id
  }
  return jwt.encode(
@@ -65,7 +65,7 @@ class User(db.Model):
     date_of_birth = db.Column(db.String(128))
     date = db.Column(db.DateTime)
 
-    def init(self, first_name, last_name, user_name, email, date_of_birth, password, date):
+    def __init__(self, first_name, last_name, user_name, email, date_of_birth, password, date):
         self.user_name = user_name
         self.first_name = first_name
         self.last_name = last_name
@@ -253,26 +253,29 @@ class Discussion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(128))
     parent = db.Column(db.Integer)
+    title = db.Column(db.String(500))
     content = db.Column(db.String(4000))
     date_added = db.Column(db.String(128))
 
-    def __init__(self, username, parent, content, date_added):
+    def __init__(self, username, parent, title, content, date_added):
         self.username = username
         self.parent = parent
+        self.title = title
         self.content = content
         self.date_added = date_added
 
 class Reviews(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(128))
+    title = db.Column(db.String(500))
     content = db.Column(db.String(4000))
     date_added = db.Column(db.String(128))
 
-    def __init__(self, username, parent, content, date_added):
+    def __init__(self, username, title, content, date_added):
         self.username = username
+        self.title = title
         self.content = content
         self.date_added = date_added
-
 
 
 class UserSchema(ma.Schema):
@@ -468,7 +471,7 @@ def create_user():
     last_name = data['last_name']
     password = data['password']
     date_of_birth = data['dob']
-    user = User(first_name, last_name, user_name, email, date_of_birth, password, datetime.datetime.utcnow())
+    user = User(first_name, last_name, user_name, email, date_of_birth, password, datetime.utcnow())
     db.session.add(user)
     db.session.commit()
     session["user_name"] = user_name
@@ -511,7 +514,7 @@ def get_tickets():
 
         number = data["number"]
         match = data["match"]
-        date = datetime.datetime.utcnow()
+        date = datetime.utcnow()
 
         ticket = Ticket(number, match, date)
         db.session.add(ticket)
@@ -863,11 +866,11 @@ def get_discussion():
         db.session.add(newpost)
         db.session.commit()
     posts = Discussion.query.filter_by(parent=0).all()
-    posts.reverse()
     comments=[]
     for i in range(len(posts)):
         pcomments = Discussion.query.filter_by(parent=len(posts)-i).all()
         comments.append(pcomments)
+    posts.reverse()
     return render_template('Discussion-Forum.html', posts=posts, comments=comments)     
 
 @app.route('/postreviews', methods=['POST'])
@@ -972,7 +975,7 @@ def user_report():
 
         dict = {}
         for i in range(len(entries)):
-            date = datetime.datetime(entries[i].date.year, entries[i].date.month, 1, 12, 0, 0)
+            date = datetime(entries[i].date.year, entries[i].date.month, 1, 12, 0, 0)
             if date not in dict:
                 dict[date] = 1
             else:

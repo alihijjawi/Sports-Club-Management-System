@@ -170,7 +170,7 @@ function addComment(){
     const data = {
         "title": "",
         "content": document.getElementById("commentcontent"+trgt).value,
-        "parent": clicked_id
+        "parent": commentdiv.length - clicked_id + 1
     };
     commentdiv[clicked_id-1].style.display="none"
     myFetch(`${SERVER_URL}/discussion`, data, 'POST'); 
