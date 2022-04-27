@@ -134,23 +134,37 @@
             <tbody>
             {% for p in posts %}
               <tr> 
-                <h4 class="u-blog-control u-text u-block-a44f-20"> {{p.title}} by {{p.username}}</h4>
-                <span class="u-border-2 u-border-palette-1-base u-file-icon u-icon u-icon-circle u-block-a44f-24">
-                  <img src="../static/images/3964085.png" alt="" data-original-src="np://user.desktop.nicepage.com/Site_2465015654/images/3964085.png" data-color="#000000"/>
-                </span>
-                <div class="u-blog-control u-metadata u-text-grey-30 u-block-a44f-21">
+                <br />
+                <h4 class="u-blog-control u-text u-block-a44f-20"> {{p.title}}</h4> 
+                <span class="u-blog-control u-text u-block-a44f-20"> by {{p.username}}</span>
+                <div style="margin-top: -5px;" class="u-blog-control u-metadata u-text-grey-30 u-block-a44f-21">
                   <span class="u-meta-date u-meta-icon">{{p.date_added}}</span>
-                  <a class="u-meta-comments u-meta-icon">Comments ({{commentslength}})</a>
+                  <a href="#" id="displaycomments{{loop.index|string}}" class="u-meta-comments u-meta-icon">Comments ({{comments[loop.index0]|length}})</a>
                 </div><div class="u-align-justify u-blog-control u-post-content u-text u-block-a44f-22">{{p.content}}</div>
-                <a id="showcomment0" class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-style u-none u-text-palette-1-base u-block-a44f-31">Add Comment</a>
-                <div id="addcomment0" class="u-form u-block-a44f-41">
+                <a id="showcomment{{loop.index|string}}" class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-style u-none u-text-palette-1-base u-block-a44f-31">Add Comment</a>
+                <div id="addcomment{{loop.index|string}}" class="u-form u-block-a44f-41">
                   <form method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="email" name="form">
                     <div class="u-form-group u-form-name u-label-none u-block-a44f-42">
-                      <label for="commentcontent0" class="u-label u-block-a44f-43">Comment</label>
-                      <input id="commentcontent0" type="text" placeholder="Comment" name="comment" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-block-a44f-44" required=""/></div>
-                      <div class="u-align-right u-form-group u-form-submit u-block-a44f-45"><a id="commentbutton0" class="u-border-none u-btn u-btn-submit u-button-style u-custom-color-1 u-hover-custom-color-2 u-block-a44f-46">POST</a>
+                      <label for="commentcontent{{loop.index|string}}" class="u-label u-block-a44f-43">Comment</label>
+                      <input id="commentcontent{{loop.index|string}}" type="text" placeholder="Comment" name="comment" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-block-a44f-44" required=""/></div>
+                      <div class="u-align-right u-form-group u-form-submit u-block-a44f-45">
+                        <span id="error{{loop.index|string}}"></span>
+                        <a id="commentbutton{{loop.index|string}}" class="u-border-none u-btn u-btn-submit u-button-style u-custom-color-1 u-hover-custom-color-2 u-block-a44f-46">POST</a>
                         <input type="submit" value="submit" class="u-form-control-hidden"/></div>
                       </form>
+                    </div>
+                    
+                    <div id="displaycomm{{loop.index|string}}">
+                      {% for c in comments[loop.index0] %}
+                      <div style="float: right;" class="u-blog-control u-metadata u-text-grey-30 u-block-a44f-21">
+                        <span class="u-meta-date u-meta-icon">{{p.date_added}}</span>
+                      </div>
+                      <br />
+                      <div class="u-blog-control u-metadata u-block-a44f-21">
+                        <span style="margin-left: 36px;" class="u-meta-date u-meta-icon">{{c.username}}: </span>
+                      </div>
+                       <h5 style="margin-left: 65px; margin-top: -2px;" class="u-align-justify u-blog-control u-post-content u-text u-block-a44f-22">{{c.content}}</h5>
+                      {%endfor%}
                     </div>
                   </tr>             
             {% endfor %}

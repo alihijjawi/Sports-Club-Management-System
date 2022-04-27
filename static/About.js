@@ -48,21 +48,17 @@ var inactivityTime = function () {
   }
   
 var del=[]
-var i = 0
-while(document.getElementById("del"+i.toString())){
-    del.push(document.getElementById("del"+i.toString()))
-    del[i].addEventListener("click", deletePost)
-    i+=1;
+function loadDeletes(){
+    del = []
+    var j = 1
+    while(document.getElementById("del"+j.toString())){
+        del.push(document.getElementById("del"+j.toString()))
+        del[j-1].addEventListener("click", deletePost)
+        j+=1
+    }
 }
-function deletePost(){
-    var buttons = document.getElementsByTagName("button")
-    var buttonsCount = buttons.length
-    var delid = 0
-    for(let i=0; i<buttonsCount; i++)
-        buttons[i].onclick = function(e){ delid = i; }
-
-    myFetch(`${SERVER_URL}/deletereview`, {"id":delid}, 'POST')
-}
+loadDeletes();
+console.log(del)
 
 async function myFetch(myRequest, data, type) {
     if(type=='POST'){
@@ -87,6 +83,18 @@ async function myFetch(myRequest, data, type) {
     }
 }
 
+function deletePost(){
+    var trgt = window.event.target.id
+    console.log(trgt)
+    var ind = 0
+    while(/^[a-z]+$/.test(trgt[ind])){ind+=1;}
+    trgt = trgt.substr(ind)
+    var clicked_id = parseInt(trgt);
+    console.log(clicked_id)
+    myFetch(`${SERVER_URL}/deletereview`, {"id":clicked_id-1}, 'POST');
+    myFetch(`${SERVER_URL}/about`, {}, 'GET'); 
+}
+
 var sr = document.getElementById("showreview")
 sr.style.display="none"
 
@@ -96,27 +104,36 @@ ar.addEventListener("click", addReview)
 pr.addEventListener("click", postReview)
 
 function addReview(){
-    if(userLabel.innerHTML != "") sr.style.display="block";
+    if(userLabel.innerHTML != ""){
+        if(ar.innerHTML=="Add Review"){
+            sr.style.display="block";
+            ar.innerHTML="Close";
+        }
+        else{
+            sr.style.display="none";
+            ar.innerHTML="Add Review";
+        }
+    } 
     else{
         alert("You cannot add posts to the forum if you are not logged in to your account.\nPlease login or register if you do not have an account.");
         location.href = "login";
     }
 }
 
-function postReview(){
-    sr.style.display="none"  
-    const inputFields = document.querySelectorAll("input");
-    for (let i = 0; i < inputFields.length; i++) {
-        let input = inputFields[i];
-        if (input.value.length == 0) {
-            return;
-        }
-    }
+function postReview(){ 
+    if (document.getElementById("name-6797").value == "" || document.getElementById("message-6797").value == ""){
+        return;
+    } 
     const data = {
         "title": document.getElementById("name-6797").value,
         "content": document.getElementById("message-6797").value
     };
+    sr.style.display="none" 
+    ar.innerHTML="Add Review";
+    document.getElementById("name-6797").value = ""
+    document.getElementById("message-6797").value = ""
     myFetch(`${SERVER_URL}/postreviews`, data, 'POST'); 
     myFetch(`${SERVER_URL}/about`, {}, 'GET'); 
+    loadDeletes();
 }
 

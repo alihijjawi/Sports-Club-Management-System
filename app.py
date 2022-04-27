@@ -339,6 +339,7 @@ def home():
 
 @app.route('/idlelogout', methods=['GET'])
 def idle_logout():
+    session.pop("user_name", None)
     return render_template("idlelogout.html")
 
 @app.route('/logout')
@@ -364,7 +365,12 @@ def contact_info():
 
 @app.route('/about',  methods=['GET'])
 def about():
-    return render_template("About.html")
+    revs = Reviews.query.all()
+    revs.reverse()
+    uname = ""
+    if "user_name" in session:
+        uname = session["user_name"]
+    return render_template('About.html', reviews=revs, uname=uname)
 
 @app.route('/TandC',  methods=['GET'])
 def TandC():
@@ -846,26 +852,37 @@ def update_coach():
 def get_discussion():
     if request.method == 'POST':
         data = request.json
-        newpost = Discussion(session['user_name'], data['parent'], data['title'], data['content'], datetime.datetime.utcnow())
+        newpost = Discussion(session['user_name'], data['parent'], data['title'], data['content'], datetime.utcnow().strftime("%m/%d/%Y, %H:%M:%S"))
         db.session.add(newpost)
         db.session.commit()
     posts = Discussion.query.filter_by(parent=0).all()
     posts.reverse()
     comments=[]
-    for p in posts:
-        pcomments = Discussion.query.filter_by(parent=p.id).all()
+    for i in range(len(posts)):
+        pcomments = Discussion.query.filter_by(parent=len(posts)-i).all()
         comments.append(pcomments)
-    return render_template('Discussion-Forum.html', posts=posts, comments=comments)    
+    return render_template('Discussion-Forum.html', posts=posts, comments=comments)     
 
-@app.route('/reviews', methods=['GET', 'POST'])
-def get_reviews():
-    if request.method == 'POST':    
-        data = request.json
-        newpost = Reviews(session['user_name'], data['title'], data['content'], datetime.datetime.utcnow())
-        db.session.add(newpost)
-        db.session.commit()
-    reviews = Reviews.query.all()
-    return render_template('About.html', reviews=reviews)
+@app.route('/postreviews', methods=['POST'])
+def post_reviews():
+    data = request.json
+    newpost = Reviews(session['user_name'], data['title'], data['content'], datetime.utcnow().strftime("%m/%d/%Y, %H:%M:%S"))
+    db.session.add(newpost)
+    db.session.commit()
+    return jsonify({'found':True})
+
+@app.route('/deletereview', methods=['POST'])
+def del_reviews():
+    data = request.json
+    rev = Reviews.query.all()
+    rev.reverse()
+    print(data["id"])
+    del_id = rev[data["id"]].id
+    del_rev = Reviews.query.filter_by(id=del_id).first()
+    print(del_rev)
+    db.session.delete(del_rev)
+    db.session.commit()
+    return jsonify({"message": "Review was deleted successfully"})
 
 @app.route('/sponsors', methods=['GET', 'POST'])
 def submit():

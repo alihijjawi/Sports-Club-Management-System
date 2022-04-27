@@ -227,11 +227,9 @@
                   <div class="u-blog-post u-container-style u-repeater-item u-block-7c8c-52">
                      <div class="u-container-layout u-similar-container u-block-7c8c-53">
                        <h4 class="u-text">{{r.title}}</h4>
-                       <button id="del"+{{loop.index0|string}} style="float: right;">
-                        <span class="u-file-icon u-icon u-icon-circle">
-                          <img src="../static/images/3964085.png" data-color="#000000"/>
-                        </span>
-                      </button>
+                       {% if uname== r.username %} 
+                        <a href="#" id="del{{loop.index|string}}" style="float: right;">Delete Review</a>
+                        {%endif%}
                         <div class="u-metadata">
                           <span class="u-meta-date u-meta-icon"> {{ r.username }} added this on {{ r.date_added }}</span>
                         </div>       
