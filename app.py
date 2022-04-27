@@ -33,8 +33,8 @@ SECRET_KEY = '\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8
 
 def create_token(user_id):
  payload = {
- 'exp': datetime.datetime.utcnow() + datetime.timedelta(days=4),
- 'iat': datetime.datetime.utcnow(),
+ 'exp': datetime.utcnow() + datetime.timedelta(days=4),
+ 'iat': datetime.utcnow(),
  'sub': user_id
  }
  return jwt.encode(
@@ -468,7 +468,7 @@ def create_user():
     last_name = data['last_name']
     password = data['password']
     date_of_birth = data['dob']
-    user = User(first_name, last_name, user_name, email, date_of_birth, password, datetime.datetime.utcnow())
+    user = User(first_name, last_name, user_name, email, date_of_birth, password, datetime.utcnow())
     db.session.add(user)
     db.session.commit()
     session["user_name"] = user_name
@@ -511,7 +511,7 @@ def get_tickets():
 
         number = data["number"]
         match = data["match"]
-        date = datetime.datetime.utcnow()
+        date = datetime.utcnow()
 
         ticket = Ticket(number, match, date)
         db.session.add(ticket)
