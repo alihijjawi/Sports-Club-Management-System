@@ -19,7 +19,7 @@ matplotlib.use('Agg')
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Fuckapple123123@127.0.0.1:3306/430'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:rootroot@127.0.0.1:3306/scms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -950,9 +950,9 @@ def store_report():
         for entry in entries:
             dates.append(entry.date)
             prices.append(entry.price)
-
-        print(dates)
         
+        fig = plt.figure()
+
         plt.plot_date(dates, prices)
         plt.xlabel("Date")
         plt.ylabel("Revenue ($)")
@@ -977,6 +977,8 @@ def ticket_report():
             dates.append(entry.date)
             prices.append(10 * int(entry.number))
         
+        fig = plt.figure()
+
         plt.plot_date(dates, prices)
         plt.xlabel("Date")
         plt.ylabel("Revenue ($)")
@@ -994,10 +996,10 @@ def user_report():
         end_date = parser.parse(data['end_date'])
 
         entries = User.query.filter(User.date.between(start_date, end_date)).all()
-
+        
         dict = {}
         for i in range(len(entries)):
-            date = datetime(entries[i].date.year, entries[i].date.month, 1, 12, 0, 0)
+            date = datetime.datetime(entries[i].date.year, entries[i].date.month, 1, 12, 0, 0)
             if date not in dict:
                 dict[date] = 1
             else:
@@ -1005,6 +1007,8 @@ def user_report():
 
         dates = list(dict.keys())
         n_users = list(dict.values())
+        
+        fig = plt.figure()
 
         plt.plot_date(dates, n_users)
         plt.xlabel("Date")
@@ -1013,3 +1017,7 @@ def user_report():
         plt.savefig('static/images/reports/user_report.png')
 
     return render_template('user_report.html')
+
+@app.route('/reports', methods = ['GET'])
+def get_reports():
+    return render_template('reports_landing.html')
