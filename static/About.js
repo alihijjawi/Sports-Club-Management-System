@@ -51,8 +51,11 @@ var del=[]
 function loadDeletes(){
     del = []
     var j = 1
-    while(document.getElementById("del"+j.toString())){
-        del.push(document.getElementById("del"+j.toString()))
+    while(document.getElementById("review"+j.toString())){
+        var x;
+        x = document.getElementById("del"+j.toString())
+        if(!x) x=document.getElementById("review"+j.toString())
+        del.push(x)
         del[j-1].addEventListener("click", deletePost)
         j+=1
     }
@@ -80,7 +83,6 @@ async function myFetch(myRequest, data, type) {
 
 function deletePost(){
     var trgt = window.event.target.id
-    console.log(5)
     var ind = 0
     while(/^[a-z]+$/.test(trgt[ind])){ind+=1;}
     trgt = trgt.substr(ind)

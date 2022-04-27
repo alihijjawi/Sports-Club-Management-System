@@ -225,7 +225,7 @@
             <div class="u-blog u-expanded-width u-block-7c8c-50">
                {% for r in reviews %}
                   <div class="u-blog-post u-container-style u-repeater-item u-block-7c8c-52">
-                     <div class="u-container-layout u-similar-container u-block-7c8c-53">
+                     <div id="review{{loop.index|string}}" class="u-container-layout u-similar-container u-block-7c8c-53">
                        <h4 class="u-text">{{r.title}}</h4>
                        {% if uname== r.username %} 
                         <a href="" id="del{{loop.index|string}}" style="float: right;">Delete Review</a>
