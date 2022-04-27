@@ -305,6 +305,12 @@ class TicketSchema(ma.Schema):
         fields = ("number", "match", "date")
         model = Ticket
 
+class PaymentInfoSchema(ma.Schema):
+    class Meta:
+        fields = ("user_name","full_name","email","address","city","state","zip_code","name_on_card","credit_card_number","exp_month","exp_year","cvv")
+        model = PaymentInfo
+
+paymentinfo_schema = PaymentInfoSchema()
 user_schema = UserSchema()
 matches_schema = MatchSchema(many=True)
 reservations_schema = ReservationSchema(many=True)
@@ -527,7 +533,16 @@ def get_payment():
     if request.method == 'GET':
         return render_template("Payment.html")
     return redirect("login")
-    
+
+@app.route('/returnPaymentInfo', methods=['GET'])
+def return_payment_info():
+    payment = PaymentInfo.query.filter_by(user_name = session["user_name"]).first()
+    if (payment is None):
+        return jsonify({"found" : False})
+    temp = paymentinfo_schema.dump(payment)
+    temp["found"] = True
+    return jsonify(temp)
+
 @app.route('/save', methods=['POST'])
 def save_info():
     data = request.json
@@ -713,8 +728,9 @@ def account():
         email = data["email"]
         currUserName = session["user_name"]
         user = User.query.filter_by(user_name=currUserName).first()
-        payment = PaymentInfo.query.filter_by(user_name = currUserName).first()
+        payment = PaymentInfo.query.filter_by(user_name=session["user_name"]).first()
         if (payment is not None):
+            print(session["user_name"])
             payment.user_name = user_name
             db.session.commit()
         user.first_name = first_name
