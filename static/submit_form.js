@@ -50,14 +50,26 @@ var inactivityTime = function () {
 
 var submitButton = document.getElementById("submit_button");
 submitButton.addEventListener("click", submit);
+var submitButton = document.getElementById("CLEAR");
+submitButton.addEventListener("click", clear);
 
 function ValidateInput(input, name){
-    if(!input.checkValidity()){
-        alert("Please enter a valid " + name + "!");
-        console.log("Invalid " + name + ".");
-        return false;
-    }
     return true;
+}
+
+function clear(){
+    let company_name = document.getElementById("company_name");
+    let point_of_contact = document.getElementById("point_of_contact");
+    let billing_address = document.getElementById("billing_address");
+    let phone_number = document.getElementById("phone_number");
+    let email = document.getElementById("email");
+    let website = document.getElementById("website");
+    company_name.value = "";
+    point_of_contact.value = "";
+    billing_address.value="";
+    phone_number.value="";
+    email.value="";
+    website.value="";
 }
 
 function submit() {
