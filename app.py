@@ -19,7 +19,7 @@ matplotlib.use('Agg')
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:mira@127.0.0.1:3306/users'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:slenderman@127.0.0.1:3306/eece430'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -63,14 +63,16 @@ class User(db.Model):
     email = db.Column(db.String(128), unique=True)
     hashed_password = db.Column(db.String(128))
     date_of_birth = db.Column(db.String(128))
+    date = db.Column(db.DateTime)
 
-    def __init__(self, first_name, last_name, user_name, email, date_of_birth, password):
+    def init(self, first_name, last_name, user_name, email, date_of_birth, password, date):
         self.user_name = user_name
         self.first_name = first_name
         self.last_name = last_name
         self.date_of_birth = date_of_birth
         self.email = email
         self.hashed_password = bcrypt.generate_password_hash(password)
+        self.date = date
 
 class Contact(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -466,7 +468,7 @@ def create_user():
     last_name = data['last_name']
     password = data['password']
     date_of_birth = data['dob']
-    user = User(first_name, last_name, user_name, email, date_of_birth, password)
+    user = User(first_name, last_name, user_name, email, date_of_birth, password, datetime.datetime.utcnow())
     db.session.add(user)
     db.session.commit()
     session["user_name"] = user_name
@@ -715,6 +717,11 @@ def account():
         db.session.commit()
         return "OK"
 
+@app.route('/teams', methods=['GET', 'POST'])
+def teams():
+    if request.method == 'GET':
+        return render_template("teams.html")
+
 @app.route('/getprofiles',  methods=['GET'])
 def get_profiles():
     coaches = Coach.query.all()
@@ -952,3 +959,32 @@ def ticket_report():
         plt.savefig('static/images/reports/ticket_report.png')
 
     return render_template('ticket_report.html')
+
+@app.route('/user_report', methods=['GET', 'POST'])
+def user_report():
+    if request.method == "POST":
+        data = request.json
+
+        start_date = parser.parse(data['start_date'])
+        end_date = parser.parse(data['end_date'])
+
+        entries = User.query.filter(User.date.between(start_date, end_date)).all()
+
+        dict = {}
+        for i in range(len(entries)):
+            date = datetime.datetime(entries[i].date.year, entries[i].date.month, 1, 12, 0, 0)
+            if date not in dict:
+                dict[date] = 1
+            else:
+                dict[date] += 1
+
+        dates = list(dict.keys())
+        n_users = list(dict.values())
+
+        plt.plot_date(dates, n_users)
+        plt.xlabel("Date")
+        plt.ylabel("Number of Users")
+        plt.gcf().autofmt_xdate()
+        plt.savefig('static/images/reports/user_report.png')
+
+    return render_template('user_report.html')

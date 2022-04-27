@@ -17,6 +17,15 @@ var loginDisplay = loginButton.style.display;
 var logoutDisplay = logoutButton.style.display;
 var userLabel = document.getElementById("label");
 var userDisplay = userLabel.style.display;
+
+var date = document.getElementById("timing"); //date var
+var today = new Date().toISOString().split('T')[0];
+var yearFromNow = new Date();
+yearFromNow.setFullYear(yearFromNow.getFullYear()+1);
+date.setAttribute('min', today);//code to restrict past date selections when reserving
+date.setAttribute('max',yearFromNow.toISOString().split('T')[0]); //max date is a year from now
+document.getElementById("timing").value = today;//code to let the date be today by default
+
 checkLogin(`${SERVER_URL}/checkLogin`);
 async function checkLogin(url) {
     const response = await fetch(url);
