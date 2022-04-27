@@ -8,6 +8,8 @@ var inactivityTime = function () {
     function logout() { window.location.href = "idlelogout" }
     function resetTimer() { clearTimeout(time); time = setTimeout(logout, 420000) }
 };
+var editPic = document.getElementById("edit-pic");
+
 window.onload = function () { inactivityTime(); }
 checkPayment();
 var initialData;
