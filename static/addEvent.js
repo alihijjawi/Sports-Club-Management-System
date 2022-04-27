@@ -55,7 +55,6 @@ addButton.addEventListener("click", addEvent);
 resetButton.addEventListener("click", resetInput);
 
 
-
 var date = document.getElementById("timing"); //date var
 var today = new Date().toISOString().split('T')[0];
 var yearFromNow = new Date();

@@ -17,6 +17,13 @@ var loginDisplay = loginButton.style.display;
 var logoutDisplay = logoutButton.style.display;
 var userLabel = document.getElementById("label");
 var userDisplay = userLabel.style.display;
+var coachButton = document.getElementById("coach-button");
+var playerButton = document.getElementById("player-button");
+var deleteCoachButton = document.getElementById("delete-coach-button");
+var deletePlayerButton = document.getElementById("delete-player-button");
+var updatePlayerButton = document.getElementById("update-player-button");
+var updateCoachButton = document.getElementById("update-coach-button");
+
 checkLogin(`${SERVER_URL}/checkLogin`);
 async function checkLogin(url) {
     const response = await fetch(url);
@@ -31,6 +38,14 @@ async function checkLogin(url) {
             loginButton.style.display = "none";
             userLabel.innerHTML = "Signed in as " + data1["user_name"];
             userLabel.style.display = userDisplay;
+            if (data1["privilege"] == "0") {
+                coachButton.disabled = true;
+                playerButton.disabled = true;
+                deleteCoachButton.disabled = true;
+                deletePlayerButton.disabled = true;
+                updatePlayerButton.disabled = true;
+                updateCoachButton.disabled = true;
+            }
         }
         else
         {
@@ -38,6 +53,12 @@ async function checkLogin(url) {
             loginButton.style.display = loginDisplay;
             userLabel.innerHTML = "";
             userLabel.style.display = "none";
+            coachButton.disabled = true;
+                playerButton.disabled = true;
+                deleteCoachButton.disabled = true;
+                deletePlayerButton.disabled = true;
+                updatePlayerButton.disabled = true;
+                updateCoachButton.disabled = true;
         }
     } catch (err) {
         // The response wasn't a JSON object
@@ -45,12 +66,7 @@ async function checkLogin(url) {
     }
 }
 
-var coachButton = document.getElementById("coach-button");
-var playerButton = document.getElementById("player-button");
-var deleteCoachButton = document.getElementById("delete-coach-button");
-var deletePlayerButton = document.getElementById("delete-player-button");
-var updatePlayerButton = document.getElementById("update-player-button");
-var updateCoachButton = document.getElementById("update-coach-button");
+
 coachButton.addEventListener("click", addCoach);
 playerButton.addEventListener("click", addPlayer);
 deleteCoachButton.addEventListener("click", deleteCoach);

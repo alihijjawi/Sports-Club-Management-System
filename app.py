@@ -19,7 +19,7 @@ matplotlib.use('Agg')
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:mira@127.0.0.1:3306/users'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Fuckapple123123@127.0.0.1:3306/430'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -64,8 +64,9 @@ class User(db.Model):
     hashed_password = db.Column(db.String(128))
     date_of_birth = db.Column(db.String(128))
     date = db.Column(db.DateTime)
+    privilege = db.Column(db.String(128))
 
-    def __init__(self, first_name, last_name, user_name, email, date_of_birth, password, date):
+    def __init__(self, first_name, last_name, user_name, email, date_of_birth, password, date, privilege):
         self.user_name = user_name
         self.first_name = first_name
         self.last_name = last_name
@@ -73,6 +74,7 @@ class User(db.Model):
         self.email = email
         self.hashed_password = bcrypt.generate_password_hash(password)
         self.date = date
+        self.privilege = "0"
 
 class Contact(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -280,7 +282,7 @@ class Reviews(db.Model):
 
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ("first_name", "last_name", "email", "user_name")
+        fields = ("first_name", "last_name", "email", "user_name", "privilege")
         model = User
 
 class MatchSchema(ma.Schema):
@@ -471,7 +473,7 @@ def create_user():
     last_name = data['last_name']
     password = data['password']
     date_of_birth = data['dob']
-    user = User(first_name, last_name, user_name, email, date_of_birth, password, datetime.utcnow())
+    user = User(first_name, last_name, user_name, email, date_of_birth, password, datetime.utcnow(), privilege = "0")
     db.session.add(user)
     db.session.commit()
     session["user_name"] = user_name

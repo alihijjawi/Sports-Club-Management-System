@@ -17,6 +17,9 @@ var loginDisplay = loginButton.style.display;
 var logoutDisplay = logoutButton.style.display;
 var userLabel = document.getElementById("label");
 var userDisplay = userLabel.style.display;
+var addButton = document.getElementById("match-button");
+var deleteButton = document.getElementById("delete-button");
+var updateButton = document.getElementById("update-button");
 checkLogin(`${SERVER_URL}/checkLogin`);
 async function checkLogin(url) {
     const response = await fetch(url);
@@ -31,6 +34,11 @@ async function checkLogin(url) {
             loginButton.style.display = "none";
             userLabel.innerHTML = "Signed in as " + data1["user_name"];
             userLabel.style.display = userDisplay;
+            if (data1["privilege"] == "0"){
+                addButton.disabled = true;
+                deleteButton.disabled = true;
+                updateButton.disabled = true;
+            }
         }
         else
         {
@@ -38,6 +46,9 @@ async function checkLogin(url) {
             loginButton.style.display = loginDisplay;
             userLabel.innerHTML = "";
             userLabel.style.display = "none";
+            addButton.disabled = true;
+            deleteButton.disabled = true;
+            updateButton.disabled = true;
         }
     } catch (err) {
         // The response wasn't a JSON object
@@ -45,9 +56,7 @@ async function checkLogin(url) {
     }
 }
 
-var addButton = document.getElementById("match-button");
-var deleteButton = document.getElementById("delete-button");
-var updateButton = document.getElementById("update-button");
+
 addButton.addEventListener("click", addMatch);
 updateButton.addEventListener("click", updateMatch);
 deleteButton.addEventListener("click", deleteMatch);
