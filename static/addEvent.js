@@ -11,9 +11,6 @@ var inactivityTime = function () {
   
 window.onload = function() { inactivityTime(); }
 
-
-
-
 var loginButton = document.getElementById("login-button");
 var logoutButton = document.getElementById("logout-button");
 var loginDisplay = loginButton.style.display;
