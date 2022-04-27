@@ -35,9 +35,9 @@ async function checkLogin(url) {
             userLabel.innerHTML = "Signed in as " + data1["user_name"];
             userLabel.style.display = userDisplay;
             if (data1["privilege"] == "0"){
-                addButton.disabled = true;
-                deleteButton.disabled = true;
-                updateButton.disabled = true;
+                addButton.style.visibility = "hidden";
+            deleteButton.style.visibility = "hidden";
+            updateButton.style.visibility = "hidden";
             }
         }
         else
@@ -46,9 +46,9 @@ async function checkLogin(url) {
             loginButton.style.display = loginDisplay;
             userLabel.innerHTML = "";
             userLabel.style.display = "none";
-            addButton.disabled = true;
-            deleteButton.disabled = true;
-            updateButton.disabled = true;
+            addButton.style.visibility = "hidden";
+            deleteButton.style.visibility = "hidden";
+            updateButton.style.visibility = "hidden";
         }
     } catch (err) {
         // The response wasn't a JSON object
