@@ -40,6 +40,8 @@ async function checkLogin(url) {
             loginButton.style.display = loginDisplay;
             userLabel.innerHTML = "";
             userLabel.style.display = "none";
+            alert("You cannot access the store if you are not logged in.\nPlease login or register if you do not have an account.");
+            location.href = "login";
         }
     } catch (err) {
         // The response wasn't a JSON object
