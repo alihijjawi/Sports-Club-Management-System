@@ -58,7 +58,6 @@ function loadDeletes(){
     }
 }
 loadDeletes();
-console.log(del)
 
 async function myFetch(myRequest, data, type) {
     if(type=='POST'){
@@ -75,17 +74,13 @@ async function myFetch(myRequest, data, type) {
         await fetch(myRequest, {
             method: 'GET',
             mode: 'cors'
-        }).then(
-            response=>response.text()
-        ).then(
-            document.write(response)
-        )
+        });
     }
 }
 
 function deletePost(){
     var trgt = window.event.target.id
-    console.log(trgt)
+    console.log(5)
     var ind = 0
     while(/^[a-z]+$/.test(trgt[ind])){ind+=1;}
     trgt = trgt.substr(ind)
@@ -93,6 +88,7 @@ function deletePost(){
     console.log(clicked_id)
     myFetch(`${SERVER_URL}/deletereview`, {"id":clicked_id-1}, 'POST');
     myFetch(`${SERVER_URL}/about`, {}, 'GET'); 
+    loadDeletes();
 }
 
 var sr = document.getElementById("showreview")
