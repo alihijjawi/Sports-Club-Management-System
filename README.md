@@ -42,3 +42,4 @@ From there, you can have multiple scenarios:
     ~ reserve different sports fields at the club arena with specific set times in the RESERVE page
     ~ you can write on a discussion forum in the DISCUSSIONS page
     ~ modify you account credentials in the ACCOUNT page
+    ~ generate feature reports from the website's databases in the REPORTS page
