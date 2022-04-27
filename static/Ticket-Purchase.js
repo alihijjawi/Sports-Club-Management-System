@@ -67,6 +67,9 @@ async function getMatches(url) {
         for (var i = 0; i < data1.length; i++) {
             var op = document.createElement("option");
             let curr = data1[i];
+            if (curr["timing"] < new Date().toISOString().split('T')[0]){
+                continue;
+            }
             op.text = curr["name"];
             op.value = curr["name"];
             select.appendChild(op);
