@@ -711,6 +711,10 @@ def account():
         email = data["email"]
         currUserName = session["user_name"]
         user = User.query.filter_by(user_name=currUserName).first()
+        payment = PaymentInfo.query.filter_by(user_name = currUserName).first()
+        if (payment is not None):
+            payment.user_name = user_name
+            db.session.commit()
         user.first_name = first_name
         user.last_name = last_name
         user.user_name = user_name
