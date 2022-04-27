@@ -711,8 +711,9 @@ def account():
         email = data["email"]
         currUserName = session["user_name"]
         user = User.query.filter_by(user_name=currUserName).first()
-        payment = PaymentInfo.query.filter_by(user_name = currUserName).first()
+        payment = PaymentInfo.query.filter_by(user_name=session["user_name"]).first()
         if (payment is not None):
+            print(session["user_name"])
             payment.user_name = user_name
             db.session.commit()
         user.first_name = first_name

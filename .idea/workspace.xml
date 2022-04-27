@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="02baa409-7ada-4f85-997d-a917bedea9b6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Account.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Account.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../EECE430L/GitHubRepo/exchange-backend-yousscharif/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../EECE430L/GitHubRepo/exchange-backend-yousscharif/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../EECE430L/GitHubRepo/exchange-backend-yousscharif/gitignore.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../EECE430L/GitHubRepo/exchange-backend-yousscharif/model/transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../EECE430L/GitHubRepo/exchange-backend-yousscharif/model/transaction.py" afterDir="false" />
